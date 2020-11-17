@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Bönetider</title>
+<meta charset="UTF-8">
+<meta http-equiv="refresh" content="120">
+
+<link rel="icon" href="{{url_for('static', filename='icon.png')}}">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Link för CSS -->
+<link rel="stylesheet" href="{{ url_for('static', filename='bön_utaniqamah.css') }}">
+<!-- Script för datum och tid -->
+<script src="{{url_for('static', filename='time.js')}}"></script>
+<script src="{{url_for('static', filename='date.js')}}"></script>
+<script src="{{url_for('static', filename='bönalarm.js')}}"></script>
+<script src="{{url_for('static', filename='refresh.js')}}"></script>
+<script></script>
+<!-- Script för att refresha sidan! -->
+<script type="text/javascript">refreshAt(00,00,30);</script>
+</head>
+<body>
+<div class="gridWrapper">
+    <header>
+    <div class="header">
+        <h1 id="date_time" class="clock"></h1>
+        <h2 id="date_time2" class="date"></h2>
+        <script type="text/javascript">window.onload = date_time('date_time');</script>
+        <script type="text/javascript">window.onload = date_time2('date_time2');</script>
+    </div>
+    </header>
+    <section id="bön_namn" class="wrapper">
+        <div><h2 class="toptable">Namaz</h2></div>
+        <div><h2 class="toptable">Počinje</h2></div>
+    </section>
+    <section id="bön1" class="wrapper">
+        <div><h2 class="namntable" id="namntable2" >Zora</h2></div>
+        <div><h2 class="böntable">{{fajr}}</h2></div>    </section>
+    <section id="bön2" class="wrapper2">
+        <div> <h2 class="namntable" id="solupgångnamn" >Izlaz Sunca </h2><img id="sol"src="{{url_for('static', filename='sol.png')}}"> </div>
+        <div><h2 style="text-align: center;padding-top:3%;font-size: 7vw;color:white; ">{{solupgång}}</h2></div>
+    </section>
+    <section id="bön3" class="wrapper">
+        <div><h2 class="namntable" id="namntable2">Podne</h2></div>
+        <div><h2 class="böntable">{{zuhr}}</h2></div>
+    </section>
+    <section id="bön4" class="wrapper">
+        <div><h2 class="namntable" >Ikindija</h2></div>
+        <div><h2 class="böntable">{{asr}}</h2></div>
+    </section>
+    <section id="bön5" class="wrapper">
+        <div><h2 class="namntable" id="namntable2">Akšam</h2></div>
+        <div><h2 class="böntable">{{magrib}}</h2></div>
+    </section>
+    <section id="bön6" class="wrapper">
+        <div><h2 class="namntable">Jacija</h2></div>
+        <div><h2 class="böntable"> {{isha}}</h2></div>
+    </section>
+    <div id="d8">
+        <p class="nästa" id="nästa2">
+        Sljedeći...        </p>
+        <p class="nästa" id="vilkenbön"></p>
+        <p class="nästa" id="vilkenbön2"></p>
+        <p class="nästa" id="bönklocka"></p>
+    </div>
+    <footer>Isključite svoje telefone!</footer>
+    <!-- <div id="footer2">SWISH - 1233711108</div> -->
+    <div id="d10" class="wrapper4">
+        <img id="logobredvid"style="width: 40%; padding-left: 35%;"src="{{url_for('static', filename='swish.png')}}"><p id="moske2">1233711108</p>
+    </div>
+    <div id="d9" class="wrapper3">
+        <div><p id="moske">ISLAMSKA ZAJEDNICA BOŠNJAKA GÖTEBORG</p><img id="logobredvid"style="width: 6.5%;float: right;padding: 2% 0% 0% 0%;"src="{{url_for('static', filename='izbgbglogo.svg')}}"></div>
+        <img style="width: 50%;float: right;  padding: 5% 0% 5% 34%;"src="{{url_for('static', filename='qr-kodakurser.png')}}">
+    </div>
+    
+</div>
+
+<script type="text/javascript">
+var test= '23:27';
+var test2= '22:27';
+
+
+var fajr = '{{fajr}}';
+var fajrimon = '{{fajrimon}}';
+var zuhr = '{{zuhr}}';
+var asr = '{{asr}}';
+var magrib = '{{magrib}}';
+var isha = '{{isha}}';
+
+var sec = 0;
+
+DIV = document.getElementById("bönklocka")
+DIV2 = document.getElementById("vilkenbön")
+DIV3 = document.getElementById("vilkenbön2")
+
+function bönklocka(){
+m = date.getMinutes();
+h = date.getHours();
+s = date.getSeconds();
+if(h<10)
+{
+h = "0"+h;
+}
+if(m<10)
+{
+m = "0"+m;
+}
+if(s<10)
+{
+s = "0"+s;
+}
+klockannu = ''+h+':'+m+':'+s+'';
+var seknu = new Date('1970-01-01T' + klockannu + 'Z').getTime() / 1000;
+var sekfajr = new Date('1970-01-01T' + fajr + 'Z').getTime() / 1000;
+var sekfajrimon = new Date('1970-01-01T' + fajrimon + 'Z').getTime() / 1000;
+var sekzuhr = new Date('1970-01-01T' + zuhr + 'Z').getTime() / 1000;
+var sekasr = new Date('1970-01-01T' + asr + 'Z').getTime() / 1000;
+var sekmagrib = new Date('1970-01-01T' + magrib + 'Z').getTime() / 1000;
+var sekisha = new Date('1970-01-01T' + isha + 'Z').getTime() / 1000;
+
+var vilken = "";
+var bönbön = "";
+const needle = seknu;
+var closest2 = [sekfajr, sekzuhr, sekasr,  sekmagrib, sekisha];
+const closest = [sekfajr, sekzuhr, sekasr,  sekmagrib, sekisha].reduce((a, b) => {
+    return Math.abs(b - needle) < Math.abs(a - needle) ? b : a;
+});
+closest2 = closest;
+function myFunction(hittanum) {
+var a_a = [sekfajr, sekzuhr, sekasr, sekmagrib, sekisha];
+var a = a_a.indexOf(hittanum);
+return a;
+}
+if ((closest - needle)<0){
+var resulatindex = myFunction(closest);
+var vilken_index = resulatindex;
+var sistabön = resulatindex;
+resulatindex = resulatindex + 1;
+if (sistabön == 4){
+    resulatindex = 0
+}
+closest2 = [sekfajr, sekzuhr, sekasr,  sekmagrib, sekisha];
+closest2 = closest2[resulatindex];
+}
+sec = closest2 - seknu
+if (closest2 == sekfajr){vilken = "Zora"; bönbön = fajr;}
+if (closest2 == sekzuhr){vilken = "Podne";bönbön = zuhr;}
+if (closest2 == sekasr){vilken = "Ikindija";bönbön = asr;}
+if (closest2 == sekmagrib){vilken = "Akšam";bönbön = magrib;}
+if (closest2 == sekisha){vilken = "Jacija";bönbön = isha;}
+if (sistabön == 4){vilken = "Zora"; bönbön = fajrimon;}
+DIV2.innerHTML = vilken;
+DIV3.innerHTML = bönbön;
+var min  = Math.floor(sec / 60),
+remSec  = sec % 60;
+var hour = Math.floor(min/ 60),
+remMin  = min % 60;
+if (remMin < 10) {
+    
+    remMin = '0' + remMin;
+}
+if (remSec < 10) {
+    
+    remSec = '0' + remSec;
+}
+if (hour < 10) {
+    
+    hour = '0' + hour;
+}
+document.getElementById("bönklocka").style.color = "#fff";
+DIV.innerHTML = hour + ":" +remMin + ":" + remSec;
+
+
+if (sec < 900){
+document.getElementById("bönklocka").style.color = "#e7b416";
+}
+if (sec < 600){
+document.getElementById("bönklocka").style.color = "red";
+}
+if (sec > 0) {
+    
+    sec = sec - 1;
+    
+} else {
+    
+    DIV.innerHTML = '';
+
+    
+}
+setTimeout('bönklocka();','1000');
+}
+
+
+bönklocka();
+
+</script>
+</body>
+</html>

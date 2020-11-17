@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="icon" href="{{url_for('static', filename='icon.png')}}">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="{{ url_for('static', filename='main.css') }}" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+
+
+<div class="row">
+  <div class="leftcolumn">
+    {% for post in posts %}
+    <div class="card">
+      <h2><a id="title" href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a>
+      <p id="content">{{ post.content }}</p>
+      <h5 id="author">Objavio {{ post.author }} u {{ post.date_posted.strftime('%Y-%m-%d') }}</h5>
+    </div>
+    {% endfor %}
+
+    
+  </div>
+
+</div>
+
+</body>
+</html>

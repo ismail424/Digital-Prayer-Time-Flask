@@ -1,0 +1,224 @@
+*{
+  margin: 0;
+}
+
+.gridWrapper{
+  display: grid;
+  width: 100vw;
+  height: 100vh;
+  grid-template-areas:
+  "ha"
+  "bö"
+  "bö1"
+  "bö2"
+  "bö3"
+  "bö4"
+  "bö5"
+  "bö6"
+  "d8"
+  "fo"
+  "d9"
+  ;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1.5fr 0.3fr 0.3fr 0.3fr 0.3fr 0.3fr 0.3fr 0.3fr 4fr 1fr 0.5fr;
+}
+
+.wrapper, .wrapper2{
+  background: #383838;
+  color: #eee;
+  font-family: Arial, Helvetica, sans-serif;
+
+}
+.iqamahtable, .böntable{
+  padding: 0 2px 0 2px;
+  border-bottom: black solid 1px;
+  text-align: center;
+  padding-bottom: 3%;
+  padding-top:3%;
+  font-size: 7vw;
+  color:white;
+}
+.iqamahtable{
+  background-color: #0066bf;
+}
+.toptable{
+  background-color: black !important;
+  padding-bottom: 3%;
+  padding-top:3%;
+  
+  font-size: 5vw;
+  color:white;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  text-transform: uppercase;
+  text-align: center;
+}
+.namntable{
+  padding-bottom: 3%;
+  padding-top:3%;
+  font-size: 7vw;
+  padding-left:3%;
+  color:white;
+}
+#namntable2{
+  background: #3d3d3d !important;
+
+}
+
+.böntable{
+
+  background-color: #dd8500;
+}
+.wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
+}
+.wrapper2 {
+  display: grid;
+  grid-template-columns:1fr 2fr !important;
+  grid-template-rows: 1fr !important;
+}
+.wrapper3 {
+  display: grid;
+  grid-template-columns:6fr 1fr!important;
+  grid-template-rows: 1fr !important;
+}
+
+
+#solupgångnamn{
+  margin-top: 10px;
+  float: left;
+  font-size: 4vw;
+
+}
+#sol{
+  margin-top: 5px;
+
+  float: right;
+  width: 25%;
+}
+footer{
+  text-align: center;
+  background-color: white;
+  color: rgb(199, 0, 0);
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 6vw;
+  padding: 5px 0px 5xpx 0px;
+  font-weight: lighter;
+  word-spacing: 5px;
+  grid-area: fo;
+  animation:blinkingText 1.5s infinite;
+}
+@keyframes blinkingText{
+    0%{     color: rgb(199, 0, 0);;    }
+    49%{    color:rgb(199, 0, 0);; }
+    60%{    color: transparent; }
+    99%{    color:transparent;  }
+    100%{   color:rgb(199, 0, 0);;    }
+}
+header{
+  text-align: center;
+  /* background: #7a7a7a; */
+  font-weight: lighter;
+  grid-area: ha;
+  color: rgb(46, 46, 46);
+  font-family: Arial, Helvetica, sans-serif;
+
+}
+
+#date_time{
+  font-size: 22.5vw;
+  line-height: 90%;
+}
+#date_time2{
+  font-size: 7.5vw;
+  padding-bottom: 10px;
+
+}
+#bön_namn{
+  grid-area: bö;
+
+}
+#bön1{
+  grid-area: bö1;
+
+}
+#bön2{
+  grid-area: bö2;
+
+}
+#bön3{
+  grid-area: bö3;
+
+}
+#bön4{
+  grid-area: bö4;
+
+}
+#bön5{
+  grid-area: bö5;
+
+}
+#bön6{
+  grid-area: bö6;
+
+}
+#d8{
+  grid-area: d8;
+  background-color: green;
+  color: white;
+  text-align: center;
+  font-family: 'BebasNeueRegular', Arial, Helvetica, sans-serif;
+  font-size: 10vw;
+}
+#d9{
+  grid-area: d9;
+  background-color:#383838;
+  color: #eee;
+
+}
+#moske{
+  font-family: 'BebasNeueRegular', Arial, Helvetica, sans-serif;
+  font-size: 4vw;
+  text-align: center;
+  word-spacing: 15px;
+  text-transform: uppercase;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  padding-top: 2%;
+}
+#nästa2{
+  padding-top: 4%;
+  opacity: .8;
+  line-height: 90%;
+
+}  
+
+#vilkenbön2{
+  font-size: 2.2em !important;
+  font-weight: 700;
+  line-height: 90%;
+
+}
+#vilkenbön{
+  opacity: .8;
+  text-transform: uppercase;
+}
+#bönklocka{
+  font-size: 7vw;
+  padding-bottom: 7px;
+}
+@media only screen and (max-width: 600px) {
+  #logobredvid{
+    display: none;
+  }
+  #moske{
+    font-family: 'BebasNeueRegular', Arial, Helvetica, sans-serif;
+    font-size: 3.3vw;
+    word-spacing: 5px;
+    float: left;
+    padding: 3% 0px 10px 1%;
+    text-transform: uppercase;
+  }
+}
