@@ -1,12 +1,15 @@
+#Kommentar
+
 from flask import Flask, render_template, request, redirect, url_for,flash
 from flask_sqlalchemy import SQLAlchemy 
 import datetime
-from datetime import datetime
-
+from datetime import datetime 
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///prayer.db'
-app.secret_key = b'_5#sdasdy2L"F4Q8z\n\xec]/'
+
+#This dosent do anything important
+app.secret_key = 'Secret key'
 
 db = SQLAlchemy(app)
 
