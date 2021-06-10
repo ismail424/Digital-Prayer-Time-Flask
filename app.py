@@ -16,16 +16,19 @@ socketio = SocketIO( app )
 def home():
   return render_template( 'index.html' )
 
+@app.route( '/prayerscreen' )
+def prayer_times():
+  return render_template( 'prayer_times.html' )
 
 @socketio.on( 'event' )
-def event( json ):
-  socketio.emit( 'event', json )
+def event( data ):
+  print(data)
 
 
 if __name__ == '__main__':
 
   #Debug only
-  socketio.run( app, debug = True )
+  socketio.run( app, debug = True, port=80 )
 
   #Server (LAN)
-  # socketio.run(app, host='0.0.0.0')
+  # socketio.run(app, host='0.0.0.0', port=80 )

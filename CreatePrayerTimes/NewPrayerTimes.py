@@ -227,8 +227,8 @@ def createTable( table ):
         return False
     
 if __name__ == "__main__":
-    # print(deleteTable("prayertimes"))
+    pass
+    # print(deleteTable("prayertimes"))a
     # NewPrayerTime( "https://www.salahtimes.com/sweden/gothenburg/render" )
     # print(createTable( "prayertimes" ))
     # CheckDatabase("prayertimes")
-    pass

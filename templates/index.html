@@ -1,90 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link rel="icon" href="{{url_for('static', filename='images/icon.png')}}">
-
-<meta charset="UTF-8">
-<meta name=viewport content="width=device-width, initial-scale=1">
-
-<title>Home</title>
-<style>
-*{
-    margin: 0;
-    padding: 0;
-}
-.button {
-    width: 98%;
-    background-color: rgb(49, 178, 221);
-    display:block;
-    padding:0.46em 1.6em;
-    border:0.1em solid #000000;
-    margin: 1% auto 1% auto;
-
-    border-radius:0.12em;
-    font-size: 2.5vw;
-    box-sizing: border-box;
-    text-decoration:none;
-    font-family:'Roboto',sans-serif;
-    font-weight:300;
-    color:#252323;
-    text-shadow: 0 0.004em 0.004em rgba(0,0,0,0.35);
-    text-align:center;
-    transition: all 0.15s;
-}
-
-.button:hover{
-text-shadow: 0 0 2em rgba(255,255,255,1);
-color:#FFFFFF;
-border-color:#FFFFFF;}
-
-#home{
-    background-color: rgb(227, 241, 28);
-
-}
-#add{
-    background-color: rgb(227, 241, 28);
-
-
-}
-#settings{
-}
-#translate{
-}
-#prayerscreen{
-    background-color: rgb(49, 221, 101);
-}
-@media only screen and (max-width: 800px) {
-    
-    .button {
-        width: 98%;
-        background-color: rgb(49, 178, 221);
-        display:block;
-        padding:0.46em 1.6em;
-        border:0.1em solid #000000;
-        margin: 1% auto 1% auto;
-
-        border-radius:0.12em;
-        font-size: 2em;
-        box-sizing: border-box;
-        text-decoration:none;
-        font-family:'Roboto',sans-serif;
-        font-weight:300;
-        color:#252323;
-        text-shadow: 0 0.004em 0.004em rgba(0,0,0,0.35);
-        text-align:center;
-        transition: all 0.15s;
-    }
-}
-
-</style>
+    <link rel="icon" href="{{url_for('static', filename='images/icon.png')}}">
+    <meta charset="UTF-8">
+    <meta name=viewport content="width=device-width, initial-scale=1">
+    <title>Home</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/home.css')}}">
 </head>
 <body background="{{url_for('static', filename='images/bgn.jpg')}}" >
+
     <a id="settings" href="settings" class="button">Settings</a>
     <a id="translate" href="translate" class="button">Translate</a>
     <a id="images" href="images" class="button">Images</a>
         <br>
-            <hr style="border: 0; height: 1px;background: #333;background-image: linear-gradient(to right, #ccc, #333, #ccc);">
+            <hr>
         <br>
     <a id="prayerscreen" href="prayerscreen" class="button" >Prayer time Screen</a>
+    
 </body>
 </html>

@@ -1,0 +1,71 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.button {
+    width: 98%;
+    background-color: rgb(49, 178, 221);
+    display:block;
+    padding:0.46em 1.6em;
+    border:0.1em solid #000000;
+    margin: 1% auto 1% auto;
+
+    border-radius:0.12em;
+    font-size: 2.5vw;
+    box-sizing: border-box;
+    text-decoration:none;
+    font-family:'Roboto',sans-serif;
+    font-weight:300;
+    color:#363636;
+    text-shadow: 0 0.004em 0.004em rgba(0,0,0,0.35);
+    text-align:center;
+    transition: all 0.15s;
+}
+
+.button:hover{
+text-shadow: 0 0 2em rgba(255,255,255,1);
+color:#FFFFFF;
+border-color:#FFFFFF;}
+
+#home{
+    background-color: rgb(227, 241, 28);
+
+}
+#add{
+    background-color: rgb(227, 241, 28);
+}
+#settings{
+}
+#translate{
+}
+#prayerscreen{
+    background-color: rgb(49, 221, 101);
+}
+hr{
+    border: 0; height: 1px;background: #333;background-image: linear-gradient(to right, #ccc, #333, #ccc);
+}
+
+
+/* CSS for mobile vy*/
+@media only screen and (max-width: 1000px) {
+    
+    .button {
+        width: 98%;
+        background-color: rgb(49, 178, 221);
+        display:block;
+        padding:0.46em 1.6em;
+        border:0.1em solid #000000;
+        margin: 1% auto 1% auto;
+
+        border-radius:0.12em;
+        font-size: 2em;
+        box-sizing: border-box;
+        text-decoration:none;
+        font-family:'Roboto',sans-serif;
+        font-weight:300;
+        color:#252323;
+        text-shadow: 0 0.004em 0.004em rgba(0,0,0,0.35);
+        text-align:center;
+        transition: all 0.15s;
+    }
+}
