@@ -1,11 +1,23 @@
 *{
     margin: 0;
     padding: 0;
+    border: 0;
+    outline: 0;
 }
-/* *{
+/* {
     cursor: none;
 } */
+/* -------------------- General css --------------------*/
+.title{
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 10px 0px 10px 0px;
+    color:#333;
+    text-transform: uppercase;
+    font-size: 2.5em;
+}
 
+/* -------------------- Index css --------------------*/
 .button {
     width: 98%;
     background-color: rgb(49, 178, 221);
@@ -20,7 +32,7 @@
     text-decoration:none;
     font-family:'Roboto',sans-serif;
     font-weight:300;
-    color:#363636;
+    color:#242424;
     text-shadow: 0 0.004em 0.004em rgba(0,0,0,0.35);
     text-align:center;
     transition: all 0.15s;
@@ -31,17 +43,6 @@ text-shadow: 0 0 2em rgba(255,255,255,1);
 color:#FFFFFF;
 border-color:#FFFFFF;}
 
-#home{
-    background-color: rgb(227, 241, 28);
-
-}
-#add{
-    background-color: rgb(227, 241, 28);
-}
-#settings{
-}
-#translate{
-}
 #prayerscreen{
     background-color: rgb(49, 221, 101);
 }
