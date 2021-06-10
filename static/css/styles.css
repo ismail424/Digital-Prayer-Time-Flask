@@ -25,7 +25,6 @@
     padding:0.46em 1.6em;
     border:0.1em solid #000000;
     margin: 1% auto 1% auto;
-
     border-radius:0.12em;
     font-size: 2.5vw;
     box-sizing: border-box;
@@ -35,7 +34,7 @@
     color:#242424;
     text-shadow: 0 0.004em 0.004em rgba(0,0,0,0.35);
     text-align:center;
-    transition: all 0.15s;
+    transition: all 0.6s;
 }
 
 .button:hover{
@@ -61,7 +60,6 @@ hr{
         padding:0.46em 1.6em;
         border:0.1em solid #000000;
         margin: 1% auto 1% auto;
-
         border-radius:0.12em;
         font-size: 2em;
         box-sizing: border-box;

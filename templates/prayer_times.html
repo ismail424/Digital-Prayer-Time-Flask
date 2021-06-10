@@ -1,51 +1,18 @@
 {% extends 'layout/layout.html' %}
+
+<!-- Title -->
 {% block title %}Screen{% endblock %}
+
+<!-- Header -->
+{% block header %}<link rel="stylesheet" href="{{url_for('static', filename='css/prayer_time.css')}}">{% endblock %}
+
+<!-- Content -->
 {% block content %}
 
-<div class="gridWrapper">
-    <header>
-
-    <div class="header">
-        <h1 id="date_time" class="clock"></h1>
-        <h2 id="date_time2" class="date"></h2>
-        <script type="text/javascript">window.onload = date_time('date_time');</script>
-        <script type="text/javascript">window.onload = date_time2('date_time2');</script>
-    </div>
-    </header>
-    <section id="bön_namn" class="wrapper">
-        <div><h2 class="toptable">{{post.prayer}}</h2></div>
-        <div><h2 class="toptable">{{post.begins}}</h2></div>
-        <div><h2 class="toptable">{{post.iqamah}}</h2></div>
-    </section>
-    <section id="bön1" class="wrapper">
-        <div><h2 class="namntable" id="namntable2" >{{post.fajrname}}</h2></div>
-        <div><h2 class="böntable">{{fajr}}</h2></div>
-        <div><h2 class="iqamahtable">{{fajriqamah}}</h2></div>
-    </section>
-    <section id="bön2" class="wrapper2">
-        <div> <h2 class="namntable" id="solupgångnamn" >{{post.sunrisename}}</h2><img id="sol"src="{{url_for('static', filename='sol.png')}}"> </div>
-        <div><h2 style="text-align: center;  padding-bottom: 2%;padding-top:2%;font-size: 7vw;color:white; ">{{solupgång}}</h2></div>
-    </section>
-    <section id="bön3" class="wrapper">
-        <div><h2 class="namntable" id="namntable2">{{post.dhuhrname}}</h2></div>
-        <div><h2 class="böntable">{{zuhr}}</h2></div>
-        <div><h2 class="iqamahtable">{{zuhriqamah}}</h2></div>
-    </section>
-    <section id="bön4" class="wrapper">
-        <div><h2 class="namntable" >{{post.asrname}}</h2></div>
-        <div><h2 class="böntable">{{asr}}</h2></div>
-        <div><h2 class="iqamahtable">{{asriqamah}}</h2></div>
-    </section>
-    <section id="bön5" class="wrapper">
-        <div><h2 class="namntable" id="namntable2">{{post.magribname}}</h2></div>
-        <div><h2 class="böntable">{{magrib}}</h2></div>
-        <div><h2 class="iqamahtable">{{magribiqamah}}</h2></div>
-    </section>
-    <section id="bön6" class="wrapper">
-        <div><h2 class="namntable">{{post.ishaname}}</h2></div>
-        <div><h2 class="böntable"> {{isha}}</h2></div>
-        <div><h2 class="iqamahtable">{{ishaiqamah}}</h2></div>
-    </section>
+<div class="container">
+    <div class="headers"></div>
+    <div class="footer"></div>
+    <div class="body"></div>
 </div>
 
 {% endblock %}
