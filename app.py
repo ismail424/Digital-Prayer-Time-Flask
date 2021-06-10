@@ -19,6 +19,18 @@ def home():
 def prayer_times():
   return render_template( 'prayer_times.html' )
 
+@app.route( '/settings' )
+def settings():
+  return render_template( 'settings.html' )
+
+@app.route( '/images' )
+def images():
+  return render_template( 'images.html' )
+
+@app.route( '/translate' )
+def translate():
+  return render_template( 'translate.html' )
+
 @socketio.on( 'event' )
 def event( data ):
   print(data)
