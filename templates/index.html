@@ -1,21 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <link rel="icon" href="{{url_for('static', filename='images/icon.png')}}">
-    <meta charset="UTF-8">
-    <meta name=viewport content="width=device-width, initial-scale=1">
-    <title>Home</title>
-    <link rel="stylesheet" href="{{url_for('static', filename='css/home.css')}}">
-</head>
-<body background="{{url_for('static', filename='images/bgn.jpg')}}" >
-
-    <a id="settings" href="settings" class="button">Settings</a>
-    <a id="translate" href="translate" class="button">Translate</a>
-    <a id="images" href="images" class="button">Images</a>
-        <br>
-            <hr>
-        <br>
-    <a id="prayerscreen" href="prayerscreen" class="button" >Prayer time Screen</a>
-    
-</body>
-</html>
+{% extends 'layout/layout.html' %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<a id="settings" href="settings" class="button">Settings</a>
+<a id="translate" href="translate" class="button">Translate</a>
+<a id="images" href="images" class="button">Images</a>
+    <br>
+        <hr>
+    <br>
+<a id="prayerscreen" href="prayerscreen" class="button" >Prayer time Screen</a>
+{% endblock %}
