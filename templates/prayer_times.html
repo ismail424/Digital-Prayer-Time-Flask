@@ -9,10 +9,76 @@
 <!-- Content -->
 {% block content %}
 
-<div class="container">
-    <div class="headers"></div>
-    <div class="footer"></div>
-    <div class="body"></div>
+<div class="container"> 
+    <!--------- Headers ------------->
+    <header class="headers">
+        <p class="headers_content" ><span  id="current_time" >00:00:00</span></p>
+        <p class="headers_content">Torsdag <span id="date_time" >0000/00/00</span></p>
+    </header>
+
+    <!--------- Body ------------->
+    <div class="body">
+        <div class="body_container">
+            <section id="table_header">
+                <h2>Prayer</h2>
+                <h2>Begins</h2>
+                <h2>Iqamah</h2>
+            </section>
+
+            <!--------- FAJR------------->
+            <section class="prayer_times_today">
+                <h2 id="fajr">Fajr</h2>
+                <h2>00:00</h2>
+                <h2>00:00</h2>
+            </section>
+
+            <!--------- Sunrise ------------->
+            <section class="prayer_times_today">
+                <h2 id="sunrise-h2">Sunrise</h2><img id="sunrise_logo" src="{{url_for('static', filename='SVG/sunrise.svg')}}" height="100%" width="7%"><p id="sunrise"> 00:00</p>
+            </section>
+
+            <!--------- Dhuhr ------------->
+            <section class="prayer_times_today">
+                <h2 id="dhuhr">Dhuhr</h2>
+                <h2>00:00</h2>
+                <h2>00:00</h2>
+            </section>
+
+            <!--------- Asr ------------->
+            <section class="prayer_times_today">
+                <h2 id="asr">Asr</h2>
+                <h2>00:00</h2>
+                <h2>00:00</h2>
+            </section>
+
+            <!--------- Magrib ------------->
+            <section class="prayer_times_today">
+                <h2 id="magrib">Magrib</h2>
+                <h2>00:00</h2>
+                <h2>00:00</h2>
+            </section>
+
+            <!--------- Isha ------------->
+            <section class="prayer_times_today">
+                <h2 id="isha">Isha</h2>
+                <h2>00:00</h2>
+                <h2>00:00</h2>
+            </section>
+          </div>
+    </div>
+
+    <footer class="footer footer_container">
+        <!-- Next section -->
+        <div class="next_section">
+            <p id="next_text"> Next...</p>
+            <p id="next_prayer">Dhuhr</p>
+            <p id="next_prayer_time">12:54</p>
+            <p id="next_prayer_countdown">00:46:21</p>
+        </div>
+        <!-- Footer text -->
+        <p id="footer_text">Please, turn off your phones</p>
+    </footer>
+
 </div>
 
 {% endblock %}

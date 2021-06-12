@@ -39,7 +39,8 @@ def event( data ):
 if __name__ == '__main__':
 
   #Debug only
-  socketio.run( app, debug = True, port = 80 )
+  # socketio.run( app, debug = True, port = 80 )
 
   #Server (LAN)
-  # socketio.run(app, host='0.0.0.0', port=80 )
+  socketio.run(app, host='0.0.0.0',debug = True,  port=80 )
+
