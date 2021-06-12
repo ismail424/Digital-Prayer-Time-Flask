@@ -74,8 +74,8 @@ def NewPrayerTime( url ):
                         current_moth = "11"
                     elif current_moth == "Dec":
                         current_moth = "12"
-                
-                    current_date = str(current_year) + "/" + str(current_moth)
+                    current_date = str(current_year) + "-" + str(current_moth)
+                    
                 count += 1
         
         #Fetches every prayertime 
@@ -91,7 +91,7 @@ def NewPrayerTime( url ):
                     current_day = str(prayer_text[1])
                     if len(current_day)  == 1:
                         current_day = "0"+ current_day
-                    one_day_prayertime.append(current_date + "/" +  current_day)
+                    one_day_prayertime.append(current_date + "-" +  current_day)
                     x = 0
             except:
                 if prayer_text[0] != "Day":
@@ -195,7 +195,7 @@ def ForcefixTime( time ):
             time = "00"+ time[2:]
         return time
     
-def CheckDatabase( table):
+def CheckDatabase(table):
     try:
         conn = sqlite3.connect("database.db")
         c = conn.cursor()
@@ -228,7 +228,8 @@ def createTable( table ):
     
 if __name__ == "__main__":
     pass
-    # print(deleteTable("prayertimes"))a
-    # NewPrayerTime( "https://www.salahtimes.com/sweden/gothenburg/render" )
+    # print(deleteTable("prayertimes"))
     # print(createTable( "prayertimes" ))
+    # NewPrayerTime( "https://www.salahtimes.com/sweden/gothenburg/render" )
     # CheckDatabase("prayertimes")
+
