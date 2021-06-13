@@ -40,6 +40,20 @@ function fix_fontsize(){
 
 }
 
+async function  get_prayertimes(){
+    try {
+        let url = '/api/get_prayertimes';
+        let response = await fetch(url);
+        let prayertime = await response.json(); 
+        console.log(prayertime);
+    } catch (error) {
+        console.log(error)
+    }
+
+
+}
+
+get_prayertimes()
 fix_fontsize()
 setInterval(() => current_time("current_time", ":"),1000);
 setInterval(() => date_time("date_time", "-"),1000);
