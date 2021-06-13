@@ -74,8 +74,17 @@ def get_prayertime_api():
         prayer_api = json.dumps(prayer_api)
         return prayer_api
         
-        
+def add_minutes_to_time( time , minutes ):
+    try:
+        #Konverterar string till time format och lägger till tid
+        time = datetime.datetime.strptime(time, "%H:%M") + datetime.timedelta(minutes = minutes)
+        time = str(datetime.datetime.strftime(time, "%H:%M"))
+        return time
+    except Exception as e: 
+        print(e)
+        return str(time)
+            
 if __name__ == '__main__':
-    print(get_prayertime_api())
-    
-    
+    # print(get_prayertime_api())
+    print(add_minutes_to_time("19:20", 40))
+    pass
