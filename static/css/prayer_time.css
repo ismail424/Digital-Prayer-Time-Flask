@@ -211,3 +211,15 @@
     word-spacing: 3px;
     overflow:hidden;
 }
+
+
+/* error */
+#error{
+    display: none;
+    font-size: 9vw;
+    position: fixed;
+    top: 0;
+    text-align: center;
+    background-color: white;
+    color: red;
+}
