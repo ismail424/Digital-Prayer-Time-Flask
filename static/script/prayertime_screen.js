@@ -18,7 +18,7 @@ var sec_fajr = 0;
 var sec_fajr_iqamah = 0;
 var sec_sunrise= 0;
 var sec_fajr_tomorrow = 0;
-var sec_dhuhr = ne0;
+var sec_dhuhr = 0;
 var sec_dhuhr_iqamah = 0;
 var sec_asr = 0;
 var sec_asr_iqamah = 0;
@@ -113,7 +113,7 @@ async function  get_prayertimes(){
             document.getElementById("asr-time-iqamah").innerText = prayertime.asr_iqamah
             document.getElementById("maghrib-time-iqamah").innerText = prayertime.maghrib_iqamah
             document.getElementById("isha-time-iqamah").innerText = prayertime.isha_iqamah
-            set_variables()
+            next_prayertime()
         }
         else {
             document.getElementById("error").style.display = "block";
@@ -129,7 +129,7 @@ async function  get_prayertimes(){
 
 
 //Next prayertime and countdown
-function set_variables(){
+function next_prayertime(){
     var date = new Date()
     h = date.getHours();
     m = date.getMinutes();
@@ -142,20 +142,21 @@ function set_variables(){
     time_now = ''+h+':'+m+':'+s+'';
 
     //Convert time to sekounds
-    var seconds_now = new Date('1970-01-01T' + time_now + 'Z').getTime() / 1000;
-    var sec_fajr = new Date('1970-01-01T' + fajr + 'Z').getTime() / 1000;
-    var sec_fajr_iqamah = new Date('1970-01-01T' + fajr_iqamah + 'Z').getTime() / 1000;
-    var sec_sunrise= new Date('1970-01-01T' + sunrise + 'Z').getTime() / 1000;
-    var sec_fajr_tomorrow = new Date('1970-01-01T' + fajr_tomorrow + 'Z').getTime() / 1000;
-    var sec_dhuhr = new Date('1970-01-01T' + dhuhr + 'Z').getTime() / 1000;
-    var sec_dhuhr_iqamah = new Date('1970-01-01T' + dhuhr_iqamah + 'Z').getTime() / 1000;
-    var sec_asr = new Date('1970-01-01T' + asr + 'Z').getTime() / 1000;
-    var sec_asr_iqamah = new Date('1970-01-01T' + asr_iqamah + 'Z').getTime() / 1000;
-    var sec_maghrib = new Date('1970-01-01T' + maghrib + 'Z').getTime() / 1000;
-    var sec_maghrib_iqamah = new Date('1970-01-01T' + maghrib_iqamah + 'Z').getTime() / 1000;
-    var sec_isha = new Date('1970-01-01T' + isha + 'Z').getTime() / 1000;
-    var sec_isha_iqamah = new Date('1970-01-01T' + isha_iqamah + 'Z').getTime() / 1000;
-}
+    seconds_now = new Date('1970-01-01T' + time_now + 'Z').getTime() / 1000;
+    sec_fajr = new Date('1970-01-01T' + fajr + 'Z').getTime() / 1000;
+    sec_fajr_iqamah = new Date('1970-01-01T' + fajr_iqamah + 'Z').getTime() / 1000;
+    sec_sunrise= new Date('1970-01-01T' + sunrise + 'Z').getTime() / 1000;
+    sec_fajr_tomorrow = new Date('1970-01-01T' + fajr_tomorrow + 'Z').getTime() / 1000;
+    sec_dhuhr = new Date('1970-01-01T' + dhuhr + 'Z').getTime() / 1000;
+    sec_dhuhr_iqamah = new Date('1970-01-01T' + dhuhr_iqamah + 'Z').getTime() / 1000;
+    sec_asr = new Date('1970-01-01T' + asr + 'Z').getTime() / 1000;
+    sec_asr_iqamah = new Date('1970-01-01T' + asr_iqamah + 'Z').getTime() / 1000;
+    sec_maghrib = new Date('1970-01-01T' + maghrib + 'Z').getTime() / 1000;
+    sec_maghrib_iqamah = new Date('1970-01-01T' + maghrib_iqamah + 'Z').getTime() / 1000;
+    sec_isha = new Date('1970-01-01T' + isha + 'Z').getTime() / 1000;
+    sec_isha_iqamah = new Date('1970-01-01T' + isha_iqamah + 'Z').getTime() / 1000;
+
+
 
     // var vilken = "";
     // var bönbön = "";
@@ -231,13 +232,11 @@ function set_variables(){
     // setTimeout('bönklocka();','1000');
     // }
 
+
 }
-
-
 
 //Run the functions
 get_prayertimes()
-the_next_prayer()
 fix_fontsize()
 setInterval(() => current_time("current_time", ":"),1000);
 setInterval(() => date_time("date_time", "-"),1000);

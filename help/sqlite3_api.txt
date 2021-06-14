@@ -18,3 +18,11 @@ sqlite3 Commands
 
 -Commit changes
     conn.commit()
+
+-Add columt to table
+    c.execute("""ALTER TABLE settings ADD iqamah_on text """)
+
+
+-Update data in table
+    c.execute("""UPDATE settings SET fajr_iqamah = '10' WHERE id = 1 """)
+    conn.commit()
