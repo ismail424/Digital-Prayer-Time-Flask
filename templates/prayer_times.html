@@ -19,7 +19,7 @@
     <!--------- Body ------------->
     <div class="body">
         <div class="body_container">
-            <section id="table_header">
+            <section id="iqamah_text_section" class="table_header">
                 <h2>Prayer</h2>
                 <h2>Begins</h2>
                 <h2>Iqamah</h2>
@@ -34,7 +34,9 @@
 
             <!--------- Sunrise ------------->
             <section class="prayer_times_today">
-                <h2 id="sunrise-h2">Sunrise</h2><img id="sunrise_logo" src="{{url_for('static', filename='SVG/sunrise.svg')}}" height="100%" width="7%"><p id="sunrise"> 00:00</p>
+                <h2 id="sunrise-h2">Sunrise</h2>
+                <img id="sunrise_logo" src="{{url_for('static', filename='SVG/sunrise.svg')}}" height="100%" width="7%">
+                <p id="sunrise-time" > 00:00</p>
             </section>
 
             <!--------- Dhuhr ------------->
@@ -69,7 +71,7 @@
 
     <footer class="footer footer_container">
         <!-- Next section -->
-        <div class="next_section">
+        <div class="next_section" id="footer_header">
             <p id="next_text">Next...</p>
             <p id="next_prayer">-----</p>
             <p id="next_prayer_time">00:00</p>

@@ -6,11 +6,14 @@ c = conn.cursor()
 
 #Add columt to table
 # c.execute("""ALTER TABLE settings ADD id INTEGER """)
-# c.execute("""UPDATE settings SET id = 1 WHERE fajr_iqamah = '30' """)
-# conn.commit()
-c.execute("""select * from settings """)
 
-res = c.fetchall()
+#Update data in table
+# c.execute("""UPDATE settings SET iqamah_on = 'true' WHERE id = 1 """)
+# conn.commit()
+# c.execute("""select * from settings """)
+c.execute("""select iqamah_on from settings where id = 1 """)
+
+res = c.fetchone()[0]
 print(res)
 
 # c.execute("""select fajr, dhuhr, asr, maghrib, isha from prayertimes where date = '2021-06-13' """)

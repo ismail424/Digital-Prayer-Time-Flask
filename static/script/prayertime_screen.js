@@ -26,11 +26,24 @@ var sec_maghrib = 0;
 var sec_maghrib_iqamah = 0;
 var sec_isha = 0;
 var sec_isha_iqamah = 0;
+var sec_all_day = 0;
+
+//list with prayers (Secounds)
+var prayer_list_sec = [];
+
+//list with prayers (Names)
+var prayer_list_name = [];
+
+//list with prayers (Time)
+var prayer_list_time = [];
+
+//Check if iqamah is on
+var iqamah_on = "false";
 
 // NEXT PRAYER DIV id
-var next_prayer = document.getElementById("next_prayer")
-var next_prayer_time = document.getElementById("next_prayer_time")
-var next_prayer_countdown = document.getElementById("next_prayer_countdown")
+var div_next_prayer = document.getElementById("next_prayer")
+var div_next_prayer_time = document.getElementById("next_prayer_time")
+var div_next_prayer_countdown = document.getElementById("next_prayer_countdown")
 
 
 
@@ -101,19 +114,32 @@ async function  get_prayertimes(){
             isha = prayertime.isha;
             isha_iqamah = prayertime.isha_iqamah;
             fajr_tomorrow = prayertime.fajr_tomorrow;
+            iqamah_on = prayertime.iqamah_on;
 
-            document.getElementById("sunrise").innerText = prayertime.sunrise
-            document.getElementById("fajr-time").innerText = prayertime.fajr
-            document.getElementById("dhuhr-time").innerText = prayertime.dhuhr
-            document.getElementById("asr-time").innerText = prayertime.asr
-            document.getElementById("maghrib-time").innerText = prayertime.maghrib
-            document.getElementById("isha-time").innerText = prayertime.isha
-            document.getElementById("fajr-time-iqamah").innerText = prayertime.fajr_iqamah
-            document.getElementById("dhuhr-time-iqamah").innerText = prayertime.dhuhr_iqamah
-            document.getElementById("asr-time-iqamah").innerText = prayertime.asr_iqamah
-            document.getElementById("maghrib-time-iqamah").innerText = prayertime.maghrib_iqamah
-            document.getElementById("isha-time-iqamah").innerText = prayertime.isha_iqamah
-            next_prayertime()
+            if (prayertime.iqamah_on == "true"){
+                document.getElementById("sunrise-time").innerText = prayertime.sunrise
+                document.getElementById("fajr-time").innerText = prayertime.fajr
+                document.getElementById("dhuhr-time").innerText = prayertime.dhuhr
+                document.getElementById("asr-time").innerText = prayertime.asr
+                document.getElementById("maghrib-time").innerText = prayertime.maghrib
+                document.getElementById("isha-time").innerText = prayertime.isha
+                document.getElementById("fajr-time-iqamah").innerText = prayertime.fajr_iqamah
+                document.getElementById("dhuhr-time-iqamah").innerText = prayertime.dhuhr_iqamah
+                document.getElementById("asr-time-iqamah").innerText = prayertime.asr_iqamah
+                document.getElementById("maghrib-time-iqamah").innerText = prayertime.maghrib_iqamah
+                document.getElementById("isha-time-iqamah").innerText = prayertime.isha_iqamah
+            }
+            else{
+                no_iqamah()
+                document.getElementById("sunrise-time").innerText = prayertime.sunrise
+                document.getElementById("fajr-time").innerText = prayertime.fajr
+                document.getElementById("dhuhr-time").innerText = prayertime.dhuhr
+                document.getElementById("asr-time").innerText = prayertime.asr
+                document.getElementById("maghrib-time").innerText = prayertime.maghrib
+                document.getElementById("isha-time").innerText = prayertime.isha
+            }
+            set_next_prayer_variable()
+            setInterval(() => next_prayertime(),1000);
         }
         else {
             document.getElementById("error").style.display = "block";
@@ -121,15 +147,126 @@ async function  get_prayertimes(){
         console.log(prayertime);
     } catch (error) {
         document.getElementById("error").style.display = "block";
-        console.log(error)
+        console.log(error);
     }
 
 
 }
 
 
+function no_iqamah(){
+    document.getElementById("iqamah_text_section").classList.add("no_iqamah_text");
+    document.getElementById("sunrise-time").style.flex = "50%";
+    document.getElementById("sunrise_logo").style.margin = 0;
+    document.getElementById("sunrise-h2").style.flex = "43%";
+    document.getElementById("sunrise-h2").style.maxWidth = "43%";
+    document.getElementById("sunrise-time").classList.add("background_color");
+
+    document.getElementById("fajr-time-iqamah").style.display = "none";
+    document.getElementById("dhuhr-time-iqamah").style.display = "none";
+    document.getElementById("asr-time-iqamah").style.display = "none";
+    document.getElementById("maghrib-time-iqamah").style.display = "none";
+    document.getElementById("isha-time-iqamah").style.display = "none";
+
+}
+
+//init the variables that are going to be used
+function set_next_prayer_variable(){
+    if (iqamah_on == "true"){
+        sec_fajr = new Date('1970-01-01T' + fajr + 'Z').getTime() / 1000;
+        sec_fajr_iqamah = new Date('1970-01-01T' + fajr_iqamah + 'Z').getTime() / 1000;
+        sec_sunrise= new Date('1970-01-01T' + sunrise + 'Z').getTime() / 1000;
+        sec_fajr_tomorrow = new Date('1970-01-01T' + fajr_tomorrow + 'Z').getTime() / 1000;
+        sec_dhuhr = new Date('1970-01-01T' + dhuhr + 'Z').getTime() / 1000;
+        sec_dhuhr_iqamah = new Date('1970-01-01T' + dhuhr_iqamah + 'Z').getTime() / 1000;
+        sec_asr = new Date('1970-01-01T' + asr + 'Z').getTime() / 1000;
+        sec_asr_iqamah = new Date('1970-01-01T' + asr_iqamah + 'Z').getTime() / 1000;
+        sec_maghrib = new Date('1970-01-01T' + maghrib + 'Z').getTime() / 1000;
+        sec_maghrib_iqamah = new Date('1970-01-01T' + maghrib_iqamah + 'Z').getTime() / 1000;
+        sec_isha = new Date('1970-01-01T' + isha + 'Z').getTime() / 1000;
+        sec_isha_iqamah = new Date('1970-01-01T' + isha_iqamah + 'Z').getTime() / 1000;
+        sec_all_day = new Date('1970-01-01T' + "24:00" + 'Z').getTime() / 1000;
+
+
+        //Add to list (Sec)
+        prayer_list_sec.push(sec_fajr);
+        prayer_list_sec.push(sec_fajr_iqamah);
+        prayer_list_sec.push(sec_sunrise);
+        prayer_list_sec.push(sec_dhuhr);
+        prayer_list_sec.push(sec_dhuhr_iqamah);
+        prayer_list_sec.push(sec_asr);  
+        prayer_list_sec.push(sec_asr_iqamah);  
+        prayer_list_sec.push(sec_maghrib);  
+        prayer_list_sec.push(sec_maghrib_iqamah);  
+        prayer_list_sec.push(sec_isha);  
+        prayer_list_sec.push(sec_isha_iqamah);
+
+        //Add to list (Time)
+        prayer_list_time.push(fajr);
+        prayer_list_time.push(fajr_iqamah);
+        prayer_list_time.push(sunrise);
+        prayer_list_time.push(dhuhr);
+        prayer_list_time.push(dhuhr_iqamah);
+        prayer_list_time.push(asr);  
+        prayer_list_time.push(asr_iqamah);  
+        prayer_list_time.push(maghrib);  
+        prayer_list_time.push(maghrib_iqamah);  
+        prayer_list_time.push(isha);  
+        prayer_list_time.push(isha_iqamah);
+
+        //Add to list (name)
+        prayer_list_name.push("fajr");
+        prayer_list_name.push("fajr_iqamah");
+        prayer_list_name.push("sunrise");
+        prayer_list_name.push("dhuhr");
+        prayer_list_name.push("dhuhr_iqamah");
+        prayer_list_name.push("asr");  
+        prayer_list_name.push("asr_iqamah");  
+        prayer_list_name.push("maghrib");  
+        prayer_list_name.push("maghrib_iqamah");  
+        prayer_list_name.push("isha");  
+        prayer_list_name.push("isha_iqamah");
+
+    }
+    else{
+        sec_fajr = new Date('1970-01-01T' + fajr + 'Z').getTime() / 1000;
+        sec_sunrise= new Date('1970-01-01T' + sunrise + 'Z').getTime() / 1000;
+        sec_fajr_tomorrow = new Date('1970-01-01T' + fajr_tomorrow + 'Z').getTime() / 1000;
+        sec_dhuhr = new Date('1970-01-01T' + dhuhr + 'Z').getTime() / 1000;
+        sec_asr = new Date('1970-01-01T' + asr + 'Z').getTime() / 1000;
+        sec_maghrib = new Date('1970-01-01T' + maghrib + 'Z').getTime() / 1000;
+        sec_isha = new Date('1970-01-01T' + isha + 'Z').getTime() / 1000;
+
+        //Add to list (Secounds)
+        prayer_list_sec.push(sec_fajr);
+        prayer_list_sec.push(sec_sunrise);
+        prayer_list_sec.push(sec_dhuhr);
+        prayer_list_sec.push(sec_asr);  
+        prayer_list_sec.push(sec_maghrib);  
+        prayer_list_sec.push(sec_isha);  
+
+        //Add to list (Time)
+        prayer_list_time.push(fajr);
+        prayer_list_time.push(sunrise);
+        prayer_list_time.push(dhuhr);
+        prayer_list_time.push(asr);  
+        prayer_list_time.push(maghrib);  
+        prayer_list_time.push(isha);  
+
+        //Add to list (Name)
+        prayer_list_name.push("fajr");
+        prayer_list_name.push("sunrise");
+        prayer_list_name.push("dhuhr");
+        prayer_list_name.push("asr");  
+        prayer_list_name.push("maghrib");  
+        prayer_list_name.push("isha");  
+    }
+
+}
+
+
 //Next prayertime and countdown
-function next_prayertime(){
+async function next_prayertime(){
     var date = new Date()
     h = date.getHours();
     m = date.getMinutes();
@@ -141,97 +278,78 @@ function next_prayertime(){
     //Time now
     time_now = ''+h+':'+m+':'+s+'';
 
-    //Convert time to sekounds
+    //Convert time to secounds
     seconds_now = new Date('1970-01-01T' + time_now + 'Z').getTime() / 1000;
-    sec_fajr = new Date('1970-01-01T' + fajr + 'Z').getTime() / 1000;
-    sec_fajr_iqamah = new Date('1970-01-01T' + fajr_iqamah + 'Z').getTime() / 1000;
-    sec_sunrise= new Date('1970-01-01T' + sunrise + 'Z').getTime() / 1000;
-    sec_fajr_tomorrow = new Date('1970-01-01T' + fajr_tomorrow + 'Z').getTime() / 1000;
-    sec_dhuhr = new Date('1970-01-01T' + dhuhr + 'Z').getTime() / 1000;
-    sec_dhuhr_iqamah = new Date('1970-01-01T' + dhuhr_iqamah + 'Z').getTime() / 1000;
-    sec_asr = new Date('1970-01-01T' + asr + 'Z').getTime() / 1000;
-    sec_asr_iqamah = new Date('1970-01-01T' + asr_iqamah + 'Z').getTime() / 1000;
-    sec_maghrib = new Date('1970-01-01T' + maghrib + 'Z').getTime() / 1000;
-    sec_maghrib_iqamah = new Date('1970-01-01T' + maghrib_iqamah + 'Z').getTime() / 1000;
-    sec_isha = new Date('1970-01-01T' + isha + 'Z').getTime() / 1000;
-    sec_isha_iqamah = new Date('1970-01-01T' + isha_iqamah + 'Z').getTime() / 1000;
 
+    let closest = prayer_list_sec.reduce((a, b) => {
+        return Math.abs(b - seconds_now) < Math.abs(a - seconds_now) ? b : a;
+    });
+    let closest_index = prayer_list_sec.indexOf(closest);
+    var closest_prayer_sec = prayer_list_sec[closest_index]
+    let next_prayer_name = "";
+    let next_prayer_time = "";
+    let next_prayer_sec_left = 0;
 
+    let list_length =  prayer_list_sec.length;
+    
+    if (closest_prayer_sec - seconds_now <= 0 ){
+        
+            if (closest_index == list_length - 1){
+                next_prayer_name = prayer_list_name[0];
+                next_prayer_time = fajr_tomorrow;
+                let x =  86400 - seconds_now 
+                next_prayer_sec_left = x + sec_fajr_tomorrow;
+            }
+            else{
+                if (prayer_list_sec[closest_index + 1] == prayer_list_sec[closest_index] ){
+                    next_prayer_name = prayer_list_name[closest_index + 2];
+                    next_prayer_time = prayer_list_time[closest_index + 2];
+                    next_prayer_sec_left = prayer_list_sec[closest_index + 2] - seconds_now;
+                    
+                }
+                else{
+                    next_prayer_name = prayer_list_name[closest_index + 1];
+                    next_prayer_time = prayer_list_time[closest_index + 1];
+                    next_prayer_sec_left = prayer_list_sec[closest_index + 1] - seconds_now;
+                } 
+            }
 
-    // var vilken = "";
-    // var bönbön = "";
-    // const needle = seknu;
-    // var closest2 = [sekfajr, sekzuhr, sekasr,  sekmagrib, sekisha];
-    // const closest = [sekfajr, sekzuhr, sekasr,  sekmagrib, sekisha].reduce((a, b) => {
-    //     return Math.abs(b - needle) < Math.abs(a - needle) ? b : a;
-    // });
-    // closest2 = closest;
-    // function myFunction(hittanum) {
-    // var a_a = [sekfajr, sekzuhr, sekasr,  sekmagrib, sekisha];
-    // var a = a_a.indexOf(hittanum);
-    // return a;
-    // }
-    // if ((closest - needle)<0){
-    // var resulatindex = myFunction(closest);
-    // var vilken_index = resulatindex;
-    // var sistabön = resulatindex;
-    // resulatindex = resulatindex + 1;
-    // if (sistabön == 9){
-    //     resulatindex = 0
-    // }
-    // closest2 = [sekfajr, sekzuhr, sekasr,  sekmagrib, sekisha];
-    // closest2 = closest2[resulatindex];
-    // }
-    // sec = closest2 - seknu
-    // if (closest2 == sekfajr){vilken = "{{post.fajrname}}"; document.getElementById("fajrcolor").style.backgroundColor = "#3d3d3d"; bönbön = fajr;}
-    // if (closest2 == sekzuhr){vilken = "{{post.dhuhrname}}";document.getElementById("zuhrcolor").style.backgroundColor = "#3d3d3d";bönbön = zuhr;}
-    // if (closest2 == sekasr){vilken = "{{post.asrname}}";bönbön = asr;document.getElementById("asrcolor").style.backgroundColor = "#383838";}
-    // if (closest2 == sekmagrib){vilken = "{{post.magribname}}";document.getElementById("magribcolor").style.backgroundColor = "#3d3d3d";bönbön = magrib;}
-    // if (closest2 == sekisha){vilken = "{{post.ishaname}}";bönbön = isha;document.getElementById("ishacolor").style.backgroundColor = "#383838";}
-    // if (sistabön == 4){vilken = "{{post.fajrname}}"; document.getElementById("fajrcolor").style.backgroundColor = "#3d3d3d";bönbön = fajrimon;}
-    // DIV2.innerHTML = vilken;
-    // DIV3.innerHTML = bönbön;
-    // var min  = Math.floor(sec / 60),
-    // remSec  = sec % 60;
-    // var hour = Math.floor(min/ 60),
-    // remMin  = min % 60;
-    // if (remMin < 10) {
-        
-    //     remMin = '0' + remMin;
-    // }
-    // if (remSec < 10) {
-        
-    //     remSec = '0' + remSec;
-    // }
-    // if (hour < 10) {
-        
-    //     hour = '0' + hour;
-    // }
-    // document.getElementById("bönklocka").style.color = "#fff";
-    // DIV.innerHTML = hour + ":" +remMin + ":" + remSec;
+    }
+    else{
+        next_prayer_name = prayer_list_name[closest_index];
+        next_prayer_time = prayer_list_time[closest_index];
+        next_prayer_sec_left = prayer_list_sec[closest_index] - seconds_now;
+    }
+
     
     
-    // if (sec < 900){
-    // document.getElementById("bönklocka").style.color = "#e7b416";
-    // }
-    // if (sec < 600){
-    // document.getElementById("bönklocka").style.color = "red";
-    // }
-    // if (sec > 0) {
-        
-    //     sec = sec - 1;
-        
-    // } else {
-        
-    //     DIV.innerHTML = '';
     
-        
-    // }
+    if (iqamah_on != "true"){
 
-    // //set timeout
-    // setTimeout('bönklocka();','1000');
-    // }
+        for (temp_name in prayer_list_name) {
+            document.getElementById(prayer_list_name[temp_name] + "-time").style.backgroundColor = "";
+        }
+        document.getElementById(next_prayer_name + "-time").style.backgroundColor = "transparent";
+        document.getElementById(next_prayer_name + "-time").style.border = 0;
+    }
 
+
+    let min  = Math.floor(next_prayer_sec_left / 60),
+    remSec  = next_prayer_sec_left % 60;
+    let hour = Math.floor(min/ 60),
+    remMin  = min % 60;
+    if (remMin < 10) { remMin = '0' + remMin;}
+    if (remSec < 10) { remSec = '0' + remSec;}
+    if (hour < 10) {hour = '0' + hour;}
+    timer = hour + ":" +remMin + ":" + remSec;
+    
+    div_next_prayer.innerText = next_prayer_name;
+    div_next_prayer_time.innerText = next_prayer_time;
+    div_next_prayer_countdown.innerText = timer;
+
+    if (next_prayer_sec_left < 900){div_next_prayer_countdown.style.color = "#e7b416";}
+    if (next_prayer_sec_left < 600){div_next_prayer_countdown.style.color = "red";}
+    if (next_prayer_sec_left <= 0) {div_next_prayer_countdown.innerHTML = '';}
 
 }
 
