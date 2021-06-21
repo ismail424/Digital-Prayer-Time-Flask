@@ -4,7 +4,13 @@
 {% block title %}Screen{% endblock %}
 
 <!-- Header -->
-{% block header %}<link rel="stylesheet" href="{{url_for('static', filename='css/prayer_time.css')}}">{% endblock %}
+{% block header %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/prayer_time.css')}}">
+<script src="{{url_for('static', filename='script/socket.io.js')}}" crossorigin="anonymous"></script>
+<script src="{{url_for('static', filename='script/qrcode.js')}}" ></script>
+<script src="{{url_for('static', filename='script/handle_socket.js')}}" ></script>
+
+{% endblock %}
 
 <!-- Content -->
 {% block content %}
@@ -13,16 +19,16 @@
     <!--------- Headers ------------->
     <header class="headers">
         <p class="headers_content" ><span  id="current_time" >00:00:00</span></p>
-        <p class="headers_content">Torsdag <span id="date_time" >0000-00-00</span></p>
+        <p class="headers_content"> <span id="current_day_name">Monday</span> <span id="date_time" >0000-00-00</span></p>
     </header>
 
     <!--------- Body ------------->
     <div class="body">
         <div class="body_container">
             <section id="iqamah_text_section" class="table_header">
-                <h2>Prayer</h2>
-                <h2>Begins</h2>
-                <h2>Iqamah</h2>
+                <h2 id="prayer">Prayer</h2>
+                <h2 id="begins">Begins</h2>
+                <h2 id="iqamah">Iqamah</h2>
             </section>
 
             <!--------- FAJR------------->
@@ -82,7 +88,7 @@
     </footer>
 
     <div id="error">ERROR</div>
-
+    <div id="qrcode"><span id="qrcode_ip">127.0.12312412412430.1</span></div>
 </div>
 
 {% endblock %}

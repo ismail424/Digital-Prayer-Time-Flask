@@ -120,6 +120,9 @@
     grid-template-rows: auto auto auto auto auto auto auto;
     gap: 0px 0px;
 }
+.body_container section{
+    border-bottom: 0.3px solid black;
+}
 .body_container section:nth-child(odd){
     background-color: #383838;
     }
@@ -196,23 +199,23 @@
 #sunrise_logo{
     margin: 0% -7% 0% 0%;
 }
+#date_time {
+    padding-bottom: 1%;
+}
 .prayer_times_today h2:nth-child(1){
     justify-content: left !important;
 }
 .prayer_times_today h2:nth-child(2){
     background-color: #dd8500 ;
-    border-bottom: 0.1px solid black;
-    border-right: 0.1px solid black;
+    border-right: 0.3px solid black;
 }
 .background_color{
     background-color: #dd8500 ;
-    border-bottom: 0.1px solid black;
-    border-right: 0.1px solid black;
+    border-right: 0.3px solid black;
 }
 
 .prayer_times_today h2:nth-child(3){
     background-color: #0066bf ;
-    border-bottom: 0.1px solid black;
 }
 
 /* ------------------ Footer ------------------*/
@@ -287,3 +290,14 @@
 .no_iqamah_text h2:last-child{
     display: none !important;
 }
+
+/* QR code*/
+#qrcode{
+    max-width:128px;
+    color: white;
+    word-wrap: break-word;
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+}
+

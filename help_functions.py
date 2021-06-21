@@ -138,10 +138,55 @@ def calculate_iqamah( date ):
         except:
             pass
         return ["00:00", "00:00", "00:00", "00:00", "00:00"]
-            
+        
+        
+def get_translation_json():
+    """[This function will return the translation settings in json format!]
+
+    Returns:
+        [json]: [keys and values for the translation]
+    """    
+    translate = get_translation()
+    the_key_values = ["monday" ,"tuesday" ,"wednesday" ,"thursday" ,"friday" ,"saturday" ,"sunday" ,"prayer" ,"begins" ,"iqamah" , "fajr" , 
+             "sunrise" , "dhuhr" , "asr" , "maghrib" , "isha" , "next_text" , "footer_text" ]
+    res = dict(zip(the_key_values, translate))
+    
+    res = json.dumps(res)
+    
+    return res
+        
+        
+def get_translation():
+    """This function returns the translation list from the database
+
+    Returns:
+        [list]: [Translation from database (table:translation)]
+    """    
+    try:
+        conn = sqlite3.connect("database.db")
+        c = conn.cursor()
+        c.execute("""select * from translate""")
+        translate = list(c.fetchone())
+        return translate
+    except Exception as e: 
+        print(e)
+        translate = ["monday" ,"tuesday" ,"wednesday" ,"thursday" ,"friday" ,"saturday" ,"sunday" ,"prayer" ,"begins" ,"iqamah" , "fajr" , 
+             "sunrise" , "dhuhr" , "asr" , "maghrib" , "isha" , "next" , "Please, turn off your phones" ]
+        return translate
+                
+def save_new_translate_values( translate_values_list ):
+    try:
+        conn = sqlite3.connect("database.db")
+        c = conn.cursor()
+        c.execute("""UPDATE translate SET monday= '{}', tuesday= '{}', wednesday= '{}', thursday= '{}', friday= '{}', saturday= '{}', sunday= '{}', prayer= '{}', begins= '{}', iqamah= '{}', fajr= '{}', sunrise= '{}', dhuhr= '{}', asr= '{}', maghrib= '{}', isha= '{}', next_text= '{}', footer_text= '{}' """.format(*translate_values_list))
+        conn.commit()   
+    except Exception as e:
+        print(e)
+
 if __name__ == '__main__':
     # print(get_prayertime_api())
     # print(add_minutes_to_time("19:20", 40))
     # print(calculate_iqamah( "2021-06-13"))
     #print(check_iqamah())
+    # print(get_translation_json())
     pass

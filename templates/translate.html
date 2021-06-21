@@ -2,6 +2,35 @@
 {% block title %}Translate{% endblock %}
 {% block content %}
 
-<a>Settings</a>
+<div class="container_padding"> 
+    <form action="/save/translate" method="POST">
+        <h1 class="title left">Days:</h1>
+        <input type="text" id="monday" name="monday" placeholder="Monday" value="{{translate['monday']}}"> 
+        <input type="text" id="tuesday" name="tuesday" placeholder="Tuesday" value="{{translate['tuesday']}}"> 
+        <input type="text" id="wednesday" name="wednesday" placeholder="Wednesday" value="{{translate['wednesday']}}"> 
+        <input type="text" id="thursday" name="thursday" placeholder="Thursday" value="{{translate['thursday']}}"> 
+        <input type="text" id="friday" name="friday" placeholder="Friday" value="{{translate['friday']}}"> 
+        <input type="text" id="saturday" name="saturday" placeholder="Saturday" value="{{translate['saturday']}}"> 
+        <input type="text" id="sunday" name="sunday" placeholder="Sunday" value="{{translate['sunday']}}"> 
+        <h1 class="title left">Column text:</h1>
+        <input type="text" id="prayer" name="prayer" placeholder="Prayer" value="{{translate['prayer']}}"> 
+        <input type="text" id="begins" name="begins" placeholder="Begins" value="{{translate['begins']}}"> 
+        <input type="text" id="iqamah" name="iqamah" placeholder="Iqamah" value="{{translate['iqamah']}}"> 
+        <h1 class="title left">Prayer names:</h1>
+        <input type="text" id="fajr" name="fajr" placeholder="Fajr" value="{{translate['fajr']}}">
+        <input type="text" id="sunrise" name="sunrise" placeholder="Sunrise" value="{{translate['sunrise']}}">
+        <input type="text" id="dhuhr" name="dhuhr" placeholder="Dhuhr" value="{{translate['dhuhr']}}">
+        <input type="text" id="asr" name="asr" placeholder="Asr" value="{{translate['asr']}}">
+        <input type="text" id="maghrib" name="maghrib" placeholder="Maghrib" value="{{translate['maghrib']}}">
+        <input type="text" id="isha" name="isha" placeholder="Isha" value="{{translate['isha']}}">
+        <h1 class="title left">Other:</h1>
+        <input type="text" id="next_text" name="next_text" placeholder="Next text" value="{{translate['next_text']}}">
+        <input type="text" id="footer_text" name="footer_text" placeholder="Footer text" value="{{translate['footer_text']}}">
+        <br><br>
+        <a class="back" href="/">Back</a>
+        <input type="submit" class="save"  value="Save"><br><br><br>
+   
+    </form>    
+</div>
 
 {% endblock %}

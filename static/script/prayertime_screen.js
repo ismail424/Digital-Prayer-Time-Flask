@@ -1,3 +1,8 @@
+//IP addres / QR code
+var ip = "127.0.0.1";
+var qrcode = new QRCode(document.getElementById("qrcode"), {text : "http://" + ip + "/", width: 128,height : 128});
+
+
 //Set variable
 var fajr = "";
 var fajr_iqamah = "";
@@ -45,7 +50,27 @@ var div_next_prayer = document.getElementById("next_prayer")
 var div_next_prayer_time = document.getElementById("next_prayer_time")
 var div_next_prayer_countdown = document.getElementById("next_prayer_countdown")
 
+//Translation
+var days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
+var prayer = "Prayer";
+var begins = "Begins";
+var iqamah = "Iqamah";
+
+var fajr_name = "Fajr";
+var fajr_iqamah_name = fajr_name + iqamah;
+var sunrise_name = "Sunrise";
+var dhuhr_name = "Dhuhr";
+var dhuhr_iqamah_name = dhuhr_name  + iqamah;
+var asr_name  = "Asr";
+var asr_iqamah_name = asr_name + iqamah;
+var maghrib_name = "Maghrib";
+var maghrib_iqamah_name = maghrib_name + iqamah;
+var isha_name = "Isha";
+var isha_iqamah_name = isha_name + iqamah;
+
+var next_text = "Next...";
+var footer_text = "Please, turn off your phones";
 
 
 //Current time (LIVE CLOCK)
@@ -144,7 +169,6 @@ async function  get_prayertimes(){
         else {
             document.getElementById("error").style.display = "block";
         }
-        console.log(prayertime);
     } catch (error) {
         document.getElementById("error").style.display = "block";
         console.log(error);
@@ -155,6 +179,7 @@ async function  get_prayertimes(){
 
 
 function no_iqamah(){
+    
     document.getElementById("iqamah_text_section").classList.add("no_iqamah_text");
     document.getElementById("sunrise-time").style.flex = "50%";
     document.getElementById("sunrise_logo").style.margin = 0;
@@ -215,17 +240,17 @@ function set_next_prayer_variable(){
         prayer_list_time.push(isha_iqamah);
 
         //Add to list (name)
-        prayer_list_name.push("fajr");
-        prayer_list_name.push("fajr_iqamah");
-        prayer_list_name.push("sunrise");
-        prayer_list_name.push("dhuhr");
-        prayer_list_name.push("dhuhr_iqamah");
-        prayer_list_name.push("asr");  
-        prayer_list_name.push("asr_iqamah");  
-        prayer_list_name.push("maghrib");  
-        prayer_list_name.push("maghrib_iqamah");  
-        prayer_list_name.push("isha");  
-        prayer_list_name.push("isha_iqamah");
+        prayer_list_name.push(fajr_name);
+        prayer_list_name.push(fajr_iqamah_name);
+        prayer_list_name.push(sunrise_name);
+        prayer_list_name.push(dhuhr_name);
+        prayer_list_name.push(dhuhr_iqamah_name);
+        prayer_list_name.push(asr_name);  
+        prayer_list_name.push(asr_iqamah_name);  
+        prayer_list_name.push(maghrib_name);  
+        prayer_list_name.push(maghrib_iqamah_name);  
+        prayer_list_name.push(isha_name);  
+        prayer_list_name.push(isha_iqamah_name);
 
     }
     else{
@@ -330,7 +355,6 @@ async function next_prayertime(){
             document.getElementById(prayer_list_name[temp_name] + "-time").style.backgroundColor = "";
         }
         document.getElementById(next_prayer_name + "-time").style.backgroundColor = "transparent";
-        document.getElementById(next_prayer_name + "-time").style.border = 0;
     }
 
 
@@ -353,8 +377,87 @@ async function next_prayertime(){
 
 }
 
+
+
+async function get_translation(){
+    try {
+        const url = '/api/get_translation';
+        let response = await fetch(url);
+        var translate = await response.json();
+
+        days = [translate.monday, translate.tuesday, translate.wednesday, translate.thursday, translate.friday, translate.saturday, translate.sunday]
+
+        prayer = translate.prayer;
+        iqamah = translate.iqamah;
+        begins = translate.begins;
+        
+        fajr_name = translate.fajr;
+        fajr_iqamah_name = fajr_name + iqamah;
+        sunrise_name = translate.sunrise;
+        dhuhr_name = translate.dhuhr;
+        dhuhr_iqamah_name = dhuhr_name  + iqamah;
+        asr_name  = translate.asr;
+        asr_iqamah_name = asr_name + iqamah;
+    
+        maghrib_name = translate.maghrib;
+        maghrib_iqamah_name = maghrib_name + iqamah;
+        isha_name = translate.isha;
+        isha_iqamah_name = isha_name + iqamah;
+        
+        next_text = translate.next_text;
+        footer_text = translate.footer_text;
+        set_translation()
+        current_day_name()
+
+    } catch (error) {
+        console.log(error);
+    }
+
+
+
+}
+function set_translation(){
+    document.getElementById("prayer").innerText =  prayer;
+    document.getElementById("begins").innerText =  begins;
+    document.getElementById("iqamah").innerText =  iqamah;
+
+    document.getElementById("fajr").innerText = fajr_name;
+    document.getElementById("sunrise-h2").innerText = sunrise_name;
+    document.getElementById("dhuhr").innerText = dhuhr_name;
+    document.getElementById("asr").innerText = asr_name;
+    document.getElementById("mahgrib").innerText = maghrib_name;
+    document.getElementById("isha").innerText = isha_name;
+
+    document.getElementById("next_text").innerText = next_text;
+    document.getElementById("footer_text").innerText = footer_text;
+
+
+}
+
+function current_day_name() {
+    var a = new Date();
+    var r = days[a.getDay() -1];
+    document.getElementById("current_day_name").innerText = r;
+}
+
+async function create_qr_code(){
+    const url = '/api/get_ip';
+    let response = await fetch(url);
+    var qr = await response.json();
+    ip = qr.ip;
+    qrcode.clear();
+    qrcode.makeCode("http://" + ip + "/"); 
+    document.getElementById("qrcode_ip").innerText = ip;
+}
+create_qr_code()
+
 //Run the functions
+get_translation()
 get_prayertimes()
 fix_fontsize()
+
 setInterval(() => current_time("current_time", ":"),1000);
 setInterval(() => date_time("date_time", "-"),1000);
+setInterval(() => create_qr_code(),5000);
+
+
