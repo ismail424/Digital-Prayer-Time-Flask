@@ -1,5 +1,7 @@
 #Import Flask and SOCKET.IO
 from flask import Flask, render_template, request, redirect
+
+# from flask_socketio import SocketIO, emit
 from flask_socketio import SocketIO, emit
 
 #Import SQL
@@ -8,12 +10,12 @@ import sqlite3
 #import help-functions from another python file
 from help_functions import *
 
-#import JSON
+# import JSON
 import json
 
 app = Flask(__name__)
 
-#This secret key dosen't do anything but you need this!
+#This secret key dosen't do anything  but you need this!
 app.config[ 'SECRET_KEY' ] = 'Secret key'
 socketio = SocketIO( app )
 
