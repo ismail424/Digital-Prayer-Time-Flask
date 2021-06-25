@@ -198,6 +198,9 @@
 }
 #sunrise_logo{
     margin: 0% -7% 0% 0%;
+
+    padding-right: 10px;
+    padding-top: 7px;
 }
 #date_time {
     padding-bottom: 1%;

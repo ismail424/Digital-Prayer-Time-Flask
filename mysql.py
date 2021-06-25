@@ -49,7 +49,6 @@ c = conn.cursor()
 # print(res)
 
 
-
 # c.execute("""SELECT iqamah_on
 # FROM settings""")
 # res = c.fetchone()

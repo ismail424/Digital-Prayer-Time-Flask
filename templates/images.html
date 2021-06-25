@@ -4,7 +4,7 @@
 
 
 <div class="container_padding"> 
-    <form action="/save/images" method="POST">
+    <form action="/save/images" method="POST" enctype="multipart/form-data">
         <h1 class="title left">What should be shown on the screen:</h1>
         <span>What should be displayed? (Nothing / Images / Video / Slide)</span><br><br>
         <label for="slide_nothing">Nothing:</label>
@@ -27,18 +27,38 @@
         <br>
         <br>
 
+        {% if images['url_1'] != ''%}
+        <label for="image1">Image 1 - {{images['url_1']}}</label>
+        <input  style=" display: none;"type="text"  id="image1" name="image1" value="{{images['url_1']}}"> <br>
+        <img height="170" width="170" alt="{{images['url_1']}}" src="{{url1}}"><br>
+        <a class="back"   href="/delete/file/1">Delete</a>
+        {% else %}
         <label for="image1">Image 1:</label>
-        <input  style=" font-size:15px; height: auto !important; width: auto !important;"type="file"  accept="image/png, image/jpeg" id="image1"   name="image1" > 
+        <input  style=" font-size:15px; height: auto !important; width: auto !important;"type="file"  accept="image/png, image/jpeg" id="image1"   name="image1" >      
+        {% endif %}
         <br>
         <br>
 
+        {% if images['url_2'] != ''%}
+        <label for="image2">Image 2 - {{images['url_2']}}</label>
+        <input  style=" display: none;"type="text"  id="image2" name="image2" value="{{images['url_2']}}"><br>
+        <img height="170" width="170" alt="{{images['url_2']}}" src="{{url2}}"><br>
+        <a class="back" href="/delete/file/2">Delete</a>
+        {% else %}
         <label for="image2">Image 2:</label>
         <input style=" font-size:15px; height: auto !important; width: auto !important;" type="file"  accept="image/png, image/jpeg" id="image2" name="image2" > 
+        {% endif %}
         <br>
         <br>
 
+        {% if images['video_url'] != ''%}
+        <label for="video_url">Video - {{images['video_url']}}</label>
+        <input  style=" display: none;"type="text"  id="video_url" name="video_url" value="{{images['video_url']}}"><br>
+        <a class="back" href="/delete/file/3">Delete</a>
+        {% else %}
         <label for="video">Video:</label>
         <input style=" font-size:15px; height: auto !important; width: auto !important;" type="file" id="video"  accept="video/*" name="video" > 
+        {% endif %}
         <br>
         <br>
 

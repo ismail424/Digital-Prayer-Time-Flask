@@ -1,5 +1,5 @@
 //IP addres / QR code
-var ip = "127.0.0.1";
+var ip = "127.0.1.1";
 var qrcode = new QRCode(document.getElementById("qrcode"), {text : "http://" + ip + "/", width: 128,height : 128});
 
 
@@ -454,6 +454,12 @@ async function create_qr_code(){
         document.getElementById("qrcode").style.display = "none";
         qrcode.clear();
         document.getElementById("qrcode_ip").innerText = ip;
+    }
+
+    if(ip == "127.0.1.1"){
+        document.getElementById("qrcode").style.display = "none";
+        qrcode.clear();
+        document.getElementById("qrcode_ip").innerText = "";
     }
 }
 create_qr_code()

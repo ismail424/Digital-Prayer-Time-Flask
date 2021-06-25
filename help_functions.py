@@ -219,8 +219,28 @@ def get_settings():
         
         return result
         
+def save_new_images( value ):
+    try:
+        conn = sqlite3.connect("database.db")
+        c = conn.cursor()
+        c.execute("""UPDATE images SET url_1 = '{}', url_2= '{}',video_url ='{}',google_slide_url = '{}',current_select= '{}',slide_delay='{}'""".format(*value))
+        conn.commit()   
+    except Exception as e:
+        value = ['','', '', '', 'none', '30']
+        conn = sqlite3.connect("database.db")
+        c = conn.cursor()
+        c.execute("""UPDATE images SET url_1 = '{}', url_2= '{}', video_url ='{}', google_slide_url= '{}',current_select= '{}',slide_delay='{}'""".format(*value))
+        conn.commit()   
+        print(e)
         
+     
+
 def get_images():
+    """Get current image settings from database
+
+    Returns:
+        [dict]: [Returns current image settings]
+    """    
     try:
         conn = sqlite3.connect("database.db")
         c = conn.cursor()
@@ -231,6 +251,9 @@ def get_images():
         return result
     
     except Exception as e:
+        values = ['', '', '', '', 'images', '30']
+        the_key_values = ["url_1", "url_2", "google_slide_url","video_url","current_select","slide_delay"]
+        result = dict(zip(the_key_values, values))
         print(e)
 
 

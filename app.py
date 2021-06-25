@@ -13,10 +13,21 @@ from help_functions import *
 # import JSON
 import json
 
+#import os
+import os
+
+# importing socket module
+import socket
+
 app = Flask(__name__)
 
 #This secret key dosen't do anything  but you need this!
 app.config[ 'SECRET_KEY' ] = 'Secret key'
+
+#Upload folder path
+UPLOAD_FOLDER = './static/upload'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
 socketio = SocketIO( app )
 
 @app.route( '/' )
@@ -46,7 +57,14 @@ def get_ip():
         c.execute("""select qrcode from settings """)
         qrcode_check = c.fetchone()
         qrcode_check = qrcode_check[0]
-        ip = str(request.remote_addr)
+        try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            s.connect(("8.8.8.8", 80))
+            hostname = s.getsockname()[0]
+            s.close()
+        except:
+            hostname = socket.gethostname()
+        ip = str(socket.gethostbyname(hostname))
         ip_json = '{"ip":"'+ip+'", "qrcode_on":"'+str(qrcode_check.lower())+'"}'
         return json.loads(ip_json)
     except:
@@ -78,17 +96,77 @@ def save_settings():
 @app.route( '/images' )
 def images():
     images = get_images()
-    return render_template( 'images.html', images = images )
+    try:
+        url1 = os.path.join(app.config['UPLOAD_FOLDER'], images["url_1"])
+        url2 = os.path.join(app.config['UPLOAD_FOLDER'], images["url_1"])
+    except:
+        url1 = ""
+        url2 = ""
+    return render_template( 'images.html', images = images, url1 = url1, url2 = url2)
 
 @app.route( '/save/images', methods=["GET","POST"] )
 def save_images():
     if request.method == "POST":
-        images = dict(request.form)
-        images_value = list(images.values())
-        print(images)
+        
+        try:
+            for file in request.files:
+                current_file = request.files[file]
+                if len(current_file.filename) != 0:
+                    path = os.path.join(app.config['UPLOAD_FOLDER'], current_file.filename)
+                    current_file.save(path)
+        except Exception as e:
+            print(e)
+        try:
+            image1 = request.files["image1"].filename
+        except:
+            image1 = request.form["image1"]
+        
+        try:
+            image2 = request.files["image2"].filename
+        except:
+            image2 = request.form["image2"]
+        
+        try:
+            video = request.files["video"].filename
+        except:
+            video = request.form["video"]
+
+        google_slide_url = request.form["google_slide_url"]
+        current_select = request.form["slide"]
+        slide_delay = request.form["slide_delay"]
+
+        values = [image1, image2, video, google_slide_url, current_select, slide_delay]
+        save_new_images( values )
+        
         return redirect("/images")
     else:
         return redirect("/")
+    
+
+@app.route( '/delete/file/<id>' )
+def delete_file(id):
+    if id == "1" or id == "2" or id == "3":
+        conn = sqlite3.connect("database.db")
+        c = conn.cursor()
+        file_list = ["url_1", "url_2", "video"]
+        remove_current_file  = file_list[int(id)-1]
+        try:
+            c.execute("SELECT {} from images".format(remove_current_file))
+            file_path = c.fetchone()[0]
+            if len(file_path) != 0:
+                os.remove(os.path.join(app.config['UPLOAD_FOLDER'], file_path))            
+        except Exception as e:
+            print(e)
+        try:
+            c.execute("""UPDATE images SET {} = '' """.format(remove_current_file))
+            conn.commit()  
+        except Exception as e:
+            print(e)
+            
+    return redirect("/images")
+
+
+
     
 @app.route( '/translate' )
 def translate():
