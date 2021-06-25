@@ -5,8 +5,8 @@
 
 <div class="container_padding"> 
     <form action="/save/images" method="POST">
-        <h1 class="title left">What should show on the screen:</h1>
-        <span>What should be display? (Nothing / Images / Video / Slide)</span><br>
+        <h1 class="title left">What should be shown on the screen:</h1>
+        <span>What should be displayed? (Nothing / Images / Video / Slide)</span><br><br>
         <label for="slide_nothing">Nothing:</label>
         <input style="text-align:left; width: auto; height:auto; margin-right: 20px;" required id="slide_nothing" value="none"  {% if images['current_select'] == 'none'%}checked{% endif%} type="radio" name="slide" >
        
@@ -18,14 +18,34 @@
 
         <label for="slide_google_slide">Google Slide <span><b>(Internet is needed)</b></span>:</label>
         <input style="text-align:left; width: auto; height:auto;" required id="slide_google_slide" value="google_slide"  {% if images['current_select'] == 'google_slide'%}checked{% endif%}  type="radio" name="slide" >
-        <br>
+        <br><br>
         <hr>
         <br>
+        
+        <label for="slide_delay">Slide delay (seconds):</label>
+        <input type="number" id="isha_iqamah" required  min="1" name="slide_delay" placeholder="Slide delay" value="{{images['slide_delay']}}">
+        <br>
+        <br>
 
-        <label for="url_1">Image 1:</label>
-        <input type="file" id="asr_iqamah"  required min="0" max="120" name="asr_iqamah" > 
+        <label for="image1">Image 1:</label>
+        <input  style=" font-size:15px; height: auto !important; width: auto !important;"type="file"  accept="image/png, image/jpeg" id="image1"   name="image1" > 
+        <br>
+        <br>
 
-   
+        <label for="image2">Image 2:</label>
+        <input style=" font-size:15px; height: auto !important; width: auto !important;" type="file"  accept="image/png, image/jpeg" id="image2" name="image2" > 
+        <br>
+        <br>
+
+        <label for="video">Video:</label>
+        <input style=" font-size:15px; height: auto !important; width: auto !important;" type="file" id="video"  accept="video/*" name="video" > 
+        <br>
+        <br>
+
+        <label for="google_slide_url">Google Slide URL:</label>
+        <input type="text" id="google_slide_url"  name="google_slide_url" placeholder="Google Slide URL" value="{{images['google_slide_url']}}">
+
+
 
         <a class="back" href="/">Back</a>
 

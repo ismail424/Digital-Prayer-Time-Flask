@@ -80,6 +80,16 @@ def images():
     images = get_images()
     return render_template( 'images.html', images = images )
 
+@app.route( '/save/images', methods=["GET","POST"] )
+def save_images():
+    if request.method == "POST":
+        images = dict(request.form)
+        images_value = list(images.values())
+        print(images)
+        return redirect("/images")
+    else:
+        return redirect("/")
+    
 @app.route( '/translate' )
 def translate():
     translate = get_translation()
