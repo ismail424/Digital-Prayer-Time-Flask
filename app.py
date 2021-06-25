@@ -33,11 +33,25 @@ def api_get_prayertimes():
     prayer_times = get_prayertime_api()
     return prayer_times
 
+@app.route( '/api/get_images' )
+def api_get_images():
+    images = get_images()
+    return json.dumps(images)
+
 @app.route( '/api/get_ip' )
 def get_ip():
-    ip = str(request.remote_addr)
-    ip_json = '{"ip":"'+ip+'"}'
-    return json.loads(ip_json)
+    try:
+        conn = sqlite3.connect("database.db")
+        c = conn.cursor()
+        c.execute("""select qrcode from settings """)
+        qrcode_check = c.fetchone()
+        qrcode_check = qrcode_check[0]
+        ip = str(request.remote_addr)
+        ip_json = '{"ip":"'+ip+'", "qrcode_on":"'+str(qrcode_check.lower())+'"}'
+        return json.loads(ip_json)
+    except:
+            ip_json = '{"ip":"0", "qrcode_on":"true"}}'
+            return json.loads(ip_json)
 
 @app.route( '/api/get_translation' )
 def api_get_translation():
@@ -46,11 +60,25 @@ def api_get_translation():
 
 @app.route( '/settings' )
 def settings():
-    return render_template( 'settings.html' )
+    settings =  get_settings()
+    return render_template( 'settings.html' , settings = settings )
 
+
+@app.route( '/save/settings', methods=["GET","POST"] )
+def save_settings():
+    if request.method == "POST":
+        settings = dict(request.form)
+        settings_values = list(settings.values())
+        save_new_settings( settings_values )
+        refresh()
+        return redirect("/settings")
+    else:
+        return redirect("/")
+    
 @app.route( '/images' )
 def images():
-    return render_template( 'images.html' )
+    images = get_images()
+    return render_template( 'images.html', images = images )
 
 @app.route( '/translate' )
 def translate():

@@ -445,9 +445,16 @@ async function create_qr_code(){
     let response = await fetch(url);
     var qr = await response.json();
     ip = qr.ip;
-    qrcode.clear();
-    qrcode.makeCode("http://" + ip + "/"); 
-    document.getElementById("qrcode_ip").innerText = ip;
+    if (qr.qrcode_on == "true"){
+        qrcode.clear();
+        qrcode.makeCode("http://" + ip + "/"); 
+        document.getElementById("qrcode_ip").innerText = ip;
+    }
+    else{
+        document.getElementById("qrcode").style.display = "none";
+        qrcode.clear();
+        document.getElementById("qrcode_ip").innerText = ip;
+    }
 }
 create_qr_code()
 

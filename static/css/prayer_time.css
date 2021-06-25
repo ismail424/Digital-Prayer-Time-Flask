@@ -292,12 +292,15 @@
 }
 
 /* QR code*/
-#qrcode{
-    max-width:128px;
+#qrcode_div{
     color: white;
     word-wrap: break-word;
     position: fixed;
     bottom: 10px;
     right: 10px;
+}
+#qrcode{
+    max-width:128px;
+
 }
 

@@ -58,8 +58,7 @@ def get_prayertime_api():
         prayer_api = today_prayertimes
         prayer_api.append(fajr_time)
         prayer_api.append(("false").lower())
-        # prayer_api.append(check_iqamah().lower())
-        prayer_api.append("false")
+        prayer_api.append(check_iqamah().lower())
 
         prayer_api.extend(calculate_iqamah( today ))
         prayer_api_key = ["date", "fajr", "sunrise", "dhuhr", "asr", "maghrib", "isha", "fajr_tomorrow", "error","iqamah_on","fajr_iqamah", "dhuhr_iqamah", "asr_iqamah", "maghrib_iqamah", "isha_iqamah"]
@@ -115,10 +114,10 @@ def calculate_iqamah( date ):
         c = conn.cursor()
 
         c.execute("""select fajr, dhuhr, asr, maghrib, isha from prayertimes where date = '{}' """.format(date))
-        prayer_times = c.fetchall()[0]
+        prayer_times = c.fetchone()
 
         c.execute("""select fajr_iqamah, dhuhr_iqamah, asr_iqamah text, maghrib_iqamah, isha_iqamah from settings""")
-        all_iqamah = c.fetchall()[0]
+        all_iqamah = c.fetchone()
 
         fajr_iqamah = add_minutes_to_time(str(prayer_times[0]), int(all_iqamah[0]))
         dhuhr_iqamah = add_minutes_to_time(str(prayer_times[1]), int(all_iqamah[1]))
@@ -182,6 +181,59 @@ def save_new_translate_values( translate_values_list ):
         conn.commit()   
     except Exception as e:
         print(e)
+        
+def save_new_settings( settings_value_list ):
+    try:
+        conn = sqlite3.connect("database.db")
+        c = conn.cursor()
+        c.execute("""UPDATE settings SET iqamah_on = '{}',fajr_iqamah = '{}',fajr_iqamah_before_sunrise = '{}', dhuhr_iqamah = '{}', asr_iqamah = '{}', maghrib_iqamah= '{}', isha_iqamah= '{}', isha_fixed = '{}', qrcode= '{}'""".format(*settings_value_list))
+        conn.commit()   
+    except Exception as e:
+        settings_value_list = ['ture','30', 'false', '10', '10', '0', '10', '0', 'true']
+        conn = sqlite3.connect("database.db")
+        c = conn.cursor()
+        c.execute("""UPDATE settings SET iqamah_on = '{}',fajr_iqamah = '{}',fajr_iqamah_before_sunrise = '{}', dhuhr_iqamah = '{}', asr_iqamah = '{}', maghrib_iqamah= '{}', isha_iqamah= '{}', isha_fixed = '{}', qrcode= '{}'""".format(*settings_value_list))
+        conn.commit()   
+        print(e)
+        
+def get_settings():
+    """Returns a dict with the current settings and their key values
+
+    Returns:
+        [dict]: Settings
+    """    
+    try:
+        conn = sqlite3.connect("database.db")
+        c = conn.cursor()
+        c.execute("""select iqamah_on,fajr_iqamah,fajr_iqamah_before_sunrise, dhuhr_iqamah, asr_iqamah, maghrib_iqamah, isha_iqamah, isha_fixed, qrcode from settings""")
+        settings = list(c.fetchone())        
+        the_key_values = ["iqamah_on","fajr_iqamah" ,"fajr_iqamah_before_sunrise" ,"dhuhr_iqamah" ,"asr_iqamah" ,"maghrib_iqamah" ,"isha_iqamah" ,"isha_fixed" ,"qrcode" ]
+        result = dict(zip(the_key_values, settings))
+    
+        return result
+    except Exception as e:
+        print(e)
+        values = ['true','30', 'false', '10', '10', '0', '10', '0', 'true']
+        the_key_values = ["iqamah_on","fajr_iqamah" ,"fajr_iqamah_before_sunrise" ,"dhuhr_iqamah" ,"asr_iqamah" ,"maghrib_iqamah" ,"isha_iqamah" ,"isha_fixed" ,"qrcode" ]
+        result = dict(zip(the_key_values, values))
+        
+        return result
+        
+        
+def get_images():
+    try:
+        conn = sqlite3.connect("database.db")
+        c = conn.cursor()
+        c.execute("""select * from images """)
+        values = list(c.fetchone())
+        the_key_values = ["url_1", "url_2", "google_slide_url","video_url","current_select","slide_delay"]
+        result = dict(zip(the_key_values, values))
+        return result
+    
+    except Exception as e:
+        print(e)
+
+
 
 if __name__ == '__main__':
     # print(get_prayertime_api())
@@ -189,4 +241,5 @@ if __name__ == '__main__':
     # print(calculate_iqamah( "2021-06-13"))
     #print(check_iqamah())
     # print(get_translation_json())
+    print(get_images())
     pass

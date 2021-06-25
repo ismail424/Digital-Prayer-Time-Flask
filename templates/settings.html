@@ -2,6 +2,56 @@
 {% block title %}Settings{% endblock %}
 {% block content %}
 
-<a>Settings</a>
+
+<div class="container_padding"> 
+    <form action="/save/settings" method="POST">
+        <h1 class="title left">Show Iqamah:</h1>
+        <span>Display iqamah on screen?</span><br>
+        <label for="iqamah_true">Yes:</label>
+        <input style="text-align:left; width: auto; height:auto; margin-right: 20px;" required id="iqamah_true" value="true"  {% if settings['iqamah_on'] == 'true'%}checked{% endif%} type="radio" name="iqamah_on" >
+        <label for="iqamah_false">No:</label>
+        <input style="text-align:left; width: auto; height:auto;" required id="iqamah_false" value="false"  {% if settings['iqamah_on'] == 'false'%}checked{% endif%}  type="radio" name="iqamah_on" >
+
+        <br>
+        <h1 class="title left">Iqamah time:</h1>
+        <label for="fajr_iqamah">Fajr iqamah (min):</label>
+        <input type="number" id="fajr_iqamah" required min="0" max="120" name="fajr_iqamah" placeholder="Fajr Iqamah" value="{{settings['fajr_iqamah']}}"> 
+        
+        <p for="fajr_iqamah"><b>Should the iqamah be {{settings['fajr_iqamah']}} min after Fajr start or {{settings['fajr_iqamah']}} min before Sunrise:</b></p><br>
+        <label for="fajr_true">After Fajr:</label>
+        <input style="text-align:left; width: auto; height:auto; margin-right: 20px;" required id="fajr_false" value="false" type="radio" {% if settings['fajr_iqamah_before_sunrise'] == 'true'%}checked {%endif%} name="fajr_iqamah_before_sunrise" >
+        <label for="fajr_false">Before Sunrise:</label>
+        <input style="text-align:left; width: auto; height:auto;" required id="fajr_true" value="true" type="radio" {% if settings['fajr_iqamah_before_sunrise'] == 'false'%}checked {%endif%} name="fajr_iqamah_before_sunrise" >
+        <br>
+        <hr>
+        <br>
+        <label for="dhuhr_iqamah">Dhuhr iqamah (min):</label>
+        <input type="number" id="dhuhr_iqamah" required  min="0" max="120" name="dhuhr_iqamh" placeholder="Dhuhr Iqamah" value="{{settings['dhuhr_iqamah']}}"> 
+
+        <label for="asr_iqamah">Asr iqamah (min):</label>
+        <input type="number" id="asr_iqamah"  required min="0" max="120" name="asr_iqamah" placeholder="Asr Iqamah" value="{{settings['asr_iqamah']}}"> 
+
+        <label for="maghrib_iqamah">Maghrib iqamah (min):</label>
+        <input type="number" id="maghrib_iqamah" required min="0" max="120" name="maghrib_iqamah" placeholder="Maghrib iqamah" value="{{settings['maghrib_iqamah']}}">
+    
+        <label for="isha_iqamah">Isha iqamah (min):</label>
+        <input type="number" id="isha_iqamah" required  min="0" max="120" name="isha_iqamah" placeholder="Isha iqamah" value="{{settings['isha_iqamah']}}">
+
+        <label for="isha_fixed">Isha fixed:<br><span>(Let it be 0 if you <b>don't</b> want a fixed isha time)</span></label>
+        <input type="text" required id="isha_fixed" name="isha_fixed" placeholder="Isha fixed" value="{{settings['isha_fixed']}}">
+        <h1 class="title left">QR code:</h1>
+        <p for="fajr_iqamah">Show QR code:</p>
+        <label for="qr_true">Yes:</label>
+        <input style="text-align:left; width: auto; height:auto; margin-right: 20px;" required id="qr_true" value="true"  {% if settings['qrcode'] == 'true'%}checked{% endif%} type="radio" name="qrcode" >
+        <label for="qr_false">No:</label>
+        <input style="text-align:left; width: auto; height:auto;" required id="qr_false" value="false"  {% if settings['qrcode'] == 'false'%}checked{% endif%}  type="radio" name="qrcode" >
+
+        <br>
+        <a class="back" href="/">Back</a>
+
+        <input type="submit" class="save"  value="Save"><br><br><br>
+
+    </form>    
+</div>
 
 {% endblock %}

@@ -2,6 +2,36 @@
 {% block title %}Images{% endblock %}
 {% block content %}
 
-<a>Images</a>
+
+<div class="container_padding"> 
+    <form action="/save/images" method="POST">
+        <h1 class="title left">What should show on the screen:</h1>
+        <span>What should be display? (Nothing / Images / Video / Slide)</span><br>
+        <label for="slide_nothing">Nothing:</label>
+        <input style="text-align:left; width: auto; height:auto; margin-right: 20px;" required id="slide_nothing" value="none"  {% if images['current_select'] == 'none'%}checked{% endif%} type="radio" name="slide" >
+       
+        <label for="slide_images">Images:</label>
+        <input style="text-align:left; width: auto; height:auto;margin-right: 20px;" required id="slide_images" value="images"  {% if images['current_select'] == 'images'%}checked{% endif%}  type="radio" name="slide" >
+
+        <label for="slide_video">Video:</label>
+        <input style="text-align:left; width: auto; height:auto;margin-right: 20px;" required id="slide_video" value="video"  {% if images['current_select'] == 'video'%}checked{% endif%}  type="radio" name="slide" >
+
+        <label for="slide_google_slide">Google Slide <span><b>(Internet is needed)</b></span>:</label>
+        <input style="text-align:left; width: auto; height:auto;" required id="slide_google_slide" value="google_slide"  {% if images['current_select'] == 'google_slide'%}checked{% endif%}  type="radio" name="slide" >
+        <br>
+        <hr>
+        <br>
+
+        <label for="url_1">Image 1:</label>
+        <input type="file" id="asr_iqamah"  required min="0" max="120" name="asr_iqamah" > 
+
+   
+
+        <a class="back" href="/">Back</a>
+
+        <input type="submit" class="save"  value="Save"><br><br><br>
+
+    </form>    
+</div>
 
 {% endblock %}
