@@ -12,7 +12,7 @@ def internet_on():
     except (requests.ConnectionError, requests.Timeout) as exception:
         return False
         
-def NewPrayerTime( url ):
+def NewPrayerTime( url , country , city):
     try:
         now = datetime.datetime.now()
         this_year = str(now.year)
@@ -21,8 +21,8 @@ def NewPrayerTime( url ):
         data = {
             "start":"01 Jan "+this_year+"",
             "end":"31 Dec "+year_after+"",
-            "placeUniqueName":"gothenburg",
-            "countryUniqueName":"sweden",
+            "placeUniqueName":""+str(city)+"",
+            "countryUniqueName": ""+str(country)+"",
             "asarCalculationMethod":2,
             "prayerCalculationMethod":1,
             "highLatitudeMethod":4,
@@ -204,7 +204,7 @@ def CheckDatabase(table):
     except:
         print("There is no table with this name: "+ table)
 
-def deleteTable( table ):
+def DeleteTable( table ):
     try:
         conn = sqlite3.connect("database.db")
         c = conn.cursor()
@@ -215,7 +215,7 @@ def deleteTable( table ):
     except:
         return False
 
-def createTable( table ):
+def CreateTable( table ):
     try:
         conn = sqlite3.connect("database.db")
         c = conn.cursor()
@@ -226,10 +226,17 @@ def createTable( table ):
     except:
         return False
     
+def CheckURL(url):
+    request = requests.get(url)
+    if request.status_code == 200:
+        return True
+    else:
+        return False
+
 if __name__ == "__main__":
     pass
-    # print(deleteTable("prayertimes"))
-    # print(createTable( "prayertimes" ))
-    # NewPrayerTime( "https://www.salahtimes.com/sweden/gothenburg/render" )
+    # print(DeleteTable("prayertimes"))
+    # print(CreateTable( "prayertimes" ))
+    # NewPrayerTime( "https://www.salahtimes.com/sweden/stockholm/render" )
     # CheckDatabase("prayertimes")
-
+    # print(CheckURL("https://www.salahtimes.com/sweden/gothenburg/render"))

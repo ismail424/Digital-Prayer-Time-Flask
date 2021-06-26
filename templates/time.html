@@ -1,0 +1,43 @@
+{% extends 'layout/layout.html' %}
+{% block title %}Settings{% endblock %}
+{% block content %}
+
+<script src="{{url_for('static', filename='script/socket.io.js')}}" crossorigin="anonymous"></script>
+
+<div class="container_padding"> 
+    <h1 class="title left">Change prayertimes - Salahtimes:</h1>
+    <p>Go to this website: <a href="https://www.salahtimes.com/countries" target="_blank">Salahtimes</a></p>
+    <br>
+    <p>Enter location and copy the URL <br><b>Example: https://www.salahtimes.com/sweden/gothenburg</b></p><br>
+
+    <label for="salahtimes_url">Enter URL that you copied(Salahtimes):</label>
+    <input type="text" id="salahtimes_url" required  name="salahtimes_url" placeholder="URL">
+    <button  id="save_prayertime" class="save" style="display:block; margin: 20px 0px;"  >Save prayertimes<button><br><br><hr><br>
+
+</div>
+    <table>
+        <tr>
+        <th>Date</th>
+        <th>Fajr</th>
+        <th>Sunrise</th>
+        <th>Dhuhr</th>
+        <th>Asr</th>
+        <th>Maghrib</th>
+        <th>Isha</th>
+        </tr>
+        {% for x in prayertimes%}
+        <tr>
+        <td>{{x[0]}}</td>
+        <td>{{x[1]}}</td>
+        <td>{{x[2]}}</td>
+        <td>{{x[3]}}</td>
+        <td>{{x[4]}}</td>
+        <td>{{x[5]}}</td>
+        <td>{{x[6]}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <script src="{{url_for('static', filename='script/handle_socket.js')}}" ></script>
+
+
+{% endblock %}

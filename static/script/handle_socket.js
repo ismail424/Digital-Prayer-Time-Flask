@@ -3,3 +3,14 @@ var socket = io();
 //     socket.emit('my event', {data: 'I\'m connected!'});
 // });
 socket.on('refresh', () => {window.location.reload()});
+
+socket.on('error_url', () => {alert("Error, The url is not working")});
+socket.on('error_wifi', () => {alert("Error, You need wifi!")});
+socket.on('success', () => {alert("New prayertimes set!")});
+
+
+
+document.getElementById("save_prayertime").addEventListener("click", function() {
+    var value = document.getElementById("salahtimes_url").value
+    socket.emit('new-prayertime-salahtimes', {"data": value});
+})

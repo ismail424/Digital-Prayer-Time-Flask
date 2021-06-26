@@ -9,6 +9,7 @@ import sqlite3
 
 #import help-functions from another python file
 from help_functions import *
+from NewPrayerTimes import *
 
 # import JSON
 import json
@@ -18,6 +19,10 @@ import os
 
 # importing socket module
 import socket
+
+#import sleep
+from time import sleep;
+
 
 app = Flask(__name__)
 
@@ -33,6 +38,17 @@ socketio = SocketIO( app )
 @app.route( '/' )
 def home():
     return render_template( 'index.html' )
+
+@app.route( '/prayertime' )
+def prayertimes():
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    c.execute("""select * from prayertimes""")
+    prayertimes = c.fetchall()     
+    return render_template( 'time.html', prayertimes = prayertimes )
+
+
+
 
 @app.route( '/prayerscreen' )
 def prayer_times():
@@ -188,21 +204,45 @@ def save_translate():
     else:
         return redirect("/")
 
+@socketio.on('new-prayertime-salahtimes')
+def new_prayertime_salahtimes(json):
+    try:
+        url = str(json["data"])
+        original_url = url + "/render"
+        url = url[27:].strip()
+        list = url.split("/")
+        country = list[0]
+        city = list[1]
+        print(original_url, country, city)
+        if internet_on():
+            try:
+                if CheckURL(original_url):
+                    print(DeleteTable("prayertimes"))
+                    print(CreateTable( "prayertimes" ))
+                    print(NewPrayerTime( original_url, country, city ))     
+                    socketio.emit("success")
+                    refresh()
+                else:
+                    socketio.emit("error_url")
+            except Exception as e:
+                print(e)
+        else:
+            socketio.emit("error_wifi")
+    except Exception as e:
+        print(e)    
+
+
 @app.route( '/refresh' )
 def refresh_now():
     refresh()
     return redirect("/")
-
-    
-@socketio.on( 'my event' )
-def event( data ):
-    print(data) 
 
 def refresh():
     try:
         socketio.emit("refresh")
     except:
         pass
+   
 
 if __name__ == '__main__':
 
