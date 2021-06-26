@@ -10,8 +10,11 @@ socket.on('success', () => {alert("New prayertimes set!")});
 
 
 
-
-document.getElementById("save_prayertime").addEventListener("click", function() {
-    var value = document.getElementById("salahtimes_url").value
-    socket.emit('new-prayertime-salahtimes', {"data": value});
-})
+try {
+    document.getElementById("save_prayertime").addEventListener("click", function() {
+        var value = document.getElementById("salahtimes_url").value
+        socket.emit('new-prayertime-salahtimes', {"data": value});
+    })
+} catch (error) {
+ console.log(error)   
+}

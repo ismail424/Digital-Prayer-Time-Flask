@@ -64,8 +64,16 @@ def get_prayertime_api():
         prayer_api.append(fajr_time)
         prayer_api.append(("false").lower())
         prayer_api.append(check_iqamah().lower())
-
         prayer_api.extend(calculate_iqamah( today ))
+        
+        c.execute("""SELECT isha_fixed FROM settings""")
+        isha_fixed = c.fetchone()[0]
+        
+        if isha_fixed != "0":
+            if len(isha_fixed) == 5:
+                prayer_api[6] = isha_fixed
+                prayer_api[14] = isha_fixed
+        
         prayer_api_key = ["date", "fajr", "sunrise", "dhuhr", "asr", "maghrib", "isha", "fajr_tomorrow", "error","iqamah_on","fajr_iqamah", "dhuhr_iqamah", "asr_iqamah", "maghrib_iqamah", "isha_iqamah"]
         
         #Bind key to value (Convert list to dict)
@@ -118,13 +126,18 @@ def calculate_iqamah( date ):
         conn = sqlite3.connect("database.db")
         c = conn.cursor()
 
-        c.execute("""select fajr, dhuhr, asr, maghrib, isha from prayertimes where date = '{}' """.format(date))
+        c.execute("""select fajr, dhuhr, asr, maghrib, isha, sunrise from prayertimes where date = '{}' """.format(date))
         prayer_times = c.fetchone()
 
-        c.execute("""select fajr_iqamah, dhuhr_iqamah, asr_iqamah text, maghrib_iqamah, isha_iqamah from settings""")
+        c.execute("""select fajr_iqamah, dhuhr_iqamah, asr_iqamah , maghrib_iqamah, isha_iqamah,fajr_iqamah_before_sunrise from settings""")
         all_iqamah = c.fetchone()
 
-        fajr_iqamah = add_minutes_to_time(str(prayer_times[0]), int(all_iqamah[0]))
+        if all_iqamah[5] == "false":
+            fajr_iqamah = add_minutes_to_time(str(prayer_times[0]), int(all_iqamah[0]))
+        else:
+            sunrise = str(prayer_times[5])
+            iqamah_fajr = int(all_iqamah[0]) * -1
+            fajr_iqamah = add_minutes_to_time(sunrise,iqamah_fajr)
         dhuhr_iqamah = add_minutes_to_time(str(prayer_times[1]), int(all_iqamah[1]))
         asr_iqamah = add_minutes_to_time(str(prayer_times[2]), int(all_iqamah[2]))
         maghrib_iqamah = add_minutes_to_time(str(prayer_times[3]), int(all_iqamah[3]))

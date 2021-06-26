@@ -19,9 +19,9 @@
         
         <p for="fajr_iqamah"><b>Should the iqamah be {{settings['fajr_iqamah']}} min after Fajr start or {{settings['fajr_iqamah']}} min before Sunrise:</b></p><br>
         <label for="fajr_true">After Fajr:</label>
-        <input style="text-align:left; width: auto; height:auto; margin-right: 20px;" required id="fajr_false" value="false" type="radio" {% if settings['fajr_iqamah_before_sunrise'] == 'true'%}checked {%endif%} name="fajr_iqamah_before_sunrise" >
+        <input style="text-align:left; width: auto; height:auto; margin-right: 20px;" required id="fajr_false" value="false" type="radio" {% if settings['fajr_iqamah_before_sunrise'] == 'false'%}checked {%endif%} name="fajr_iqamah_before_sunrise" >
         <label for="fajr_false">Before Sunrise:</label>
-        <input style="text-align:left; width: auto; height:auto;" required id="fajr_true" value="true" type="radio" {% if settings['fajr_iqamah_before_sunrise'] == 'false'%}checked {%endif%} name="fajr_iqamah_before_sunrise" >
+        <input style="text-align:left; width: auto; height:auto;" required id="fajr_true" value="true" type="radio" {% if settings['fajr_iqamah_before_sunrise'] == 'true'%}checked {%endif%} name="fajr_iqamah_before_sunrise" >
         <br>
         <hr>
         <br>

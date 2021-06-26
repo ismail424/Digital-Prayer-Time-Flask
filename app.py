@@ -125,6 +125,7 @@ def api_get_translation():
 @app.route( '/settings' )
 def settings():
     settings =  get_settings()
+    print(settings['fajr_iqamah_before_sunrise'])
     return render_template( 'settings.html' , settings = settings )
 
 
@@ -280,5 +281,5 @@ if __name__ == '__main__':
     # socketio.run( app, debug = True, port = 80 )
 
     #Server (LAN)
-    socketio.run(app, host='0.0.0.0', port=80)
+    socketio.run(app, host='0.0.0.0', debug=True, port=80)
 

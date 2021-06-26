@@ -315,7 +315,6 @@ async function next_prayertime(){
     let next_prayer_sec_left = 0;
 
     let list_length =  prayer_list_sec.length;
-    
     if (closest_prayer_sec - seconds_now <= 0 ){
         
             if (closest_index == list_length - 1){
@@ -326,12 +325,22 @@ async function next_prayertime(){
             }
             else{
                 if (prayer_list_sec[closest_index + 1] == prayer_list_sec[closest_index] ){
+                    if (closest_index + 2 != 11){
+
                     next_prayer_name = prayer_list_name[closest_index + 2];
                     next_prayer_time = prayer_list_time[closest_index + 2];
                     next_prayer_sec_left = prayer_list_sec[closest_index + 2] - seconds_now;
+                    }
+                    else{
+                        next_prayer_name = prayer_list_name[0];
+                        next_prayer_time = fajr_tomorrow;
+                        let x =  86400 - seconds_now 
+                        next_prayer_sec_left = x + sec_fajr_tomorrow;
+                    }
                     
                 }
                 else{
+                    
                     next_prayer_name = prayer_list_name[closest_index + 1];
                     next_prayer_time = prayer_list_time[closest_index + 1];
                     next_prayer_sec_left = prayer_list_sec[closest_index + 1] - seconds_now;
@@ -396,17 +405,17 @@ async function get_translation(){
         begins = translate.begins;
         
         fajr_name = translate.fajr;
-        fajr_iqamah_name = fajr_name + iqamah;
+        fajr_iqamah_name = fajr_name  + " " + iqamah;
         sunrise_name = translate.sunrise;
         dhuhr_name = translate.dhuhr;
-        dhuhr_iqamah_name = dhuhr_name  + iqamah;
+        dhuhr_iqamah_name = dhuhr_name  + " " +iqamah;
         asr_name  = translate.asr;
-        asr_iqamah_name = asr_name + iqamah;
+        asr_iqamah_name = asr_name + " " +iqamah;
     
         maghrib_name = translate.maghrib;
-        maghrib_iqamah_name = maghrib_name + iqamah;
+        maghrib_iqamah_name = maghrib_name + " " +iqamah;
         isha_name = translate.isha;
-        isha_iqamah_name = isha_name + iqamah;
+        isha_iqamah_name = isha_name + " " +iqamah;
         
         next_text = translate.next_text;
         footer_text = translate.footer_text;
@@ -569,6 +578,23 @@ async function init_slide(){
 
 }
 
+function refreshAt(hours, minutes, seconds) {
+    var now = new Date();
+    var then = new Date();
+
+    if(now.getHours() > hours ||
+       (now.getHours() == hours && now.getMinutes() > minutes) ||
+        now.getHours() == hours && now.getMinutes() == minutes && now.getSeconds() >= seconds) {
+        then.setDate(now.getDate() + 1);
+    }
+    then.setHours(hours);
+    then.setMinutes(minutes);
+    then.setSeconds(seconds);
+
+    var timeout = (then.getTime() - now.getTime());
+    setTimeout(function() { window.location.reload(true); }, timeout);
+}
+
 function video_duration_now(){var vid = document.getElementById("video");video_duration = vid.duration * 1000;}
 
 create_qr_code()
@@ -578,6 +604,7 @@ get_translation()
 get_prayertimes()
 fix_fontsize()
 init_slide()
+refreshAt(0,0,30); 
 
 setInterval(() => current_time("current_time", ":"),1000);
 setInterval(() => date_time("date_time", "-"),1000);
