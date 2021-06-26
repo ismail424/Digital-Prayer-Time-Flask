@@ -1,0 +1,25 @@
+
+{% extends 'layout/layout.html' %}
+
+<!-- Title -->
+{% block title %}ERROR CSV{% endblock %}
+
+<!-- Header -->
+{% block header %}
+
+
+{% endblock %}
+
+<!-- Content -->
+{% block content %}
+
+<div class="container_padding"> 
+    <h1>Error file:</h1>
+    <p>Contact me if you need help fixing thses errors</p>
+    {% for x in error_list %}
+    <p>{{x}}</p>
+    {% endfor %}
+
+</div>
+
+{% endblock %}

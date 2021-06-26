@@ -1,0 +1,26 @@
+
+{% extends 'layout/layout.html' %}
+
+<!-- Title -->
+{% block title %}ERROR CSV{% endblock %}
+
+<!-- Header -->
+{% block header %}
+
+
+{% endblock %}
+
+<!-- Content -->
+{% block content %}
+
+<div class="container_padding"> 
+    <h1>Error, Change these rows:</h1>
+    <p>If you want to import CSV change these rows in your file</p>
+    <p>Correct format: Date: (yyyy:mm:dd) or (mm:dd) | time (hh:mm) </p>
+    {% for x in error_list %}
+    <p>{{x}}</p>
+    {% endfor %}
+
+</div>
+
+{% endblock %}

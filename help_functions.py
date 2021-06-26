@@ -8,6 +8,11 @@ import  datetime
 #import json
 import json
 
+#import sys
+import sys
+import time
+import os
+
 #Description:This function will return the prayertimes for today and fajr time for tomorrow! 
 #Argument 1: klass - None
 #Return: klass - JSON (ALl the prayertimes for the prayertime screen (Today prayertimes and Fajr time for tomorrow))
@@ -84,7 +89,7 @@ def add_minutes_to_time( time , minutes ):
         time = str(datetime.datetime.strftime(time, "%H:%M"))
         return time
     except Exception as e: 
-        print(e)
+        save_error(e)
         try:
             with open("error.txt", "a") as f:
                 f.write(str(e)+"\n\n")
@@ -130,7 +135,7 @@ def calculate_iqamah( date ):
         return final_list
     
     except Exception as e: 
-        print(e)
+        save_error(e)
         try:
             with open("error.txt", "a") as f:
                 f.write(str(e)+"\n\n")
@@ -168,7 +173,7 @@ def get_translation():
         translate = list(c.fetchone())
         return translate
     except Exception as e: 
-        print(e)
+        save_error(e)
         translate = ["monday" ,"tuesday" ,"wednesday" ,"thursday" ,"friday" ,"saturday" ,"sunday" ,"prayer" ,"begins" ,"iqamah" , "fajr" , 
              "sunrise" , "dhuhr" , "asr" , "maghrib" , "isha" , "next" , "Please, turn off your phones" ]
         return translate
@@ -180,7 +185,7 @@ def save_new_translate_values( translate_values_list ):
         c.execute("""UPDATE translate SET monday= '{}', tuesday= '{}', wednesday= '{}', thursday= '{}', friday= '{}', saturday= '{}', sunday= '{}', prayer= '{}', begins= '{}', iqamah= '{}', fajr= '{}', sunrise= '{}', dhuhr= '{}', asr= '{}', maghrib= '{}', isha= '{}', next_text= '{}', footer_text= '{}' """.format(*translate_values_list))
         conn.commit()   
     except Exception as e:
-        print(e)
+        save_error(e)
         
 def save_new_settings( settings_value_list ):
     try:
@@ -194,7 +199,7 @@ def save_new_settings( settings_value_list ):
         c = conn.cursor()
         c.execute("""UPDATE settings SET iqamah_on = '{}',fajr_iqamah = '{}',fajr_iqamah_before_sunrise = '{}', dhuhr_iqamah = '{}', asr_iqamah = '{}', maghrib_iqamah= '{}', isha_iqamah= '{}', isha_fixed = '{}', qrcode= '{}'""".format(*settings_value_list))
         conn.commit()   
-        print(e)
+        save_error(e)
         
 def get_settings():
     """Returns a dict with the current settings and their key values
@@ -212,7 +217,7 @@ def get_settings():
     
         return result
     except Exception as e:
-        print(e)
+        save_error(e)
         values = ['true','30', 'false', '10', '10', '0', '10', '0', 'true']
         the_key_values = ["iqamah_on","fajr_iqamah" ,"fajr_iqamah_before_sunrise" ,"dhuhr_iqamah" ,"asr_iqamah" ,"maghrib_iqamah" ,"isha_iqamah" ,"isha_fixed" ,"qrcode" ]
         result = dict(zip(the_key_values, values))
@@ -231,7 +236,7 @@ def save_new_images( value ):
         c = conn.cursor()
         c.execute("""UPDATE images SET url_1 = '{}', url_2= '{}', video_url ='{}', google_slide_url= '{}',current_select= '{}',slide_delay='{}'""".format(*value))
         conn.commit()   
-        print(e)
+        save_error(e)
         
      
 
@@ -254,9 +259,30 @@ def get_images():
         values = ['', '', '', '', 'images', '30']
         the_key_values = ["url_1", "url_2", "google_slide_url","video_url","current_select","slide_delay"]
         result = dict(zip(the_key_values, values))
-        print(e)
+        save_error(e)
+        
 
 
+def save_error( error ):
+    try:
+        error = 'Error on line {}'.format(sys.exc_info()[-1].tb_lineno), type(error).__name__, error
+        error = str(error)
+    except:
+        error = str(error)
+    today = datetime.date.today()
+    date =  today.strftime("%Y-%m-%d")
+    full_error = str(date) + " | "+ error  + "\n\n"
+    with open("error.txt","a") as f:
+        f.write(full_error)    
+
+def sync_time():
+    try:
+        import ntplib
+        client = ntplib.NTPClient()
+        response = client.request('pool.ntp.org')
+        os.system('sudo date ' + time.strftime('%m%d%H%M%Y.%S',time.localtime(response.tx_time)))
+    except:
+        print('Could not sync with time server.')
 
 if __name__ == '__main__':
     # print(get_prayertime_api())
@@ -264,5 +290,6 @@ if __name__ == '__main__':
     # print(calculate_iqamah( "2021-06-13"))
     #print(check_iqamah())
     # print(get_translation_json())
-    print(get_images())
+    # add_minutes_to_time( "10" , 10 )
+    sync_time()
     pass

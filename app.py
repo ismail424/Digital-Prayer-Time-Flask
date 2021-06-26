@@ -39,6 +39,17 @@ socketio = SocketIO( app )
 def home():
     return render_template( 'index.html' )
 
+@app.route( '/error' )
+def error():
+    error_list = open("error.txt","r").readlines()
+    return render_template( 'error.html' , error_list = error_list)
+
+
+@app.route( '/sync' )
+def sync():
+    sync_time()
+    return redirect("/")
+
 @app.route( '/prayertime' )
 def prayertimes():
     conn = sqlite3.connect("database.db")
@@ -61,7 +72,7 @@ def import_prayertime():
                     print(CreateTable( "prayertimes" ))
                     CSV_prayertimes( str(path) )
                 else:
-                    socketio.emit("error_csv", {'error_list': str(error_list)})
+                    return render_template( 'error_csv.html', error_list = error_list )
             return redirect("/prayertime")
         except:
             pass
@@ -150,7 +161,7 @@ def save_images():
                     path = os.path.join(app.config['UPLOAD_FOLDER'], current_file.filename)
                     current_file.save(path)
         except Exception as e:
-            print(e)
+            save_error(e)
         try:
             image1 = request.files["image1"].filename
         except:
@@ -191,13 +202,13 @@ def delete_file(id):
             if len(file_path) != 0:
                 os.remove(os.path.join(app.config['UPLOAD_FOLDER'], file_path))            
         except Exception as e:
-            print(e)
+            save_error(e)
         try:
             c.execute("""UPDATE images SET {} = '' """.format(remove_current_file))
             conn.commit()  
             
         except Exception as e:
-            print(e)
+            save_error(e)
     refresh()
     return redirect("/images")
 
@@ -244,11 +255,11 @@ def new_prayertime_salahtimes(json):
                 else:
                     socketio.emit("error_url")
             except Exception as e:
-                print(e)
+                save_error(e)
         else:
             socketio.emit("error_wifi")
     except Exception as e:
-        print(e)    
+        save_error(e)    
 
 
 @app.route( '/refresh' )
@@ -269,5 +280,5 @@ if __name__ == '__main__':
     # socketio.run( app, debug = True, port = 80 )
 
     #Server (LAN)
-    socketio.run(app, host='0.0.0.0',debug = True, port=80)
+    socketio.run(app, host='0.0.0.0', port=80)
 
