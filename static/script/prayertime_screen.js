@@ -550,7 +550,7 @@ async function init_slide(){
         video_url = images.video_url;
         
         if (video_url.length != 0){
-            document.getElementById("slider-frame").innerHTML += '<div class="slide-container fade"><video id="video" width="100%" height="100%" autoplay muted><source src="./static/upload/'+video_url+'" ></video></div> '
+            document.getElementById("slider-frame").innerHTML += '<div class="slide-container fade"><video id="video" loop width="100%" height="100%" autoplay muted><source src="./static/upload/'+video_url+'" ></video></div> '
         }
     
     }
