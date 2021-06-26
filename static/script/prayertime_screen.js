@@ -449,6 +449,8 @@ async function create_qr_code(){
         qrcode.clear();
         qrcode.makeCode("http://" + ip + "/"); 
         document.getElementById("qrcode_ip").innerText = ip;
+        document.getElementById("qrcode").style.display = "block";
+
     }
     else{
         document.getElementById("qrcode").style.display = "none";
@@ -458,16 +460,63 @@ async function create_qr_code(){
 
     if(ip == "127.0.1.1"){
         document.getElementById("qrcode").style.display = "none";
-        qrcode.clear();
         document.getElementById("qrcode_ip").innerText = "";
     }
+
 }
+
+
+var current_slideIndex = 0;
+var slides = document.getElementsByClassName("slide-container");
+
+function showSlides() {
+  var i;
+  if (slides.length == 1){
+  	return;
+  }
+  
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";  
+  }
+
+  if (current_slideIndex >= slides.length) {current_slideIndex = 0;}
+  slides[current_slideIndex].style.display = "block";  
+
+  if (current_slideIndex == 0){
+    div = document.getElementsByClassName("slide-container")[0]
+    div.style.maxHeight = null;
+    div.style.maxWidth = null;
+    div.style.height = null;
+    div.style.width = null;
+
+    div_height = document.getElementsByClassName("slide-container")[0].offsetHeight;
+    div_width = document.getElementsByClassName("slide-container")[0].offsetWidth;
+
+    var y;
+    for (y = 0; y < slides.length; y++) {
+        slides[y].style.maxHeight = div_height + "px";
+        slides[y].style.maxWidth = div_width + "px";
+        slides[y].style.height = div_height + "px";
+        slides[y].style.width = div_width + "px";
+
+    }
+  } 
+
+  current_slideIndex++;
+  
+  setTimeout(showSlides, 1000); 
+}
+
+
+
 create_qr_code()
 
 //Run the functions
 get_translation()
 get_prayertimes()
 fix_fontsize()
+showSlides();
+
 
 setInterval(() => current_time("current_time", ":"),1000);
 setInterval(() => date_time("date_time", "-"),1000);
