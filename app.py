@@ -98,7 +98,7 @@ def images():
     images = get_images()
     try:
         url1 = os.path.join(app.config['UPLOAD_FOLDER'], images["url_1"])
-        url2 = os.path.join(app.config['UPLOAD_FOLDER'], images["url_1"])
+        url2 = os.path.join(app.config['UPLOAD_FOLDER'], images["url_2"])
     except:
         url1 = ""
         url2 = ""
@@ -137,7 +137,7 @@ def save_images():
 
         values = [image1, image2, video, google_slide_url, current_select, slide_delay]
         save_new_images( values )
-        
+        refresh()
         return redirect("/images")
     else:
         return redirect("/")
@@ -160,9 +160,10 @@ def delete_file(id):
         try:
             c.execute("""UPDATE images SET {} = '' """.format(remove_current_file))
             conn.commit()  
+            
         except Exception as e:
             print(e)
-            
+    refresh()
     return redirect("/images")
 
 
@@ -198,7 +199,10 @@ def event( data ):
     print(data) 
 
 def refresh():
-    socketio.emit("refresh")
+    try:
+        socketio.emit("refresh")
+    except:
+        pass
 
 if __name__ == '__main__':
 

@@ -45,10 +45,7 @@ var prayer_list_time = [];
 //Check if iqamah is on
 var iqamah_on = "false";
 
-// NEXT PRAYER DIV id
-var div_next_prayer = document.getElementById("next_prayer")
-var div_next_prayer_time = document.getElementById("next_prayer_time")
-var div_next_prayer_countdown = document.getElementById("next_prayer_countdown")
+
 
 //Translation
 var days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
@@ -120,6 +117,7 @@ async function fix_fontsize(){
 //Fetch API 
 async function  get_prayertimes(){
     try {
+        
         const url = '/api/get_prayertimes';
         let response = await fetch(url);
         var prayertime = await response.json(); 
@@ -292,6 +290,7 @@ function set_next_prayer_variable(){
 
 //Next prayertime and countdown
 async function next_prayertime(){
+
     var date = new Date()
     h = date.getHours();
     m = date.getMinutes();
@@ -367,6 +366,11 @@ async function next_prayertime(){
     if (hour < 10) {hour = '0' + hour;}
     timer = hour + ":" +remMin + ":" + remSec;
     
+    // NEXT PRAYER DIV id
+    var div_next_prayer = document.getElementById("next_prayer")
+    var div_next_prayer_time = document.getElementById("next_prayer_time")
+    var div_next_prayer_countdown = document.getElementById("next_prayer_countdown")
+
     div_next_prayer.innerText = next_prayer_name;
     div_next_prayer_time.innerText = next_prayer_time;
     div_next_prayer_countdown.innerText = timer;
@@ -466,8 +470,16 @@ async function create_qr_code(){
 }
 
 
+//--------------------SLIDE------------------------
 var current_slideIndex = 0;
 var slides = document.getElementsByClassName("slide-container");
+var current_slide_height = 0;
+var current_slide_delay = 30000;
+
+var url1 = ""
+var url2 = ""
+var video_url = ""
+var google_slide_url = ""
 
 function showSlides() {
   var i;
@@ -483,15 +495,11 @@ function showSlides() {
   slides[current_slideIndex].style.display = "block";  
 
   if (current_slideIndex == 0){
-    div = document.getElementsByClassName("slide-container")[0]
-    div.style.maxHeight = null;
-    div.style.maxWidth = null;
-    div.style.height = null;
-    div.style.width = null;
+    slides[0].style.height = null;
+    slides[0].style.maxHeight = null;
 
-    div_height = document.getElementsByClassName("slide-container")[0].offsetHeight;
-    div_width = document.getElementsByClassName("slide-container")[0].offsetWidth;
-
+    div_height = document.getElementById("slider-frame").offsetHeight;
+    div_width = document.getElementsByClassName("slider-frame").offsetWidth;
     var y;
     for (y = 0; y < slides.length; y++) {
         slides[y].style.maxHeight = div_height + "px";
@@ -504,9 +512,36 @@ function showSlides() {
 
   current_slideIndex++;
   
-  setTimeout(showSlides, 1000); 
+  setTimeout(showSlides, current_slide_delay); 
 }
 
+async function init_slide(){ 
+
+    const url = "/api/get_images"
+    let response = await fetch(url);
+    var images = await response.json(); 
+
+    current_slide_delay = parseInt(images.slide_delay,10);
+    current_slide_delay = current_slide_delay * 1000;
+    if (images.current_select == "none"){return;}
+    else if (images.current_select == "images"){
+        url1 = images.url_1;
+        url2 = images.url_2;
+
+        if (url1.length != 0){
+            document.getElementById("slider-frame").innerHTML += '<div class="slide-container fade"><img src="./static/upload/'+url1+'" ></div> '
+        }
+        if (url2.length != 0){
+            document.getElementById("slider-frame").innerHTML += '<div class="slide-container fade"><img src="./static/upload/'+url2+'" ></div> '
+        }
+    }
+    else if (images.current_select == "video"){return;}
+    else if (images.current_select == "google_slide"){return;}
+    else {return;}
+    slides = document.getElementsByClassName("slide-container");
+    showSlides();
+
+}
 
 
 create_qr_code()
@@ -515,11 +550,11 @@ create_qr_code()
 get_translation()
 get_prayertimes()
 fix_fontsize()
-showSlides();
-
+init_slide()
 
 setInterval(() => current_time("current_time", ":"),1000);
 setInterval(() => date_time("date_time", "-"),1000);
 setInterval(() => create_qr_code(),5000);
+
 
 
