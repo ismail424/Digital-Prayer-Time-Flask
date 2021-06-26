@@ -7,6 +7,12 @@ socket.on('refresh', () => {window.location.reload()});
 socket.on('error_url', () => {alert("Error, The url is not working")});
 socket.on('error_wifi', () => {alert("Error, You need wifi!")});
 socket.on('success', () => {alert("New prayertimes set!")});
+socket.on('error_csv', function(msg){
+
+    document.getElementById("error_title").style.display = "block";
+    document.getElementById("error_csv").innerHTML = msg;
+
+});
 
 
 

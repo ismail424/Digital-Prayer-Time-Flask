@@ -47,6 +47,25 @@ def prayertimes():
     prayertimes = c.fetchall()     
     return render_template( 'time.html', prayertimes = prayertimes )
 
+@app.route( '/import/prayertime' , methods=["GET","POST"])
+def import_prayertime():
+    if request.method == 'POST':
+        try:
+            current_file = request.files["csv"]
+            if len(current_file.filename) != 0:
+                path = os.path.join(app.config['UPLOAD_FOLDER'], current_file.filename)
+                current_file.save(path)
+                error_list = Check_CSV_prayertimes( path )
+                if len(error_list) == 0:
+                    print(DeleteTable("prayertimes"))
+                    print(CreateTable( "prayertimes" ))
+                    CSV_prayertimes( str(path) )
+                else:
+                    socketio.emit("error_csv", {'error_list': str(error_list)})
+            return redirect("/prayertime")
+        except:
+            pass
+    return redirect("/")
 
 
 

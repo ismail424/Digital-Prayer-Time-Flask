@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup as soup
 import datetime
 import sqlite3
+import csv 
 
 def internet_on():
     url = "http://www.google.com"
@@ -232,7 +233,63 @@ def CheckURL(url):
         return True
     else:
         return False
+    
+    
+def Check_CSV_prayertimes( path ):
+    error_list = []
+    with open(path, 'r') as csv_file:
+        csv_reader = csv.reader(csv_file)
+        first_row = False
+        for row in csv_reader:
+            if first_row != False:
+                    
+                datum = row[0]
+                if len(datum) != 10 and len(datum) != 5:
+                    print(datum)
+                    error_list.append(str(row))
+                    
+                if len(datum) == 5:
+                    datum = datum.replace(datum[2], ":")
+                fajr = row[1]
+                sunrise = row[2]
+                dhuhr = row[3]
+                asr = row[4]
+                maghrib = row[5]
+                isha = row[6]
+                
+                if len(fajr) != 5 and len(sunrise) != 5 and len(dhuhr) != 5 and len(asr) != 5  and len(maghrib) != 5  and len(isha) != 5:
+                    error_list.append(str(row))
+            else:
+                first_row = True
+        
+    return error_list
+    
+def CSV_prayertimes( path ):
+    """Add to database prayertimes from CSV file
 
+    Args:
+        path (String): [Path to file]
+    """    
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    with open(path, 'r') as csv_file:
+        csv_reader = csv.reader(csv_file)
+        first_row = False
+        for row in csv_reader:
+            if first_row != False:      
+                datum = row[0]
+                fajr = row[1]
+                sunrise = row[2]
+                dhuhr = row[3]
+                asr = row[4]
+                maghrib = row[5]
+                isha = row[6]
+                c.execute("INSERT INTO prayertimes VALUES ( ? , ? , ? , ? , ? , ? , ?)", (datum,fajr, sunrise, dhuhr, asr, maghrib, isha))
+            else:
+                first_row = True
+    conn.commit()
+    conn.close()
+            
 if __name__ == "__main__":
     pass
     # print(DeleteTable("prayertimes"))
@@ -240,3 +297,4 @@ if __name__ == "__main__":
     # NewPrayerTime( "https://www.salahtimes.com/sweden/stockholm/render" )
     # CheckDatabase("prayertimes")
     # print(CheckURL("https://www.salahtimes.com/sweden/gothenburg/render"))
+    print(Check_CSV_prayertimes( "./static/upload/BHA.csv" ))

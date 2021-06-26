@@ -1,5 +1,5 @@
 {% extends 'layout/layout.html' %}
-{% block title %}Settings{% endblock %}
+{% block title %}Time{% endblock %}
 {% block content %}
 
 <script src="{{url_for('static', filename='script/socket.io.js')}}" crossorigin="anonymous"></script>
@@ -12,9 +12,18 @@
 
     <label for="salahtimes_url">Enter URL that you copied(Salahtimes):</label>
     <input type="text" id="salahtimes_url" required  name="salahtimes_url" placeholder="URL">
-    <button  id="save_prayertime" class="save" style="display:block; margin: 20px 0px;"  >Save prayertimes<button><br><br><hr><br>
+    <button  id="save_prayertime" class="save" style="display:block; margin: 20px 0px;"  >Save prayertimes</button><br><br><hr><br>
+    <form action="/import/prayertime" method="POST" enctype="multipart/form-data">
+        <h1 class="title left">Import prayertime CSV:</h1>
+        <p>Download start templet <a href="./static/upload/start_template.csv" target="_blank">DOWNLOAD</a></p>
+        <p>Date: (yyyy:mm:dd) or (mm:dd) | time (hh:mm) </p>
 
-</div>
+        <input  style=" font-size:15px; height: auto !important; width: auto !important;" required type="file"  accept=".csv" id="csv"   name="csv" >      
+
+        <input type="submit" class="save"  value="Import"><br><br><br>
+        <h1 id="error_title" style="display: none">Error, fix these lines and try agin:</h1>
+        <div id="error_csv" style="color:red;"></div>
+    </form>   
     <table>
         <tr>
         <th>Date</th>
@@ -38,6 +47,6 @@
         {% endfor %}
     </table>
     <script src="{{url_for('static', filename='script/handle_socket.js')}}" ></script>
-
+</div>
 
 {% endblock %}
