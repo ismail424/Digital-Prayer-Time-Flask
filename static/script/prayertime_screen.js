@@ -475,6 +475,8 @@ var current_slideIndex = 0;
 var slides = document.getElementsByClassName("slide-container");
 var current_slide_height = 0;
 var current_slide_delay = 30000;
+var video_duration = 0;
+var current_selected = "";
 
 var url1 = ""
 var url2 = ""
@@ -512,7 +514,14 @@ function showSlides() {
 
   current_slideIndex++;
   
-  setTimeout(showSlides, current_slide_delay); 
+  if (current_selected == "video"){
+    video_duration_now()
+    setTimeout(showSlides, video_duration); 
+
+  }
+  else{
+      setTimeout(showSlides, current_slide_delay); 
+  }
 }
 
 async function init_slide(){ 
@@ -523,6 +532,8 @@ async function init_slide(){
 
     current_slide_delay = parseInt(images.slide_delay,10);
     current_slide_delay = current_slide_delay * 1000;
+    current_selected = images.current_select;
+
     if (images.current_select == "none"){return;}
     else if (images.current_select == "images"){
         url1 = images.url_1;
@@ -535,14 +546,30 @@ async function init_slide(){
             document.getElementById("slider-frame").innerHTML += '<div class="slide-container fade"><img src="./static/upload/'+url2+'" ></div> '
         }
     }
-    else if (images.current_select == "video"){return;}
-    else if (images.current_select == "google_slide"){return;}
+    else if (images.current_select == "video"){
+        video_url = images.video_url;
+        
+        if (video_url.length != 0){
+            document.getElementById("slider-frame").innerHTML += '<div class="slide-container fade"><video id="video" width="100%" height="100%" autoplay muted><source src="./static/upload/'+video_url+'" ></video></div> '
+        }
+    
+    }
+    else if (images.current_select == "google_slide"){
+        google_slide_url = images.google_slide_url;
+        
+        console.log(google_slide_url);
+        if (google_slide_url.length != 0){
+            document.getElementById("slider-frame").innerHTML += '<div class="slide-container fade">'+google_slide_url+'</div> ';
+        }
+    
+    }
     else {return;}
     slides = document.getElementsByClassName("slide-container");
     showSlides();
 
 }
 
+function video_duration_now(){var vid = document.getElementById("video");video_duration = vid.duration * 1000;}
 
 create_qr_code()
 

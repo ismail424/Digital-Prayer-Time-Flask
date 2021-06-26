@@ -129,7 +129,7 @@ def save_images():
         try:
             video = request.files["video"].filename
         except:
-            video = request.form["video"]
+            video = request.form["video_url"]
 
         google_slide_url = request.form["google_slide_url"]
         current_select = request.form["slide"]
@@ -148,7 +148,7 @@ def delete_file(id):
     if id == "1" or id == "2" or id == "3":
         conn = sqlite3.connect("database.db")
         c = conn.cursor()
-        file_list = ["url_1", "url_2", "video"]
+        file_list = ["url_1", "url_2", "video_url"]
         remove_current_file  = file_list[int(id)-1]
         try:
             c.execute("SELECT {} from images".format(remove_current_file))
