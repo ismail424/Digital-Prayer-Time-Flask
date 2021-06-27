@@ -48,7 +48,7 @@ var iqamah_on = "false";
 
 
 //Translation
-var days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+var days = ["Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 
 var prayer = "Prayer";
 var begins = "Begins";
@@ -384,6 +384,8 @@ async function next_prayertime(){
     div_next_prayer_time.innerText = next_prayer_time;
     div_next_prayer_countdown.innerText = timer;
 
+    div_next_prayer_countdown.style.color = "#fff";
+
     if (next_prayer_sec_left < 900){div_next_prayer_countdown.style.color = "#e7b416";}
     if (next_prayer_sec_left < 600){div_next_prayer_countdown.style.color = "red";}
     if (next_prayer_sec_left <= 0) {div_next_prayer_countdown.innerHTML = '';}
@@ -398,7 +400,7 @@ async function get_translation(){
         let response = await fetch(url);
         var translate = await response.json();
 
-        days = [translate.monday, translate.tuesday, translate.wednesday, translate.thursday, translate.friday, translate.saturday, translate.sunday]
+        days = [ translate.sunday, translate.monday, translate.tuesday, translate.wednesday, translate.thursday, translate.friday, translate.saturday]
 
         prayer = translate.prayer;
         iqamah = translate.iqamah;
@@ -448,8 +450,8 @@ function set_translation(){
 }
 
 function current_day_name() {
-    var a = new Date();
-    var r = days[a.getDay() -1];
+    let a = new Date();
+    let r = days[a.getDay()];
     document.getElementById("current_day_name").innerText = r;
 }
 
@@ -566,7 +568,6 @@ async function init_slide(){
     else if (images.current_select == "google_slide"){
         google_slide_url = images.google_slide_url;
         
-        console.log(google_slide_url);
         if (google_slide_url.length != 0){
             document.getElementById("slider-frame").innerHTML += '<div class="slide-container fade">'+google_slide_url+'</div> ';
         }
@@ -609,6 +610,7 @@ refreshAt(0,0,30);
 setInterval(() => current_time("current_time", ":"),1000);
 setInterval(() => date_time("date_time", "-"),1000);
 setInterval(() => create_qr_code(),5000);
+setInterval(() => current_day_name(),5000);
 
 
 
