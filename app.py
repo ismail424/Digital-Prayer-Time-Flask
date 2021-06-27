@@ -50,6 +50,11 @@ def sync():
     sync_time()
     return redirect("/")
 
+@app.route( '/update' )
+def update_now():
+    update()
+    return redirect("/")
+
 @app.route( '/prayertime' )
 def prayertimes():
     conn = sqlite3.connect("database.db")
