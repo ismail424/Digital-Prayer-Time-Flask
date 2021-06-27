@@ -21,7 +21,7 @@ import os
 import socket
 
 #import sleep
-from time import sleep;
+from time import sleep
 
 
 app = Flask(__name__)
