@@ -48,7 +48,7 @@ def error():
 @app.route( '/sync' )
 def sync():
     sync_time()
-    return redirect("/")
+    return redirect("/settings")
 
 @app.route( '/update' )
 def update_now():
