@@ -297,6 +297,9 @@ def sync_time():
     except:
         print('Could not sync with time server.')
 
+def update():
+    os.system("git pull")
+
 if __name__ == '__main__':
     # print(get_prayertime_api())
     # print(add_minutes_to_time("19:20", 40))
@@ -304,5 +307,5 @@ if __name__ == '__main__':
     #print(check_iqamah())
     # print(get_translation_json())
     # add_minutes_to_time( "10" , 10 )
-    sync_time()
+    update()
     pass
