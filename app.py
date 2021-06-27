@@ -41,6 +41,7 @@ def home():
 
 @app.route( '/error' )
 def error():
+    print("nice")
     error_list = open("error.txt","r").readlines()
     return render_template( 'error.html' , error_list = error_list)
 
