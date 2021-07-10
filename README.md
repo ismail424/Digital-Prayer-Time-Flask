@@ -1,1 +1,1 @@
-Beta version
+Beta version v.1
