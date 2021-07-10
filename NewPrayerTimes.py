@@ -3,6 +3,8 @@ from bs4 import BeautifulSoup as soup
 import datetime
 import sqlite3
 import csv 
+import json
+
 
 def internet_on():
     url = "http://www.google.com"
@@ -17,7 +19,7 @@ def NewPrayerTime( url , country , city):
     try:
         now = datetime.datetime.now()
         this_year = str(now.year)
-        year_after = str(now.year + 3)
+        year_after = str(now.year + 5)
         headers = {'content-Type': 'application/json', "user-Agent" : "Mozilla/5.0"}
         data = {
             "start":"01 Jan "+this_year+"",
@@ -289,7 +291,58 @@ def CSV_prayertimes( path ):
                 first_row = True
     conn.commit()
     conn.close()
-            
+     
+
+def get_prayertime_vaktija( id ):
+    """[Get prayertime from vakrija.ba 5 YEARS]
+
+    Args:
+        id ([int]): [City ID you can find it here https://api.vaktija.ba/vaktija/v1]
+    """    
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    try:
+        now = datetime.datetime.now()
+        this_year = now.year
+        year_after = now.year + 5
+        for year in range(this_year, year_after):
+            url = "https://api.vaktija.ba/vaktija/v1/"+str(id)+"/"+str(year)+""
+            res = requests.get(url)
+            res_json = json.loads(res.text)
+            all_year = res_json["mjesec"]
+            #loop thru months
+            count  = 0
+            for month in all_year:
+                count += 1
+                #loop thru days
+                count2 = 0
+                for day in month["dan"]:
+                    count2 += 1
+                    
+                    string_month = str(count)
+                    string_day = str(count2)
+
+                    if len(string_month) == 1 and len(string_day) == 1: 
+                        date = ""+str(year)+"-0"+str(string_month)+"-0"+str(string_day) + ""
+                    elif len(string_month) == 1 and len(string_day) != 1: 
+                        date = ""+str(year)+"-0"+str(string_month)+"-"+str(string_day) + ""
+                    elif len(string_month) != 1 and len(string_day) == 1: 
+                        date = ""+str(year)+"-"+str(string_month)+"-0"+str(string_day) + ""  
+                    elif len(string_month) != 1 and len(string_day) != 1: 
+                        date = ""+str(year)+"-"+str(string_month)+"-"+str(string_day) + ""      
+                    
+
+                    prayertimes = day["vakat"]
+                    if len(prayertimes[0]) == 4:
+                        prayertimes[0] = "0"+prayertimes[0] 
+                    if len(prayertimes[1]) == 4:
+                        prayertimes[1] = "0"+prayertimes[1] 
+
+                    c.execute("INSERT INTO prayertimes VALUES ( ? , ? , ? , ? , ? , ? , ?)", (date,day["vakat"][0],day["vakat"][1],day["vakat"][2],day["vakat"][3],day["vakat"][4],day["vakat"][5]))
+        conn.commit()
+        conn.close()
+    except Exception as e:
+        print(e)       
 if __name__ == "__main__":
     pass
     # print(DeleteTable("prayertimes"))

@@ -132,6 +132,11 @@ input{
 
 }
 
+
+  .select{
+    padding: 10px 20px;
+    border: 1px solid grey;
+  }
   
 
 /* CSS for desktop vy*/

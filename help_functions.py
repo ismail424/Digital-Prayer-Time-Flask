@@ -298,7 +298,13 @@ def sync_time():
         print('Could not sync with time server.')
 
 def update():
-    os.system("git pull")
+    try:
+        os.system("git pull")
+    except Exception as e:
+        save_error( e )
+    finally:
+        pass
+        
 
 if __name__ == '__main__':
     # print(get_prayertime_api())

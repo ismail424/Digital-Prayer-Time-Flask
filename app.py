@@ -268,6 +268,19 @@ def new_prayertime_salahtimes(json):
     except Exception as e:
         save_error(e)    
 
+@socketio.on('new-prayertime-salahtimes2')
+def new_prayertime_salahtimes2(json):
+    try:
+        if internet_on():
+            print(DeleteTable("prayertimes"))
+            print(CreateTable( "prayertimes" ))
+            id = int(json["data"])
+            get_prayertime_vaktija( id )
+            refresh()
+        else:
+            socketio.emit("error_wifi")
+    except Exception as e:
+        save_error(e)    
 
 @app.route( '/refresh' )
 def refresh_now():
