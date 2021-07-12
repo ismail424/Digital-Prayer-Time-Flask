@@ -277,12 +277,12 @@ function set_next_prayer_variable(){
         prayer_list_time.push(isha);  
 
         //Add to list (Name)
-        prayer_list_name.push("fajr");
-        prayer_list_name.push("sunrise");
-        prayer_list_name.push("dhuhr");
-        prayer_list_name.push("asr");  
-        prayer_list_name.push("maghrib");  
-        prayer_list_name.push("isha");  
+        prayer_list_name.push(fajr_name);
+        prayer_list_name.push(sunrise_name);
+        prayer_list_name.push(dhuhr_name);
+        prayer_list_name.push(asr_name);  
+        prayer_list_name.push(maghrib_name);  
+        prayer_list_name.push(isha_name);  
     }
 
 }
