@@ -360,9 +360,15 @@ async function next_prayertime(){
     if (iqamah_on != "true"){
 
         for (temp_name in prayer_list_name) {
-            document.getElementById(prayer_list_name[temp_name] + "-time").style.backgroundColor = "";
+            try {
+                document.getElementById(prayer_list_name[temp_name] + "-time").style.backgroundColor = "";
+            } catch (error) {
+            }
         }
-        document.getElementById(next_prayer_name + "-time").style.backgroundColor = "transparent";
+        try {
+            document.getElementById(next_prayer_name + "-time").style.backgroundColor = "transparent";
+        } catch (error) {
+        }
     }
 
 
