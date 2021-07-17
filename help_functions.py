@@ -300,7 +300,7 @@ def sync_time():
 def update():
     try:
         os.system("git reset --hard HEAD")
-    expect:
+    except:
         pass
     os.system("git pull")
 
