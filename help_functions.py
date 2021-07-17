@@ -298,6 +298,10 @@ def sync_time():
         print('Could not sync with time server.')
 
 def update():
+    try:
+        os.system("git reset --hard HEAD")
+    expect:
+        pass
     os.system("git pull")
 
         
