@@ -1,14 +1,10 @@
 {% extends 'layout/layout.html' %}
 {% block title %}Home{% endblock %}
 {% block content %}
-<h1 class="title">Control panel:</h1>
-<a id="prayertime" href="prayertime" class="button">Prayertimes - Change times</a>
 <a id="settings" href="settings" class="button">Settings</a>
 <a id="translate" href="translate" class="button">Translate</a>
 <a id="images" href="images" class="button">Images / Video / Slide</a>
-<a id="sync" href="sync" class="button">Sync time</a>
-<a id="update" href="update" class="button">Update System (Need WiFi)</a>
-<a id="error" href="error" class="button">File with all error's</a>
+<a href="advanced" class="button">Advanced</a>
 
 
 <a id="refresh" href="refresh" class="button circle_button"><img id="refresh_logo"src="{{url_for('static', filename='SVG/refresh.svg')}}" height="100px" width="100px"></a>

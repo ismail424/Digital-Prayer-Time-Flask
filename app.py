@@ -134,6 +134,11 @@ def settings():
     print(settings['fajr_iqamah_before_sunrise'])
     return render_template( 'settings.html' , settings = settings )
 
+@app.route( '/advanced' )
+def advanced():
+    return render_template( 'advanced.html'  )
+
+
 
 @app.route( '/save/settings', methods=["GET","POST"] )
 def save_settings():

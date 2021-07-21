@@ -120,6 +120,7 @@ def check_iqamah():
         return "false"
 
     
+#This function will calculate todays iqamah
 def calculate_iqamah( date ):
     try:
         date = str(date)
