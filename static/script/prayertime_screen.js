@@ -42,6 +42,9 @@ var prayer_list_name = [];
 //list with prayers (Time)
 var prayer_list_time = [];
 
+//list with prayers (Time)
+var prayer_id_list = ["fajr-time","sunrise-time","dhuhr-time","asr-time","maghrib-time","isha-time"];
+
 //Check if iqamah is on
 var iqamah_on = "false";
 
@@ -357,18 +360,13 @@ async function next_prayertime(){
     
     
     
-    if (iqamah_on != "true"){
-
-        for (temp_name in prayer_list_name) {
-            try {
-                document.getElementById(prayer_list_name[temp_name] + "-time").style.backgroundColor = "";
-            } catch (error) {
-            }
-        }
+    if (iqamah_on == "false"){
+        for (temp_name in prayer_id_list) {
+            try{ document.getElementById(prayer_id_list[temp_name]).style.backgroundColor = "";} catch(error) {console.log(error)}
+        } 
         try {
-            document.getElementById(next_prayer_name + "-time").style.backgroundColor = "transparent";
-        } catch (error) {
-        }
+            document.getElementById(prayer_id_list[closest_index]).style.backgroundColor = "transparent";} catch(error) {console.log(error)}
+
     }
 
 
@@ -429,6 +427,8 @@ async function get_translation(){
         footer_text = translate.footer_text;
         set_translation()
         current_day_name()
+        fix_fontsize()
+
 
     } catch (error) {
         console.log(error);
