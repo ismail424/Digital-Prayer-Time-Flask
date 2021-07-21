@@ -1,16 +1,32 @@
 {% extends 'layout/layout.html' %}
 {% block title %}Home{% endblock %}
 {% block content %}
-<a id="settings" href="settings" class="button">Settings</a>
-<a id="translate" href="translate" class="button">Translate</a>
-<a id="images" href="images" class="button">Images / Video / Slide</a>
-<a href="advanced" class="button">Advanced</a>
+
+<a href="settings" class="button">
+    <img class="img_icon" src="{{url_for('static', filename='SVG/settings.svg')}}" width=50 height=50>
+    <span>Settings</span>
+</a>
+
+<a id="translate" href="translate" class="button">
+    <img class="img_icon" src="{{url_for('static', filename='SVG/translation.svg')}}" width=50 height=50>
+    <span>Translate</span>
+</a>
+
+<a href="images" class="button">
+    <img class="img_icon" src="{{url_for('static', filename='SVG/image.svg')}}" width=50 height=50>
+    <span>Images / Video / Slide</span>
+</a>
+
+<a href="advanced" class="button">
+    <img class="img_icon" src="{{url_for('static', filename='SVG/more.svg')}}" width=50 height=50>
+    <span>Advanced</span>
+</a>
 
 
-<a id="refresh" href="refresh" class="button circle_button"><img id="refresh_logo"src="{{url_for('static', filename='SVG/refresh.svg')}}" height="100px" width="100px"></a>
+<a  href="sync" class="button circle_button">
+    <img id="refresh_logo"src="{{url_for('static', filename='SVG/refresh.svg')}}" height="100px" width="100px">
+</a>
 
-    <br>
-        <hr>
-    <br>
+<br><hr><br>
 <a id="prayerscreen" href="prayerscreen" class="button" >Prayer time Screen</a>
 {% endblock %}
