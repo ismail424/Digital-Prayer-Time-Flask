@@ -9,7 +9,7 @@ import sqlite3
 
 #import help-functions from another python file
 from help_functions import *
-from NewPrayerTimes import *
+from new_prayer_times import *
 
 # import JSON
 import json

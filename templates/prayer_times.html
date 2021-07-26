@@ -8,8 +8,13 @@
 <link rel="stylesheet" href="{{url_for('static', filename='css/prayer_time.css')}}">
 <script src="{{url_for('static', filename='script/socket.io.js')}}" crossorigin="anonymous"></script>
 <script src="{{url_for('static', filename='script/qrcode.js')}}" ></script>
-<script src="{{url_for('static', filename='script/handle_socket.js')}}" ></script>
-
+<script>
+    var socket = io();
+    socket.on('refresh', () => {window.location.reload()});
+    socket.on('error_url', () => {alert("Error, The url is not working")});
+    socket.on('error_wifi', () => {alert("Error, You need wifi!")});
+    socket.on('success', () => {alert("New prayertimes set!")});
+</script>
 {% endblock %}
 
 <!-- Content -->
@@ -17,9 +22,11 @@
 
 <div class="container"> 
     <!--------- Headers ------------->
-    <header class="headers">
-        <p class="headers_content" ><span  id="current_time" >00:00:00</span></p>
-        <p class="headers_content"> <span id="current_day_name">Monday</span> <span id="date_time" >0000-00-00</span></p>
+    <header>
+        <div class="headers">
+            <p class="headers_content" ><span  id="current_time" >00:00:00</span></p>
+            <p class="headers_content"> <span id="current_day_name">Monday</span> <span id="date_time" >0000-00-00</span></p>
+        </div>
     </header>
 
     <!--------- Body ------------->
@@ -40,9 +47,12 @@
 
             <!--------- Sunrise ------------->
             <section class="prayer_times_today">
-                <h2 id="sunrise-h2">Sunrise</h2>
-                <img id="sunrise_logo" src="{{url_for('static', filename='SVG/sunrise.svg')}}" height="100%" width="7%">
-                <p id="sunrise-time" > 00:00</p>
+                <div id="sunrise-text">
+                    <span id="sunrise-span">Sunrise </span>
+                    <img src="{{url_for('static', filename='SVG/sunrise.svg')}}" height="100%" width="15%">
+                </div>
+
+                <p id="sunrise-time"> 00:00</p>
             </section>
 
             <!--------- Dhuhr ------------->
@@ -84,7 +94,6 @@
                 <p id="next_prayer_time">00:00</p>
                 <p id="next_prayer_countdown">00:00:00</p>
             </div>
-
         </div>
         <!-- Footer text -->
         <p id="footer_text">Please, turn off your phones</p>

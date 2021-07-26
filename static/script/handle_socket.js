@@ -1,9 +1,6 @@
 var socket = io();
-// socket.on('connect', function() {
-//     socket.emit('my event', {data: 'I\'m connected!'});
-// });
-socket.on('refresh', () => {window.location.reload()});
 
+socket.on('refresh', () => {window.location.reload()});
 socket.on('error_url', () => {alert("Error, The url is not working")});
 socket.on('error_wifi', () => {alert("Error, You need wifi!")});
 socket.on('success', () => {alert("New prayertimes set!")});

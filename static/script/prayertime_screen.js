@@ -22,15 +22,15 @@ async function date_time( id , tecken ){
 //Fix font-size
 async function fix_fontsize(){
     try{
-        var sunrise_text = document.getElementById("sunrise-h2").innerHTML
+        var sunrise_text = document.getElementById("sunrise-span").innerHTML
         if(( sunrise_text.length > 8 ) &&( sunrise_text.length <= 11 )){
-            document.getElementById("sunrise-h2").style.fontSize = "5vw";
+            document.getElementById("sunrise-span").style.fontSize = "5vw";
         }
         else if (( sunrise_text.length > 11) && ( sunrise_text.length <= 13)){
-            document.getElementById("sunrise-h2").style.fontSize = "4vw";
+            document.getElementById("sunrise-span").style.fontSize = "4vw";
         }
         else if (( sunrise_text.length > 13)){
-            document.getElementById("sunrise-h2").style.fontSize = "3vw";
+            document.getElementById("sunrise-span").style.fontSize = "3vw";
         }
         return null;
 
@@ -108,10 +108,8 @@ function no_iqamah(){
     
     document.getElementById("iqamah_text_section").classList.add("no_iqamah_text");
     document.getElementById("sunrise-time").style.flex = "50%";
-    document.getElementById("sunrise_logo").style.margin = 0;
-    document.getElementById("sunrise-h2").style.flex = "43%";
-    document.getElementById("sunrise-h2").style.maxWidth = "43%";
-    document.getElementById("sunrise-time").classList.add("background_color");
+    document.getElementById("sunrise-text").style.flex = "50%";
+    document.getElementById("sunrise-time").classList.add("sunrise-time-background_color");
 
     document.getElementById("fajr-time-iqamah").style.display = "none";
     document.getElementById("dhuhr-time-iqamah").style.display = "none";
@@ -241,11 +239,13 @@ async function next_prayertime(){
     let next_prayer_name = "";
     let next_prayer_time = "";
     let next_prayer_sec_left = 0;
+    let next_prayer_section = closest_index;
 
     let list_length =  prayer_list_sec.length;
     if (closest_prayer_sec - seconds_now <= 0 ){
         
             if (closest_index == list_length - 1){
+                next_prayer_section = 0;
                 next_prayer_name = prayer_list_name[0];
                 next_prayer_time = fajr_tomorrow;
                 let x =  86400 - seconds_now 
@@ -254,12 +254,13 @@ async function next_prayertime(){
             else{
                 if (prayer_list_sec[closest_index + 1] == prayer_list_sec[closest_index] ){
                     if (closest_index + 2 != 11){
-
+                    next_prayer_section = closest_index + 2;
                     next_prayer_name = prayer_list_name[closest_index + 2];
                     next_prayer_time = prayer_list_time[closest_index + 2];
                     next_prayer_sec_left = prayer_list_sec[closest_index + 2] - seconds_now;
                     }
                     else{
+                        next_prayer_section = 0;
                         next_prayer_name = prayer_list_name[0];
                         next_prayer_time = fajr_tomorrow;
                         let x =  86400 - seconds_now 
@@ -268,7 +269,7 @@ async function next_prayertime(){
                     
                 }
                 else{
-                    
+                    next_prayer_section = closest_index + 1;
                     next_prayer_name = prayer_list_name[closest_index + 1];
                     next_prayer_time = prayer_list_time[closest_index + 1];
                     next_prayer_sec_left = prayer_list_sec[closest_index + 1] - seconds_now;
@@ -276,7 +277,9 @@ async function next_prayertime(){
             }
 
     }
+
     else{
+        next_prayer_section = closest_index;
         next_prayer_name = prayer_list_name[closest_index];
         next_prayer_time = prayer_list_time[closest_index];
         next_prayer_sec_left = prayer_list_sec[closest_index] - seconds_now;
@@ -284,14 +287,16 @@ async function next_prayertime(){
 
     
     
-    
-    if (iqamah_on == "false"){
+    // Remove orange background if there is no IQAMAH
+    if (iqamah_on == "false"){ 
         for (temp_name in prayer_id_list) {
-            try{ document.getElementById(prayer_id_list[temp_name]).style.backgroundColor = "";} catch(error) {console.log(error)}
+            try{ document.getElementById(prayer_id_list[temp_name]).style.backgroundColor = "";} 
+            catch(error) {console.log(error)}
         } 
         try {
-            document.getElementById(prayer_id_list[closest_index]).style.backgroundColor = "transparent";} catch(error) {console.log(error)}
-
+            document.getElementById(prayer_id_list[next_prayer_section]).style.backgroundColor = "transparent";
+        } 
+        catch(error) {console.log(error)}
     }
 
 
@@ -368,7 +373,7 @@ function set_translation(){
     document.getElementById("iqamah").innerText =  iqamah;
 
     document.getElementById("fajr").innerText = fajr_name;
-    document.getElementById("sunrise-h2").innerText = sunrise_name;
+    document.getElementById("sunrise-span").innerText = sunrise_name;
     document.getElementById("dhuhr").innerText = dhuhr_name;
     document.getElementById("asr").innerText = asr_name;
     document.getElementById("mahgrib").innerText = maghrib_name;
@@ -438,28 +443,11 @@ function showSlides() {
   if (current_slideIndex >= slides.length) {current_slideIndex = 0;}
   slides[current_slideIndex].style.display = "block";  
 
-  if (current_slideIndex == 0){
-    slides[0].style.height = null;
-    slides[0].style.maxHeight = null;
 
-    div_height = document.getElementById("slider-frame").offsetHeight;
-    div_width = document.getElementsByClassName("slider-frame").offsetWidth;
-    var y;
-    for (y = 0; y < slides.length; y++) {
-        slides[y].style.maxHeight = div_height + "px";
-        slides[y].style.maxWidth = div_width + "px";
-        slides[y].style.height = div_height + "px";
-        slides[y].style.width = div_width + "px";
-
-    }
-  } 
-
-  current_slideIndex++;
-  
+  current_slideIndex++;  
   if (current_selected == "video"){
     video_duration_now()
     setTimeout(showSlides, video_duration); 
-
   }
   else{
       setTimeout(showSlides, current_slide_delay); 
@@ -474,10 +462,10 @@ async function init_slide(){
 
     current_slide_delay = parseInt(images.slide_delay,10);
     current_slide_delay = current_slide_delay * 1000;
-    current_selected = images.current_select;
+    let current_selected = images.current_select;
 
-    if (images.current_select == "none"){return;}
-    else if (images.current_select == "images"){
+    if (current_selected == "none"){return;}
+    else if (current_selected == "images"){
         url1 = images.url_1;
         url2 = images.url_2;
 
@@ -488,7 +476,7 @@ async function init_slide(){
             document.getElementById("slider-frame").innerHTML += '<div class="slide-container fade"><img src="./static/upload/'+url2+'" ></div> '
         }
     }
-    else if (images.current_select == "video"){
+    else if (current_selected == "video"){
         video_url = images.video_url;
         
         if (video_url.length != 0){
@@ -496,7 +484,7 @@ async function init_slide(){
         }
     
     }
-    else if (images.current_select == "google_slide"){
+    else if (current_selected == "google_slide"){
         google_slide_url = images.google_slide_url;
         
         if (google_slide_url.length != 0){
