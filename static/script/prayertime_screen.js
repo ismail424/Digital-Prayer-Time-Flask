@@ -287,7 +287,7 @@ async function next_prayertime(){
 
     
     
-    // Remove orange background if there is no IQAMAH
+    // Remove orange background if there is no IQAMAH / 
     if (iqamah_on == "false"){ 
         for (temp_name in prayer_id_list) {
             try{ document.getElementById(prayer_id_list[temp_name]).style.backgroundColor = "";} 
