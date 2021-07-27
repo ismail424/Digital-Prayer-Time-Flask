@@ -299,7 +299,7 @@ def sync_time():
         print('Could not sync with time server.')
 
 def update():
-    os.system("git fetch --all;git reset --hard origin/master;")
+    os.system("git reset --hard HEAD;git pull;")
 
         
 
