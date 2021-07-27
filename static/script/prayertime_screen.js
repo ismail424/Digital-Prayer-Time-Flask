@@ -294,7 +294,7 @@ async function next_prayertime(){
             catch(error) {console.log(error)}
         } 
         try {
-            document.getElementById(prayer_id_list[next_prayer_section]).style.backgroundColor = "transparent";
+            document.getElementById(prayer_id_list[next_prayer_section-1]).style.backgroundColor = "transparent";
         } 
         catch(error) {console.log(error)}
     }
