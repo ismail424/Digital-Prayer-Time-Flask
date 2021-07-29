@@ -299,7 +299,9 @@ def sync_time():
         print('Could not sync with time server.')
 
 def update():
-    os.system("git reset --hard HEAD;git pull;")
+    os.system('git config --global user.email "test3@hotmail.com"')
+    os.system('git config --global user.name "Raspberrypi"')
+    os.system("git fetch --all;git reset --hard origin/main;git pull;")
 
         
 

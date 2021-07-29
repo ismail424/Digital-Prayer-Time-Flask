@@ -1,8 +1,18 @@
 {% extends 'layout/layout.html' %}
 {% block title %}Translate{% endblock %}
+{% block header %}
+<script src="{{url_for('static', filename='script/language.js')}}" crossorigin="anonymous"></script>
+{% endblock %}
+
 {% block content %}
 
 <div class="container_padding"> 
+    <br><br>
+    <span id="language-span">Click on the Language you want to translate to</span><br>
+    <button onclick="change_language('usa')" style="cursor:pointer;"><img src="{{url_for('static', filename='images/usa.png')}}"></button>
+    <button onclick="change_language('ba')"  style="cursor:pointer;"><img src="{{url_for('static', filename='images/ba.png')}}"></button>
+    <button onclick="change_language('swe')" style="cursor:pointer;"><img src="{{url_for('static', filename='images/swe.png')}}"></button>
+
     <form action="/save/translate" method="POST">
         <h1 class="title left">Days:</h1>
         <input required type="text" id="monday" name="monday" placeholder="Monday" value="{{translate['monday']}}"> 

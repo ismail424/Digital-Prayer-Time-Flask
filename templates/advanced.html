@@ -3,9 +3,16 @@
 {% block content %}
 
 <a href="prayertime" class="button">Change prayer times table</a>
-<a href="update" class="button">Update System (Need WiFi)</a>
+<button  onclick=" update_button_accept()"class="button">Update System</button>
 <a href="error" class="button">File with all error's</a>
 
 <a href="/" class="button" style="background-color: red !important;">Back</a>
+<script>
+function update_button_accept(){
+    if (confirm('Are you sure you want to update the system?')) {
+        window.location.replace("/update")
+    } 
+}
 
+</script>
 {% endblock %}
