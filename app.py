@@ -56,6 +56,11 @@ def update_now():
     update()
     return redirect("/")
 
+@app.route( '/setup-realtimeclock' )
+def realtimeclock():
+    x = setup_realtimeclock()
+    return x
+
 @app.route( '/prayertime' )
 def prayertimes():
     conn = sqlite3.connect("database.db")

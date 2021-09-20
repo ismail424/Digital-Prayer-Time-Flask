@@ -3,7 +3,7 @@ import os, sys
 path_to_this_folder = os.getcwd()
 path_to_desktop = str(os.path.expanduser("~/Desktop")) + "/prayertime_autostart.sh"
 path_to_appfile = path_to_this_folder + "/app.py"
-autostart_string = """'#!/bin/bash
+autostart_string = """#!/bin/bash
 cd {};
 authbind python3 app.py &
 firefox -kiosk http://0.0.0.0/prayerscreen

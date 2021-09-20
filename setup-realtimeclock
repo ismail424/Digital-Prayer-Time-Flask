@@ -1,0 +1,41 @@
+#!/bin/bash
+
+clear;echo;echo
+
+IC2ACTIVE=$(ls /dev/*i2c*)
+
+if [ $IC2ACTIVE = "/dev/i2c-1" ]
+then
+echo "IC2 is active"
+else 
+clear;echo;echo
+echo "Enableing I2C now:"
+sudo raspi-config nonint do_i2c 0;
+echo
+exit 0
+fi
+
+clear;echo;echo
+echo "Current time/date:"
+date
+echo
+
+sudo i2cdetect -y 1
+
+echo;echo
+echo
+sudo modprobe rtc-ds1307
+echo "ds1307 0x68" | sudo tee -a /sys/class/i2c-adapter/i2c-1/new_device
+sudo hwclock -w
+echo rtc-ds1307 | sudo tee -a /etc/modules
+
+sudo sed -i 's/exit\ 0//' /etc/rc.local
+echo "echo ds1307 0x68 > /sys/class/i2c-adapter/i2c-1/new_device" | sudo tee -a /etc/rc.local > /dev/null 2>&1
+echo "sudo hwclock -s" | sudo tee -a /etc/rc.local > /dev/null 2>&1
+echo "date" | sudo tee -a /etc/rc.local > /dev/null 2>&1
+echo "exit 0" | sudo tee -a /etc/rc.local > /dev/null 2>&1
+echo
+echo "The real time clock has been installed & configured"
+
+
+

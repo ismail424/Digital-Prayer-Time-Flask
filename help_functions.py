@@ -12,7 +12,9 @@ import json
 import sys
 import time
 import os
+import subprocess
 
+import ntplib
 #Description:This function will return the prayertimes for today and fajr time for tomorrow! 
 #Argument 1: klass - None
 #Return: klass - JSON (ALl the prayertimes for the prayertime screen (Today prayertimes and Fajr time for tomorrow))
@@ -291,7 +293,6 @@ def save_error( error ):
 
 def sync_time():
     try:
-        import ntplib
         client = ntplib.NTPClient()
         response = client.request('pool.ntp.org')
         os.system('sudo date ' + time.strftime('%m%d%H%M%Y.%S',time.localtime(response.tx_time)))
@@ -303,6 +304,17 @@ def update():
     os.system('git config --global user.name "Raspberrypi"')
     os.system("git fetch --all;git reset --hard origin/main;git pull;")
 
+def setup_realtimeclock():
+    try:
+        sync_time()
+        folder = os. getcwd() 
+        #output = subprocess.check_output("chmod +x setup-realtimeclock;./setup-realtimeclock", shell=True)
+        os.system(f"chmod +x {folder}/setup-realtimeclock;")
+        output = subprocess.check_output(f"{folder}/setup-realtimeclock", shell=True)
+
+        return str(output.decode("utf-8")) + "\nEverything works!"
+    except:
+        return "Error failed"
         
 
 if __name__ == '__main__':
@@ -312,5 +324,6 @@ if __name__ == '__main__':
     #print(check_iqamah())
     # print(get_translation_json())
     # add_minutes_to_time( "10" , 10 )
-    update()
+    # update()
+    print(setup_realtimeclock())
     pass
