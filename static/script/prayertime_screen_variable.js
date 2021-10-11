@@ -2,6 +2,9 @@
 var ip = "127.0.1.1";
 var qrcode = new QRCode(document.getElementById("qrcode"), {text : "http://" + ip + "/", width: 128,height : 128});
 
+//fajrtime div thing
+var div_fajr_time_tomorrow = document.getElementById("fajr-time")
+
 
 //Set variable
 var fajr = "";

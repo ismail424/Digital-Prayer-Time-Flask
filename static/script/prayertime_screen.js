@@ -242,17 +242,19 @@ async function next_prayertime(){
     let next_prayer_section = closest_index;
 
     let list_length =  prayer_list_sec.length;
-    if (closest_prayer_sec - seconds_now <= 0 ){
-        
+    if (closest_prayer_sec - seconds_now <= 0 ){ 
+
             if (closest_index == list_length - 1){
                 next_prayer_section = 0;
                 next_prayer_name = prayer_list_name[0];
-                next_prayer_time = fajr_tomorrow;
+                next_prayer_time  = fajr_tomorrow ;
+                div_fajr_time_tomorrow.innerText = fajr_tomorrow;
                 let x =  86400 - seconds_now 
                 next_prayer_sec_left = x + sec_fajr_tomorrow;
             }
             else{
                 if (prayer_list_sec[closest_index + 1] == prayer_list_sec[closest_index] ){
+
                     if (closest_index + 2 != 11){
                     next_prayer_section = closest_index + 2;
                     next_prayer_name = prayer_list_name[closest_index + 2];
@@ -294,7 +296,12 @@ async function next_prayertime(){
             catch(error) {console.log(error)}
         } 
         try {
-            document.getElementById(prayer_id_list[next_prayer_section-1]).style.backgroundColor = "transparent";
+            if (next_prayer_section == 0){
+                document.getElementById(prayer_id_list[next_prayer_section]).style.backgroundColor = "transparent";
+            }
+            else{
+                document.getElementById(prayer_id_list[next_prayer_section- 1]).style.backgroundColor = "transparent";
+            }
         } 
         catch(error) {console.log(error)}
     }
@@ -313,6 +320,7 @@ async function next_prayertime(){
     var div_next_prayer = document.getElementById("next_prayer")
     var div_next_prayer_time = document.getElementById("next_prayer_time")
     var div_next_prayer_countdown = document.getElementById("next_prayer_countdown")
+
 
     div_next_prayer.innerText = next_prayer_name;
     div_next_prayer_time.innerText = next_prayer_time;
