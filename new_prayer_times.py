@@ -343,6 +343,49 @@ def get_prayertime_vaktija( id ):
         conn.close()
     except Exception as e:
         print(e)       
+    
+def get_prayertimes_vaktijaEU( location_slug ):
+    url = "https://api.vaktija.eu/v1/locations/slug/" + location_slug
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    res_json = requests.get(url).json()
+    months =  res_json["data"]["months"]
+    current_year = str(datetime.date.today().year)
+
+    for month in months:
+        current_month = "0" + str(month) if len(month) == 1 else month
+        for days in months[month]:
+            for day in months[month]["days"]:
+                current_day = "0" + str(day) if len(day) == 1 else day
+                current_date =f"{current_year}-{current_month}-{current_day}"
+                the_prayertimes = months[month]["days"][day]["prayers"]
+                if len(the_prayertimes) != 0 :
+                        h = current_date,the_prayertimes[0],the_prayertimes[1],the_prayertimes[2],the_prayertimes[3],the_prayertimes[4],the_prayertimes[5]
+                        c.execute("INSERT INTO prayertimes VALUES ( ? , ? , ? , ? , ? , ? , ?)", (current_date,the_prayertimes[0],the_prayertimes[1],the_prayertimes[2],the_prayertimes[3],the_prayertimes[4],the_prayertimes[5]))
+                
+    conn.commit()
+    conn.close()
+
+def check_vaktija_eu( location_slug ):
+    url = "https://api.vaktija.eu/v1/locations/slug/" + location_slug
+    try:
+        res_json = requests.get(url).json()
+        months =  res_json["data"]["months"]
+        current_year = str(datetime.date.today().year)
+
+        for month in months:
+            current_month = "0" + str(month) if len(month) == 1 else month
+            for days in months[month]:
+                for day in months[month]["days"]:
+                    current_day = "0" + str(day) if len(day) == 1 else day
+                    current_date =f"{current_year}-{current_month}-{current_day}"
+                    the_prayertimes = months[month]["days"][day]["prayers"]
+                    h = current_date,the_prayertimes[0],the_prayertimes[1],the_prayertimes[2],the_prayertimes[3],the_prayertimes[4],the_prayertimes[5]
+                    print(h)
+                    return True
+    except Exception as e:
+        print(e)
+        return False
 if __name__ == "__main__":
     pass
     # print(DeleteTable("prayertimes"))

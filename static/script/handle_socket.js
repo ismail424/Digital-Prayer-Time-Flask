@@ -27,3 +27,14 @@ try {
 catch (error) {
  console.log(error)   
 }
+
+try {
+    document.getElementById("save_prayertime3").addEventListener("click", function() {
+        var value = document.getElementById("city_slug").value
+        socket.emit('new-prayertime-vaktijaeu', {"data": value});
+        alert("Saving...");
+    })
+} 
+catch (error) {
+ console.log(error)   
+}

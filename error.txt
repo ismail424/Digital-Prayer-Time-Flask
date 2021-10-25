@@ -1,0 +1,4 @@
+2021-10-25 | ('Error on line 307', 'ProgrammingError', ProgrammingError('Cannot operate on a closed database.'))
+
+2021-10-25 | ('Error on line 307', 'ProgrammingError', ProgrammingError('Cannot operate on a closed database.'))
+
