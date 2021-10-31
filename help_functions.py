@@ -73,7 +73,6 @@ def get_prayertime_api():
         
         if isha_fixed != "0":
             if len(isha_fixed) == 5:
-                prayer_api[6] = isha_fixed
                 prayer_api[14] = isha_fixed
         
         prayer_api_key = ["date", "fajr", "sunrise", "dhuhr", "asr", "maghrib", "isha", "fajr_tomorrow", "error","iqamah_on","fajr_iqamah", "dhuhr_iqamah", "asr_iqamah", "maghrib_iqamah", "isha_iqamah"]
