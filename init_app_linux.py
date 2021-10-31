@@ -11,7 +11,7 @@ if not 'SUDO_UID' in os.environ.keys():
     print("Run program as ROOT!")
 
 # ----------- Update system ----------- 
-os.system("sudo apt update;")
+os.system("sudo apt update -y;")
 
 # ----------- Install pip -----------  
 os.system("sudo apt install python3-pip -y;pip3 install -r requirements.txt;")
