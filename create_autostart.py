@@ -22,7 +22,7 @@ os.system(chmod_string)
      
      
 # ----------- Create file Autostart.desktop ----------- 
-path_to_autostart = str(os.path.expanduser("~/.config/autostart")) + "/prayertime_autostart.desktop" 
+path_to_autostart = str(os.path.expanduser("/.config/autostart")) + "/prayertime_autostart.desktop" 
 desktopfile_string = """[Desktop Entry]
 Encoding=UTF-8
 Type=Application
