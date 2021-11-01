@@ -22,7 +22,28 @@ os.system(chmod_string)
      
      
 # ----------- Create file Autostart.desktop ----------- 
-path_to_autostart = str(os.path.expanduser("/.config/autostart")) + "/prayertime_autostart.desktop" 
+def get_user_config_directory():
+    """Returns a platform-specific root directory for user config settings."""
+    # On Windows, prefer %LOCALAPPDATA%, then %APPDATA%, since we can expect the
+    # AppData directories to be ACLed to be visible only to the user and admin
+    # users (https://stackoverflow.com/a/7617601/1179226). If neither is set,
+    # return None instead of falling back to something that may be world-readable.
+    if os.name == "nt":
+        appdata = os.getenv("LOCALAPPDATA")
+        if appdata:
+            return appdata
+        appdata = os.getenv("APPDATA")
+        if appdata:
+            return appdata
+        return None
+    # On non-windows, use XDG_CONFIG_HOME if set, else default to ~/.config.
+    xdg_config_home = os.getenv("XDG_CONFIG_HOME")
+    if xdg_config_home:
+        return xdg_config_home
+    return os.path.join(os.path.expanduser("~"), ".config") 
+
+
+path_to_autostart = str(get_user_config_directory()) + "/prayertime_autostart.desktop" 
 desktopfile_string = """[Desktop Entry]
 Encoding=UTF-8
 Type=Application
