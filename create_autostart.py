@@ -43,7 +43,7 @@ def get_user_config_directory():
     return os.path.join(os.path.expanduser("~"), ".config") 
 
 
-path_to_autostart = str(get_user_config_directory()) + "/prayertime_autostart.desktop" 
+path_to_autostart = str(get_user_config_directory()) + "autostart/prayertime_autostart.desktop" 
 desktopfile_string = """[Desktop Entry]
 Encoding=UTF-8
 Type=Application
@@ -61,3 +61,5 @@ except:
     
 chmod2_string = "chmod +x {}".format(path_to_autostart)
 os.system(chmod2_string)
+
+print("\n\n\n\nAUTOSTART DONE\n\n\n\n")
