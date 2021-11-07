@@ -42,6 +42,14 @@ def get_user_config_directory():
         return xdg_config_home
     return os.path.join(os.path.expanduser("~"), ".config") 
 
+path_to_autostart_folder = str(get_user_config_directory()) + "autostart"
+
+try:
+    os.mkdir(path_to_autostart_folder)
+except OSError:
+    print ("Creation of the directory %s failed" % path_to_autostart_folder)
+else:
+    print ("Successfully created the directory %s " % path_to_autostart_folder)
 
 path_to_autostart = str(get_user_config_directory()) + "autostart/prayertime_autostart.desktop" 
 desktopfile_string = """[Desktop Entry]
