@@ -134,11 +134,41 @@ input{
 }
 
 
-  .select{
-    padding: 10px 20px;
-    border: 1px solid grey;
-  }
-  
+.select{
+padding: 10px 20px;
+border: 1px solid grey;
+}
+#screen-rotate-name{
+    font-size: 40px;
+    font-weight: 900;
+    text-transform: uppercase;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: normal;
+    text-align: center;
+    margin: 0px;
+}
+
+.parent {
+    width: 98.5%;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.child {
+    flex: 1 0 20%;
+    border-radius: 8px;
+    margin: 5px;
+    height: 100px;
+    background-color: #5cb85c;
+    color: white;
+    font-size: 30px;
+}
+.child:hover{
+    background-color: #3e8d3e;
+    cursor: pointer;
+}
+
 
 /* CSS for desktop vy*/
 @media only screen and (min-width: 1000px){
@@ -194,5 +224,8 @@ img{
 @media only screen and (max-width: 500px) {
     input{
         font-size:20px;
+    }
+    .child {
+        flex: 1 0 40%;
     }
 }

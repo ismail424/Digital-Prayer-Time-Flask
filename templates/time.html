@@ -3,6 +3,7 @@
 {% block content %}
 
 <script src="{{url_for('static', filename='script/socket.io.js')}}" crossorigin="anonymous"></script>
+<script src="{{url_for('static', filename='script/new_times.js')}}"></script>
 
 <div class="container_padding"> 
     <!-- Salah times -->
@@ -16,7 +17,7 @@
 
     <!-- Vaktija.ba -->
     <h1 class="title left">Vaktija.ba (Bosnian prayertimes):</h1>
-    <p>Select a city <br><br>
+    <p>Select a city </p><br>
     <select class="select" name="city" id="city">
         <option value=0>Banovići</option>
         <option value=1>Banja Luka</option>
@@ -142,19 +143,23 @@
 
     <hr>
     <h1 class="title left">Vaktija.eu (EU times):</h1>
-    <p>You can find city slug here <a href="https://api.vaktija.eu/v1/locations" target="_blank">Locations</a></p><br>
-    <label for="salahtimes_url">Enter city slug:</label>
-    <input type="text" id="city_slug" required  name="salahtimes_url" placeholder="slug">
+    <p>Select a country</p>
+    <select id="vaktija_eu_country" class="select" name="country" id="country">
+        <option value="" disabled selected="selected">Select a country</option>
+    </select>
+    <br><br>
+    <p id="vaktija_eu_name"  style="display: none;">Select a city</p>
+    <select id="vaktija_eu_city" class="select" style="display: none;" name="city" id="vaktija_eu_city_value">
+    </select>
     <button  id="save_prayertime3" class="save" style="display:block; margin: 20px 0px;"  >Save prayertimes</button><br><br><hr><br>
-    
-    
+
 
 
     <!-- CSV -->
     <form action="/import/prayertime" method="POST" enctype="multipart/form-data">
         <h1 class="title left">Import prayertime CSV:</h1>
         <p>Download start templet <a href="./static/upload/start_template.csv" target="_blank">DOWNLOAD</a></p>
-        <p>Date: (yyyy:mm:dd) or (mm:dd) | time (hh:mm) </p>
+        <p>Date: (yyyy-mm-dd) or (mm:dd) | time (hh:mm) </p>
         <input  style=" font-size:15px; height: auto !important; width: auto !important;" required type="file"  accept=".csv" id="csv"   name="csv" >      
         <input type="submit" class="save"  value="Import"><br><br><br>
     </form>   

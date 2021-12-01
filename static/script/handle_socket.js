@@ -14,7 +14,7 @@ try {
     })
 } 
 catch (error) {
- console.log(error)   
+    console.log(error)   
 }
 
 try {
@@ -25,16 +25,23 @@ try {
     })
 } 
 catch (error) {
- console.log(error)   
+    console.log(error)   
 }
 
 try {
     document.getElementById("save_prayertime3").addEventListener("click", function() {
-        var value = document.getElementById("city_slug").value
+        var value = document.getElementById("vaktija_eu_city").value;
+        if (value != undefined || value != "") {
         socket.emit('new-prayertime-vaktijaeu', {"data": value});
-        alert("Saving...");
+        alert("Saving..." );
+        }
+        else {
+            console.log(value);
+            alert("Please enter a valid city name");
+        }
     })
 } 
 catch (error) {
- console.log(error)   
+    alert("Try again!")
+    console.log(error)   
 }

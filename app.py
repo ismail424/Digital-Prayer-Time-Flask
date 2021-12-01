@@ -231,7 +231,6 @@ def delete_file(id):
 
 
 
-    
 @app.route( '/translate' )
 def translate():
     translate = get_translation()
@@ -311,6 +310,19 @@ def new_prayertime_salahtimes2(json):
             socketio.emit("error_wifi")
     except Exception as e:
         save_error(e)    
+        
+@socketio.on('rotate_screen')
+def rotate_screen(json):
+    try:
+        rotation  = str(json["data"])
+        os.system("xrandr -o {}".format(rotation))
+    except Exception as e:
+        print(e)
+        save_error(e)            
+        
+@app.route( '/get_vaktija_eu' )
+def get_vaktija_eu():
+    return get_all_data_vakitja_eu()
 
 @app.route( '/refresh' )
 def refresh_now():

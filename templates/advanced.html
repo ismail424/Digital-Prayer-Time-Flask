@@ -1,19 +1,34 @@
 {% extends 'layout/layout.html' %}
 {% block title %}Advanced{% endblock %}
 {% block content %}
+<script src="{{url_for('static', filename='script/socket.io.js')}}" crossorigin="anonymous"></script>
 
 <a href="prayertime" class="button">Change prayer times table</a>
 <button  onclick=" update_button_accept()"class="button">Update System</button>
 <a href="error" class="button">File with all error's</a>
 <a href="setup-realtimeclock" class="button">Setup realtimeclock</a>
-
+<hr><br>
+<p id="screen-rotate-name">Screen rotation:</p>
+<div class="parent">
+    <button onclick="rotate('normal')" class="child">Normal</button>
+    <button onclick="rotate('left')" class="child">Left</button>
+    <button onclick="rotate('right')" class="child">Right</button>
+    <button onclick="rotate('inverted')" class="child">Inverted</button>
+</div>
 <a href="/" class="button" style="background-color: red !important;">Back</a>
 <script>
-function update_button_accept(){
-    if (confirm('Are you sure you want to update the system?')) {
-        window.location.replace("/update")
-    } 
-}
+    var socket = io();
 
+    function update_button_accept(){
+        if (confirm('Are you sure you want to update the system?')) {
+            window.location.replace("/update")
+        } 
+    }
+    const rotate = (rotation) => {
+        console.log(rotation)
+        socket.emit('rotate_screen', {"data": rotation});
+
+    }
 </script>
+
 {% endblock %}
