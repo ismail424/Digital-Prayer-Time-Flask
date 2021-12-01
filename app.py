@@ -315,6 +315,14 @@ def new_prayertime_salahtimes2(json):
 def rotate_screen(json):
     try:
         rotation  = str(json["data"])
+        rotation_command = f"xrandr -o {rotation}"
+        rotation_autostart = "/etc/X11/Xsession.d/45custom_xrandr-settings"
+        if os.path.exists(rotation_autostart) != True:
+            subprocess.call(['sudo', 'touch', rotation_autostart])
+            subprocess.call(['sudo', 'chmod', '777', rotation_autostart])
+        with open(rotation_autostart, "w") as f:
+            f.write(rotation_command)
+        
         os.system("xrandr -o {}".format(rotation))
     except Exception as e:
         print(e)

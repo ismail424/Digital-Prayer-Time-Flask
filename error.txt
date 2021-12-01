@@ -6,3 +6,5 @@
 
 2021-12-01 | ('Error on line 298', 'KeyError', KeyError('data'))
 
+2021-12-01 | ('Error on line 320', 'PermissionError', PermissionError(13, 'Permission denied'))
+
