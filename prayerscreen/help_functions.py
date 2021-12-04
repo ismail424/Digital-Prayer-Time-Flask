@@ -299,16 +299,16 @@ def sync_time():
         print('Could not sync with time server.')
 
 def update():
+    os.system('pip3 install -r requirements.txt')
     os.system('git config --global user.email "test3@hotmail.com"')
     os.system('git config --global user.name "Raspberrypi"')
     os.system("git fetch --all;git reset --hard origin/main;git pull;")
 
-def setup_realtimeclock():
+def setup_get_imagestimeclock():
     try:
         sync_time()
-        folder = os. getcwd() 
-        #output = subprocess.check_output("chmod +x setup-realtimeclock;./setup-realtimeclock", shell=True)
-        os.system(f"chmod +x {folder}/setup-realtimeclock;")
+        folder = os.getcwd() 
+        os.system(f"chmod +x {folder}/prayerscreen/setup-realtimeclock;")
         output = subprocess.check_output(f"{folder}/setup-realtimeclock", shell=True)
 
         return str(output.decode("utf-8")) + "\nEverything works!"
@@ -324,5 +324,5 @@ if __name__ == '__main__':
     # print(get_translation_json())
     # add_minutes_to_time( "10" , 10 )
     # update()
-    print(setup_realtimeclock())
+    # print(setup_realtimeclock())
     pass

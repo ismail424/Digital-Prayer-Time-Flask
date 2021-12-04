@@ -1,10 +1,12 @@
-2021-10-25 | ('Error on line 307', 'ProgrammingError', ProgrammingError('Cannot operate on a closed database.'))
+2021-12-04 | ('Error on line 228', 'OperationalError', OperationalError('no such table: settings'))
 
-2021-10-25 | ('Error on line 307', 'ProgrammingError', ProgrammingError('Cannot operate on a closed database.'))
+2021-12-04 | ('Error on line 228', 'OperationalError', OperationalError('no such table: settings'))
 
-2021-12-01 | ('Error on line 298', 'KeyError', KeyError('data'))
+2021-12-04 | ('Error on line 228', 'OperationalError', OperationalError('no such table: settings'))
 
-2021-12-01 | ('Error on line 298', 'KeyError', KeyError('data'))
+2021-12-04 | ('Error on line 228', 'OperationalError', OperationalError('no such table: settings'))
 
-2021-12-01 | ('Error on line 320', 'PermissionError', PermissionError(13, 'Permission denied'))
+2021-12-04 | ('Error on line 187', 'OperationalError', OperationalError('no such table: translate'))
+
+2021-12-04 | ('Error on line 267', 'OperationalError', OperationalError('no such table: images'))
 
