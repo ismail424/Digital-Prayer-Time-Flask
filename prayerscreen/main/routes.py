@@ -4,6 +4,7 @@ from prayerscreen.help_functions import *
 from prayerscreen.new_prayer_times import *
 from prayerscreen.socket.socket_routes import refresh
 from prayerscreen import db
+from prayerscreen.models import *
 from time import sleep
 import sqlite3
 import json
@@ -14,10 +15,9 @@ import socket
 main = Blueprint('main', __name__)
 
 @main.route( '/' )
-def home():
-    # Get the current prayer times from the database
-    prayer_times = db.session.query('prayer_times').all()
-    print(prayer_times)
+def index():
+    settings = Settings.query.first()
+    print(settings.__dict__)
     return render_template( 'index.html' )
 
 @main.route( '/error' )

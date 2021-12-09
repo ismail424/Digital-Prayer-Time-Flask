@@ -1,14 +1,7 @@
-from datetime import datetime
-
-from sqlalchemy.orm import defaultload
-from sqlalchemy.sql.operators import nullslast_op
 from prayerscreen import db
-
-# coding: utf-8
-from flask_sqlalchemy import SQLAlchemy
-
-# JSON for translate file
+from datetime import datetime
 import json
+
 
 class Media(db.Model):
     
@@ -19,14 +12,14 @@ class Media(db.Model):
     video_src = db.Column(db.String, nullable=True)
 
     def __repr__(self):
-        return '<Media %r>' % self.name
+        return '<Media %r>' % self.id
 
 
 
 class PrayerTimes(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
-    date = db.column(db.DateTime, nullable = False)        
+    date = db.column(db.DateTime)     
     fajr = db.Column(db.String, nullable=False)
     sunrise = db.Column(db.String, nullable=False)
     dhuhr = db.Column(db.String, nullable=False)
@@ -35,7 +28,7 @@ class PrayerTimes(db.Model):
     isha = db.Column(db.String, nullable=False)
 
     def __repr__(self):
-        return '<PrayerTimes %r>' % self.name
+        return '<PrayerTimes %r>' % self.id
 
 
 class Settings(db.Model):
@@ -78,23 +71,86 @@ class Settings(db.Model):
     slide_delay = db.Column(db.Integer, default=5, nullable=False)
     
     def __repr__(self):
-        return '<Settings %r>' % self.name
+        return '<Settings %r>' % self.id
 
 
 translate_keys = "monday,tuesday,wednesday,thursday,friday,saturday,sunday,january,february,march,april,may,june,july,august,september,october,november,december,am,pm,fajr,sunrise,dhuhr,asr,maghrib,isha,iqamah,next,begins,payer,turn_off_phones"
+translate_values = json.loads(open('prayerscreen/translate_values.json').read())
+default_translate_values = translate_values["en"]
 
 # Translate class
 class Translate(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     language = db.Column(db.String, nullable=False, default='en')
     key = db.Column(db.String, nullable=False, default= translate_keys)
-    value = db.Column(db.String, nullable=False, default= "translate_values_en")
+    value = db.Column(db.String, nullable=False, default= default_translate_values)
     
     def __repr__(self):
-        return '<Translate %r>' % self.name
+        return '<Translate %r>' % self.id
+
+
+def init_db():
+    db.create_all()
+
+    # Create a test user
+    new_settings = Settings(
+        timezone=2,
+        location="",
+        latitude=0.0,
+        longitude=0.0,
+        fajr_iqamah=30,
+        dhuhr_iqamah=10,
+        asr_iqamah=10,
+        maghrib_iqamah=0,
+        isha_iqamah=10,
+        fajr_iqamah_before_sunrise=False,
+        iqamah_on=False,
+        fajr_offset="",
+        sunrise_offset="",
+        dhuhr_offset="",
+        asr_offset="",
+        maghrib_offset="",
+        isha_offset="",
+        fixed_prayer_times=json.dumps({}),
+        qr_code_on=True,
+        time_format="24",
+        date_format="%d/%m/%Y",
+        prayertime_format="%H:%M",
+        current_selected="Picture",
+        slide_delay=5
+        )
+    db.session.add(new_settings)
+    db.session.commit()
+
+    new_translate = Translate(
+        language='en',
+        key=translate_keys,
+        value=default_translate_values
+        )
+    db.session.add(new_translate)
+    db.session.commit()
+
+    new_media = Media(
+        pic_src_1='',
+        pic_src_2='',
+        google_slide_src='',
+        video_src=''
+        )
+    db.session.add(new_media)
+    db.session.commit()
+
+    new_prayer_times = PrayerTimes(
+        date=datetime.now(),
+        fajr='',
+        sunrise='',
+        dhuhr='',
+        asr='',
+        maghrib='',
+        isha=''
+        )
+    db.session.add(new_prayer_times)
+    db.session.commit()
+    
 
 if __name__ == '__main__':
-    print("PrayerScreen models")
-    # translate_values = json.dumps("prayerscreen/translate_values.json")
-    # print(translate_values)
-    #db.create_all()
+    init_db()
