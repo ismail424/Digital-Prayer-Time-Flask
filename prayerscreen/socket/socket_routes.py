@@ -2,8 +2,7 @@ from types import FrameType
 
 
 from prayerscreen import socketio
-from prayerscreen.help_functions import *
-from prayerscreen.new_prayer_times import *
+from prayerscreen.utils import *
 
 @socketio.on('new-prayertime-salahtimes')
 def new_prayertime_salahtimes(json):

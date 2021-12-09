@@ -15,6 +15,7 @@ import os
 import subprocess
 
 import ntplib
+
 #Description:This function will return the prayertimes for today and fajr time for tomorrow! 
 #Argument 1: klass - None
 #Return: klass - JSON (ALl the prayertimes for the prayertime screen (Today prayertimes and Fajr time for tomorrow))
@@ -304,7 +305,7 @@ def update():
     os.system('git config --global user.name "Raspberrypi"')
     os.system("git fetch --all;git reset --hard origin/main;git pull;")
 
-def setup_get_imagestimeclock():
+def setup_realtimeclock():
     try:
         sync_time()
         folder = os.getcwd() 

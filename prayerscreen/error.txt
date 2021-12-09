@@ -1,4 +1,0 @@
-2021-12-04 | ('Error on line 228', 'OperationalError', OperationalError('no such table: settings'))
-
-2021-12-04 | ('Error on line 267', 'OperationalError', OperationalError('no such table: images'))
-

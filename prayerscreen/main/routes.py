@@ -1,9 +1,10 @@
 from flask import Flask, render_template, request, redirect, Blueprint
 from requests.api import get
-from prayerscreen.help_functions import *
+from prayerscreen.utils import *
 from prayerscreen.new_prayer_times import *
 from prayerscreen.socket.socket_routes import refresh
 from prayerscreen import db
+from prayerscreen.config import Config
 from prayerscreen.models import *
 from time import sleep
 import sqlite3
@@ -14,18 +15,17 @@ import socket
 
 main = Blueprint('main', __name__)
 
+UPLOAD_FILE_SRC = Config.UPLOAD_FOLDER
+
+
 @main.route( '/' )
 def index():
-    settings = Settings.query.first()
-    print(settings.__dict__)
     return render_template( 'index.html' )
 
 @main.route( '/error' )
-def error():
-    print("nice")
-    error_list = open("error.txt","r").readlines()
+def error_text_file():
+    error_list = open("prayerscreen/error.txt","r").readlines()
     return render_template( 'error.html' , error_list = error_list)
-
 
 @main.route( '/sync' )
 def sync():
@@ -39,16 +39,12 @@ def update_now():
 
 @main.route( '/setup-realtimeclock' )
 def realtimeclock():
-    x = setup_realtimeclock()
-    return x
+    return setup_realtimeclock()
 
 @main.route( '/prayertime' )
 def prayertimes():
-    conn = sqlite3.connect("database.db")
-    c = conn.cursor()
-    c.execute("""select * from prayertimes""")
-    prayertimes = c.fetchall()     
-    return render_template( 'time.html', prayertimes = prayertimes )
+    prayertimes = PrayerTimes.query.all()
+    return render_template( 'prayer_tabel.html', prayertimes = prayertimes )
 
 @main.route( '/import/prayertime' , methods=["GET","POST"])
 def import_prayertime():
@@ -56,7 +52,7 @@ def import_prayertime():
         try:
             current_file = request.files["csv"]
             if len(current_file.filename) != 0:
-                path = os.path.join(app.config['UPLOAD_FOLDER'], current_file.filename)
+                path = os.path.join(UPLOAD_FILE_SRC, current_file.filename)
                 current_file.save(path)
                 error_list = Check_CSV_prayertimes( path )
                 if len(error_list) == 0:
@@ -89,11 +85,9 @@ def api_get_images():
 @main.route( '/api/get_ip' )
 def get_ip():
     try:
-        conn = sqlite3.connect("database.db")
-        c = conn.cursor()
-        c.execute("""select qrcode from settings """)
-        qrcode_check = c.fetchone()
-        qrcode_check = qrcode_check[0]
+        settings = Settings.query.filter_by(id=1).first()
+        qrcode_check = settings.qr_code_on
+        
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             s.connect(("8.8.8.8", 80))
@@ -101,12 +95,12 @@ def get_ip():
             s.close()
         except:
             hostname = socket.gethostname()
+            
         ip = str(socket.gethostbyname(hostname))
-        ip_json = '{"ip":"'+ip+'", "qrcode_on":"'+str(qrcode_check.lower())+'"}'
-        return json.loads(ip_json)
+        
+        return {"ip": ip, "qrcode_on": qrcode_check}
     except:
-            ip_json = '{"ip":"0", "qrcode_on":"true"}}'
-            return json.loads(ip_json)
+        return {"ip": "127.0.0.1", "qrcode_on": "false"}
 
 @main.route( '/api/get_translation' )
 def api_get_translation():
@@ -140,8 +134,8 @@ def save_settings():
 def images():
     images = get_images()
     try:
-        url1 = os.path.join(app.config['UPLOAD_FOLDER'], images["url_1"])
-        url2 = os.path.join(app.config['UPLOAD_FOLDER'], images["url_2"])
+        url1 = os.path.join(UPLOAD_FILE_SRC, images["url_1"])
+        url2 = os.path.join(UPLOAD_FILE_SRC, images["url_2"])
     except:
         url1 = ""
         url2 = ""
@@ -155,7 +149,7 @@ def save_images():
             for file in request.files:
                 current_file = request.files[file]
                 if len(current_file.filename) != 0:
-                    path = os.path.join(app.config['UPLOAD_FOLDER'], current_file.filename)
+                    path = os.path.join(UPLOAD_FILE_SRC, current_file.filename)
                     current_file.save(path)
         except Exception as e:
             save_error(e)
@@ -197,7 +191,7 @@ def delete_file(id):
             c.execute("SELECT {} from images".format(remove_current_file))
             file_path = c.fetchone()[0]
             if len(file_path) != 0:
-                os.remove(os.path.join(app.config['UPLOAD_FOLDER'], file_path))            
+                os.remove(os.path.join(UPLOAD_FILE_SRC, file_path))            
         except Exception as e:
             save_error(e)
         try:
@@ -238,3 +232,4 @@ def get_vaktija_eu():
 def refresh_now():
     refresh()
     return redirect("/")
+
