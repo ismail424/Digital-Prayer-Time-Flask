@@ -1,0 +1,70 @@
+2021-12-12 | ('Error on line 268', 'OperationalError', OperationalError('no such table: images'))
+
+2021-12-12 | ('Error on line 268', 'OperationalError', OperationalError('no such table: images'))
+
+2021-12-12 | ('Error on line 194', 'TypeError', TypeError("'Row' object does not support item assignment"))
+
+2021-12-12 | ('Error on line 194', 'AttributeError', AttributeError("'Row' object has no attribute 'pic_src_1'"))
+
+2021-12-12 | ('Error on line 194', 'AttributeError', AttributeError("'Row' object has no attribute 'pic_src_1'"))
+
+2021-12-12 | ('Error on line 196', 'TypeError', TypeError("'Media' object does not support item assignment"))
+
+2021-12-12 | ('Error on line 196', 'TypeError', TypeError("'Media' object does not support item assignment"))
+
+2021-12-12 | ('Error on line 196', 'TypeError', TypeError("'Media' object does not support item assignment"))
+
+2021-12-12 | ('Error on line 196', 'TypeError', TypeError("'Media' object does not support item assignment"))
+
+2021-12-12 | ('Error on line 196', 'AttributeError', AttributeError("'Media' object has no attribute 'update'"))
+
+2021-12-12 | ('Error on line 196', 'AttributeError', AttributeError("Could not locate column in row for column 'data'"))
+
+2021-12-12 | ('Error on line 196', 'AttributeError', AttributeError("Could not locate column in row for column 'data'"))
+
+2021-12-12 | ('Error on line 196', 'TypeError', TypeError("'Row' object does not support item assignment"))
+
+2021-12-12 | ('Error on line 195', 'TypeError', TypeError("'Row' object does not support item assignment"))
+
+2021-12-12 | ('Error on line 194', 'TypeError', TypeError("'Row' object does not support item assignment"))
+
+2021-12-12 | ('Error on line 194', 'TypeError', TypeError("'Row' object does not support item assignment"))
+
+2021-12-12 | ('Error on line 194', 'TypeError', TypeError("'Row' object does not support item assignment"))
+
+2021-12-12 | ('Error on line 194', 'TypeError', TypeError("'Row' object does not support item assignment"))
+
+2021-12-12 | ('Error on line 195', 'TypeError', TypeError("'Media' object is not subscriptable"))
+
+2021-12-12 | ('Error on line 195', 'AttributeError', AttributeError("Could not locate column in row for column '__dict__'"))
+
+2021-12-12 | ('Error on line 192', 'TypeError', TypeError("'Media' object is not subscriptable"))
+
+2021-12-12 | ('Error on line 192', 'TypeError', TypeError("'Media' object is not subscriptable"))
+
+2021-12-12 | ('Error on line 191', 'AttributeError', AttributeError("'NoneType' object has no attribute 'execute'"))
+
+2021-12-12 | ('Error on line 191', 'AttributeError', AttributeError("'NoneType' object has no attribute 'execute'"))
+
+2021-12-12 | ('Error on line 192', 'TypeError', TypeError("'Media' object is not subscriptable"))
+
+2021-12-12 | ('Error on line 191', 'TypeError', TypeError("'Media' object is not subscriptable"))
+
+2021-12-12 | ('Error on line 191', 'TypeError', TypeError("'Media' object is not subscriptable"))
+
+2021-12-12 | ('Error on line 191', 'TypeError', TypeError("'Media' object is not subscriptable"))
+
+2021-12-12 | ('Error on line 191', 'TypeError', TypeError("'Media' object is not subscriptable"))
+
+2021-12-12 | ('Error on line 192', 'TypeError', TypeError("'Media' object is not subscriptable"))
+
+2021-12-12 | ('Error on line 195', 'TypeError', TypeError("'Media' object does not support item assignment"))
+
+2021-12-12 | ('Error on line 193', 'FileNotFoundError', FileNotFoundError(2, 'No such file or directory'))
+
+2021-12-12 | ('Error on line 193', 'FileNotFoundError', FileNotFoundError(2, 'No such file or directory'))
+
+2021-12-12 | ('Error on line 193', 'FileNotFoundError', FileNotFoundError(2, 'No such file or directory'))
+
+2021-12-12 | ('Error on line 193', 'FileNotFoundError', FileNotFoundError(2, 'No such file or directory'))
+

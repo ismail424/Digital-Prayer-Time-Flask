@@ -11,6 +11,13 @@ class Media(db.Model):
     google_slide_src = db.Column(db.String, nullable=True)
     video_src = db.Column(db.String, nullable=True)
 
+    def __init__(self, id, pic_src_1, pic_src_2, google_slide_src, video_src):
+        self.id = id
+        self.pic_src_1 = pic_src_1
+        self.pic_src_2 = pic_src_2
+        self.google_slide_src = google_slide_src
+        self.video_src = video_src
+
     def __repr__(self):
         return '<Media %r>' % self.id
 

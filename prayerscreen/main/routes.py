@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, Blueprint
+from flask.scaffold import F
 from requests.api import get
 from prayerscreen.utils import *
 from prayerscreen.new_prayer_times import *
@@ -130,8 +131,8 @@ def save_settings():
     else:
         return redirect("/")
     
-@main.route( '/images' )
-def images():
+@main.route( '/media' )
+def media():
     images = get_images()
     try:
         url1 = os.path.join(UPLOAD_FILE_SRC, images["url_1"])
@@ -180,29 +181,26 @@ def save_images():
         return redirect("/")
     
 
-@main.route( '/delete/file/<id>' )
+@main.route( '/delete/file/<int:id>' )
 def delete_file(id):
-    if id == "1" or id == "2" or id == "3":
-        conn = sqlite3.connect("database.db")
-        c = conn.cursor()
-        file_list = ["url_1", "url_2", "video_url"]
-        remove_current_file  = file_list[int(id)-1]
+    if id in [1,2,3]:
         try:
-            c.execute("SELECT {} from images".format(remove_current_file))
-            file_path = c.fetchone()[0]
+            all_files = ["pic_src_1", "pic_src_2", "video_src"]
+            fileToRemove  = all_files[id-1]
+            full_media = Media.query.first()
+            file_path = getattr(full_media, fileToRemove)
             if len(file_path) != 0:
-                os.remove(os.path.join(UPLOAD_FILE_SRC, file_path))            
+                os.remove(os.path.join(UPLOAD_FILE_SRC, file_path))         
+                            
+            full_media.__setattr__(fileToRemove, "")
+            db.session.commit()
+              
         except Exception as e:
             save_error(e)
-        try:
-            c.execute("""UPDATE images SET {} = '' """.format(remove_current_file))
-            conn.commit()  
-            
-        except Exception as e:
-            save_error(e)
+            return "Error deleting file"
+
     refresh()
     return redirect("/images")
-
 
 
 @main.route( '/translate' )
