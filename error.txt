@@ -68,3 +68,59 @@
 
 2021-12-12 | ('Error on line 193', 'FileNotFoundError', FileNotFoundError(2, 'No such file or directory'))
 
+2021-12-24 | ('Error on line 229', 'OperationalError', OperationalError('no such table: settings'))
+
+2021-12-24 | ('Error on line 188', 'OperationalError', OperationalError('no such table: translate'))
+
+2021-12-25 | ('Error on line 229', 'OperationalError', OperationalError('no such table: settings'))
+
+2021-12-25 | ('Error on line 229', 'OperationalError', OperationalError('no such table: settings'))
+
+2021-12-25 | ('Error on line 229', 'OperationalError', OperationalError('no such table: settings'))
+
+2021-12-25 | ('Error on line 229', 'OperationalError', OperationalError('no such table: settings'))
+
+2021-12-25 | ('Error on line 229', 'OperationalError', OperationalError('no such table: settings'))
+
+2021-12-25 | ('Error on line 229', 'OperationalError', OperationalError('no such table: settings'))
+
+2021-12-25 | ('Error on line 229', 'OperationalError', OperationalError('no such table: settings'))
+
+2021-12-25 | ('Error on line 229', 'OperationalError', OperationalError('no such table: settings'))
+
+2021-12-25 | ('Error on line 229', 'OperationalError', OperationalError('no such table: settings'))
+
+2021-12-25 | ('Error on line 229', 'OperationalError', OperationalError('no such table: settings'))
+
+2021-12-25 | ('Error on line 229', 'OperationalError', OperationalError('no such table: settings'))
+
+2021-12-25 | ('Error on line 229', 'OperationalError', OperationalError('no such table: settings'))
+
+2021-12-25 | ('Error on line 229', 'OperationalError', OperationalError('no such table: settings'))
+
+2021-12-25 | ('Error on line 229', 'OperationalError', OperationalError('no such table: settings'))
+
+2021-12-25 | ('Error on line 229', 'OperationalError', OperationalError('no such table: settings'))
+
+2021-12-25 | ('Error on line 229', 'OperationalError', OperationalError('no such table: settings'))
+
+2021-12-25 | ('Error on line 229', 'OperationalError', OperationalError('no such table: settings'))
+
+2021-12-25 | ('Error on line 229', 'OperationalError', OperationalError('no such table: settings'))
+
+2021-12-25 | ('Error on line 229', 'OperationalError', OperationalError('no such table: settings'))
+
+2021-12-25 | ('Error on line 229', 'OperationalError', OperationalError('no such table: settings'))
+
+2021-12-25 | ('Error on line 229', 'OperationalError', OperationalError('no such table: settings'))
+
+2021-12-25 | ('Error on line 229', 'OperationalError', OperationalError('no such table: settings'))
+
+2021-12-25 | ('Error on line 229', 'OperationalError', OperationalError('no such table: settings'))
+
+2021-12-25 | ('Error on line 229', 'OperationalError', OperationalError('no such table: settings'))
+
+2021-12-25 | ('Error on line 229', 'OperationalError', OperationalError('no such table: settings'))
+
+2021-12-25 | ('Error on line 229', 'OperationalError', OperationalError('no such table: settings'))
+

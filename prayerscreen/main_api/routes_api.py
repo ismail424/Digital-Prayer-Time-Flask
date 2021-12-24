@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, Blueprint
+from flask import render_template, request, redirect, Blueprint
 from flask.scaffold import F
 from requests.api import get
 from prayerscreen.utils import *
@@ -8,46 +8,43 @@ from prayerscreen import db
 from prayerscreen.config import Config
 from prayerscreen.models import *
 from time import sleep
-import sqlite3
 import json
 import os
 import socket
 
-
-main = Blueprint('main', __name__)
-
 UPLOAD_FILE_SRC = Config.UPLOAD_FOLDER
+api = Blueprint('api', __name__)
 
 
-@main.route( '/' )
+@api.route( '/' )
 def index():
-    return render_template( 'index.html' )
+    return {'message': 'Hello, World!'}
 
-@main.route( '/error' )
+@api.route( '/error' )
 def error_text_file():
     error_list = open("prayerscreen/error.txt","r").readlines()
     return render_template( 'error.html' , error_list = error_list)
 
-@main.route( '/sync' )
+@api.route( '/sync' )
 def sync():
     sync_time()
     return redirect("/")
 
-@main.route( '/update' )
+@api.route( '/update' )
 def update_now():
     update()
     return redirect("/")
 
-@main.route( '/setup-realtimeclock' )
+@api.route( '/setup-realtimeclock' )
 def realtimeclock():
     return setup_realtimeclock()
 
-@main.route( '/prayertime' )
+@api.route( '/prayertime' )
 def prayertimes():
     prayertimes = PrayerTimes.query.all()
     return render_template( 'prayer_tabel.html', prayertimes = prayertimes )
 
-@main.route( '/import/prayertime' , methods=["GET","POST"])
+@api.route( '/import/prayertime' , methods=["GET","POST"])
 def import_prayertime():
     if request.method == 'POST':
         try:
@@ -69,21 +66,21 @@ def import_prayertime():
 
 
 
-@main.route( '/prayerscreen' )
+@api.route( '/prayerscreen' )
 def prayer_times():
     return render_template( 'prayer_times.html' )
 
-@main.route( '/api/get_prayertimes' )
+@api.route( '/api/get_prayertimes' )
 def api_get_prayertimes():
     prayer_times = get_prayertime_api()
     return prayer_times
 
-@main.route( '/api/get_images' )
+@api.route( '/api/get_images' )
 def api_get_images():
     images = get_images()
     return json.dumps(images)
 
-@main.route( '/api/get_ip' )
+@api.route( '/api/get_ip' )
 def get_ip():
     try:
         settings = Settings.query.filter_by(id=1).first()
@@ -103,24 +100,24 @@ def get_ip():
     except:
         return {"ip": "127.0.0.1", "qrcode_on": "false"}
 
-@main.route( '/api/get_translation' )
+@api.route( '/api/get_translation' )
 def api_get_translation():
     translation = get_translation_json()
     return translation
 
-@main.route( '/settings' )
+@api.route( '/settings' )
 def settings():
     settings =  get_settings()
     print(settings['fajr_iqamah_before_sunrise'])
     return render_template( 'settings.html' , settings = settings )
 
-@main.route( '/advanced' )
+@api.route( '/advanced' )
 def advanced():
     return render_template( 'advanced.html'  )
 
 
 
-@main.route( '/save/settings', methods=["GET","POST"] )
+@api.route( '/save/settings', methods=["GET","POST"] )
 def save_settings():
     if request.method == "POST":
         settings = dict(request.form)
@@ -131,7 +128,7 @@ def save_settings():
     else:
         return redirect("/")
     
-@main.route( '/media' )
+@api.route( '/media' )
 def media():
     images = get_images()
     try:
@@ -142,7 +139,7 @@ def media():
         url2 = ""
     return render_template( 'images.html', images = images, url1 = url1, url2 = url2)
 
-@main.route( '/save/images', methods=["GET","POST"] )
+@api.route( '/save/images', methods=["GET","POST"] )
 def save_images():
     if request.method == "POST":
         
@@ -181,7 +178,7 @@ def save_images():
         return redirect("/")
     
 
-@main.route( '/delete/file/<int:id>' )
+@api.route( '/delete/file/<int:id>' )
 def delete_file(id):
     if id in [1,2,3]:
         try:
@@ -192,7 +189,7 @@ def delete_file(id):
             if len(file_path) != 0:
                 os.remove(os.path.join(UPLOAD_FILE_SRC, file_path))         
                             
-            full_media.__setattr__(fileToRemove, "")
+            setattr(full_media, fileToRemove, '')
             db.session.commit()
               
         except Exception as e:
@@ -203,7 +200,7 @@ def delete_file(id):
     return redirect("/images")
 
 
-@main.route( '/translate' )
+@api.route( '/translate' )
 def translate():
     translate = get_translation()
     the_key_values = ["monday" ,"tuesday" ,"wednesday" ,"thursday" ,"friday" ,"saturday" ,"sunday" ,"prayer" ,"begins" ,"iqamah" , "fajr" , 
@@ -211,7 +208,7 @@ def translate():
     translate = dict(zip(the_key_values, translate))
     return render_template( 'translate.html' , translate= translate)
 
-@main.route( '/save/translate', methods=["GET","POST"] )
+@api.route( '/save/translate', methods=["GET","POST"] )
 def save_translate():
     if request.method == "POST":
         translate = dict(request.form)
@@ -220,13 +217,13 @@ def save_translate():
         refresh()
         return redirect("/translate")
     else:
-        return redirect("/")    
+        return redirect("/")  
         
-@main.route( '/get_vaktija_eu' )
+@api.route( '/get_vaktija_eu' )
 def get_vaktija_eu():
     return get_all_data_vakitja_eu()
 
-@main.route( '/refresh' )
+@api.route( '/refresh' )
 def refresh_now():
     refresh()
     return redirect("/")
