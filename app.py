@@ -90,9 +90,22 @@ def import_prayertime():
     return redirect("/")
 
 
-
+first_time = True
 @app.route( '/prayerscreen' )
 def prayer_times():
+    global first_time
+    if first_time:
+        first_time = False
+    try:
+        with open('json_test/settings.json', 'r') as f:
+            data = json.load(f)
+            rotation = data["screen_rotation"]
+    except Exception as e:
+        print(e)
+        with open('json_test/settings.json', 'w') as f:
+            f.write('{"screen_rotation": "normal"}')
+        rotation = "normal"
+    os.system("xrandr -o {};".format(rotation))
     return render_template( 'prayer_times.html' )
 
 
@@ -315,10 +328,13 @@ def new_prayertime_salahtimes2(json):
 def rotate_screen(json):
     try:
         rotation  = str(json["data"])
-        rotation_command = f"xrandr -o {rotation}"
+        try:
+            with open('settings.json', 'w') as f:
+                json.dump({"screen_rotation": rotation }, f)
+        except Exception as e:
+            print(e)
         os.system("xrandr -o {};".format(rotation))
-        os.system("autorandr --save {} --force;".format(rotation))
-        os.system("autorandr --change;")
+
     except Exception as e:
         print(e)
         save_error(e)            
