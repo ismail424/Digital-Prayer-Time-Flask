@@ -97,13 +97,10 @@ def prayer_times():
     if first_time:
         first_time = False
     try:
-        with open('json_test/settings.json', 'r') as f:
+        with open('settings.json', 'r') as f:
             data = json.load(f)
             rotation = data["screen_rotation"]
     except Exception as e:
-        print(e)
-        with open('json_test/settings.json', 'w') as f:
-            f.write('{"screen_rotation": "normal"}')
         rotation = "normal"
     os.system("xrandr -o {};".format(rotation))
     return render_template( 'prayer_times.html' )
