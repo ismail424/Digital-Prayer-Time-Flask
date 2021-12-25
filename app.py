@@ -327,7 +327,7 @@ def rotate_screen(json):
         rotation  = str(json["data"])
         try:
             with open('settings.json', 'w') as f:
-                command = '{ "screen_rotation" : %s }' % rotation
+                command = '{ "screen_rotation" : "%s" }' % rotation
                 f.write(command)
         except Exception as e:
             print(e)
