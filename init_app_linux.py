@@ -22,6 +22,8 @@ os.system("sudo apt install firefox-esr -y;")
 # ----------- Install ScreenSaver ----------- 
 os.system("sudo apt install xscreensaver -y;")
 
+os.system("sudo apt install autorandr -y;")
+
 # ----------- Install Authbind ----------- 
 os.system('sudo apt install authbind -y;sudo touch /etc/authbind/byport/80;sudo chmod 777 /etc/authbind/byport/80;')
 
