@@ -7,13 +7,111 @@
 
 <div class="container_padding"> 
     <!-- Salah times -->
-    <h1 class="title left">Change prayertimes - Salahtimes:</h1>
+    <!-- <h1 class="title left">Change prayertimes - Salahtimes:</h1>
     <p>Go to this website: <a href="https://www.salahtimes.com/countries" target="_blank">Salahtimes</a></p><br>
     <p>Enter location and copy the URL <br><b>Example: https://www.salahtimes.com/sweden/gothenburg</b></p><br>
     <label for="salahtimes_url">Enter URL that you copied(Salahtimes):</label>
     <input type="text" id="salahtimes_url" required  name="salahtimes_url" placeholder="URL">
     <button  id="save_prayertime" class="save" style="display:block; margin: 20px 0px;"  >Save prayertimes</button><br><br><hr><br>
-    
+ -->
+
+    <!-- Islamiskaforbundet.se -->
+    <h1 class="title left">Islamiska Förbundet (Sverige):</h1>
+    <p>Select a city </p><br>
+    <select class="select" name="city" id="city_islamiskaforbundet">
+        <option value="Stockholm">Stockholm</option>
+        <option value="Alingsås">Alingsås</option>
+        <option value="Avesta">Avesta</option>
+        <option value="Bengtsfors">Bengtsfors</option>
+        <option value="Boden">Boden</option>
+        <option value="Bollnäs">Bollnäs</option>
+        <option value="Borlänge">Borlänge</option>
+        <option value="Borås">Borås</option>
+        <option value="Enköping">Enköping</option>
+        <option value="Eskilstuna">Eskilstuna</option>
+        <option value="Eslöv">Eslöv</option>
+        <option value="Falkenberg">Falkenberg</option>
+        <option value="Falköping">Falköping</option>
+        <option value="Flen">Flen</option>
+        <option value="Filipstad">Filipstad</option>
+        <option value="Gislaved">Gislaved</option>
+        <option value="Gnosjö">Gnosjö</option>
+        <option value="Gävle">Gävle</option>
+        <option value="Göteborg">Göteborg</option>
+        <option value="Halmstad">Halmstad</option>
+        <option value="Haparanda">Haparanda</option>
+        <option value="Helsingborg">Helsingborg</option>
+        <option value="Hudiksvall">Hudiksvall</option>
+        <option value="Hultsfred">Hultsfred</option>
+        <option value="Härnösand">Härnösand</option>
+        <option value="Hässleholm">Hässleholm</option>
+        <option value="Jokkmokk">Jokkmokk</option>
+        <option value="Jönköping">Jönköping</option>
+        <option value="Kalmar">Kalmar</option>
+        <option value="Karlskoga">Karlskoga</option>
+        <option value="Karlskrona">Karlskrona</option>
+        <option value="Karlstad">Karlstad</option>
+        <option value="Katrineholm">Katrineholm</option>
+        <option value="Kiruna">Kiruna</option>
+        <option value="Kristianstad">Kristianstad</option>
+        <option value="Kristinehamn">Kristinehamn</option>
+        <option value="Köping">Köping</option>
+        <option value="Landskrona">Landskrona</option>
+        <option value="Lessebo">Lessebo</option>
+        <option value="Lidköping">Lidköping</option>
+        <option value="Linköping">Linköping</option>
+        <option value="Ludvika">Ludvika</option>
+        <option value="Luleå">Luleå</option>
+        <option value="Lund">Lund</option>
+        <option value="Malmö">Malmö</option>
+        <option value="Mariestad">Mariestad</option>
+        <option value="Mellerud">Mellerud</option>
+        <option value="Mjölby">Mjölby</option>
+        <option value="Norrköping">Norrköping</option>
+        <option value="Norrtälje">Norrtälje</option>
+        <option value="Nyköping">Nyköping</option>
+        <option value="Nässjö">Nässjö</option>
+        <option value="Oskarshamn">Oskarshamn</option>
+        <option value="Oxelösund">Oxelösund</option>
+        <option value="Pajala">Pajala</option>
+        <option value="Piteå">Piteå</option>
+        <option value="Ronneby">Ronneby</option>
+        <option value="Sala">Sala</option>
+        <option value="Simrishamn">Simrishamn</option>
+        <option value="Skara">Skara</option>
+        <option value="Skellefteå">Skellefteå</option>
+        <option value="Skövde">Skövde</option>
+        <option value="Sollefteå">Sollefteå</option>
+        <option value="Strängnäs">Strängnäs</option>
+        <option value="Sundsvall">Sundsvall</option>
+        <option value="Sävsjö">Sävsjö</option>
+        <option value="Söderhamn">Söderhamn</option>
+        <option value="Södertälje">Södertälje</option>
+        <option value="Tierp">Tierp</option>
+        <option value="Tranemo">Tranemo</option>
+        <option value="Trelleborg">Trelleborg</option>
+        <option value="Trollhättan">Trollhättan</option>
+        <option value="Uddevalla">Uddevalla</option>
+        <option value="Ulricehamn">Ulricehamn</option>
+        <option value="Umeå">Umeå</option>
+        <option value="Uppsala">Uppsala</option>
+        <option value="Varberg">Varberg</option>
+        <option value="Vetlanda">Vetlanda</option>
+        <option value="Visby">Visby</option>
+        <option value="Vänersborg">Vänersborg</option>
+        <option value="Värnamo">Värnamo</option>
+        <option value="Västervik">Västervik</option>
+        <option value="Västerås">Västerås</option>
+        <option value="Växjö">Växjö</option>
+        <option value="Ystad">Ystad</option>
+        <option value="Åmål">Åmål</option>
+        <option value="Örebro">Örebro</option>
+        <option value="Örnsköldsvik">Örnsköldsvik</option>
+        <option value="Östersund">Östersund</option>     
+    </select>
+    <button  id="save_prayertime" class="save" style="display:block; margin: 20px 0px;" >Save Prayertimes</button>
+    <br><br>
+    <hr>
 
     <!-- Vaktija.ba -->
     <h1 class="title left">Vaktija.ba (Bosnian prayertimes):</h1>

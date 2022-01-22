@@ -253,20 +253,14 @@ def save_translate():
 @socketio.on('new-prayertime-salahtimes')
 def new_prayertime_salahtimes(json):
     try:
-        url = str(json["data"])
-        original_url = url + "/render"
-        url = url[27:].strip()
-        list = url.split("/")
-        country = list[0]
-        city = list[1]
-        print(original_url, country, city)
+        city = str(json["data"])
         if internet_on():
             try:
-                if CheckURL(original_url):
-                    print(DeleteTable("prayertimes"))
-                    print(CreateTable( "prayertimes" ))
-                    print(NewPrayerTime( original_url, country, city ))     
-                    socketio.emit("success")
+                print("Islamska förbundet saving new prayertime", city)
+                print(DeleteTable("prayertimes"))
+                print(CreateTable( "prayertimes" ))
+                if save_islamiska_forbundet_data(city):
+                    print("Islamska förbundet saved")
                     refresh()
                 else:
                     socketio.emit("error_url")

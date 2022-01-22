@@ -343,6 +343,58 @@ def get_prayertime_vaktija( id ):
         conn.close()
     except Exception as e:
         print(e)       
+        
+        
+def  save_islamiska_forbundet_data(city: str):
+    conn = sqlite3.connect("database.db")
+    c = conn.cursor()
+    
+    url = "https://www.islamiskaforbundet.se/wp-content/plugins/bonetider/Bonetider_Widget.php"
+    cities = ['Stockholm', 'Alingsås', 'Avesta', 'Bengtsfors', 'Boden', 'Bollnäs', 'Borlänge', 'Borås', 'Enköping', 'Eskilstuna', 'Eslöv', 'Falkenberg', 'Falköping', 'Flen', 'Filipstad', 'Gislaved', 'Gnosjö', 'Gävle', 'Göteborg', 'Halmstad', 'Haparanda', 'Helsingborg', 'Hudiksvall', 'Hultsfred', 'Härnösand', 'Hässleholm', 'Jokkmokk', 'Jönköping', 'Kalmar', 'Karlskoga', 'Karlskrona', 'Karlstad', 'Katrineholm', 'Kiruna', 'Kristianstad', 'Kristinehamn', 'Köping', 'Landskrona', 'Lessebo', 'Lidköping', 'Linköping', 'Ludvika', 'Luleå', 'Lund', 'Malmö', 'Mariestad', 'Mellerud', 'Mjölby', 'Norrköping', 'Norrtälje', 'Nyköping', 'Nässjö', 'Oskarshamn', 'Oxelösund', 'Pajala', 'Piteå', 'Ronneby', 'Sala', 'Simrishamn', 'Skara', 'Skellefteå', 'Skövde', 'Sollefteå', 'Strängnäs', 'Sundsvall', 'Sävsjö', 'Söderhamn', 'Södertälje', 'Tierp', 'Tranemo', 'Trelleborg', 'Trollhättan', 'Uddevalla', 'Ulricehamn', 'Umeå', 'Uppsala', 'Varberg', 'Vetlanda', 'Visby', 'Vänersborg', 'Värnamo', 'Västervik', 'Västerås', 'Växjö', 'Ystad', 'Åmål', 'Örebro', 'Örnsköldsvik', 'Östersund']
+    if city not in cities:
+        return "City not found"
+    try:
+
+        headers = {
+            'accept': '*/*',
+            'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
+            'x-requested-with': 'XMLHttpRequest',
+            'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36'
+        }
+        data = {
+        'ifis_bonetider_page_city': '',
+        'ifis_bonetider_page_month': '1'
+        }
+        data['ifis_bonetider_page_city'] = city + ", SE"
+        
+        
+        for month in range(1,13):
+            print(f"{city} {month}")
+
+            data['ifis_bonetider_page_month'] = str(month)
+            res = requests.post(url, headers=headers, data=data)
+            
+            html = soup(res.text, 'html.parser')
+            all_td = html.find_all('td')
+            all_td = [td.text for td in all_td]
+            prayertimes_month = []
+            for i in range(0, len(all_td), 7):
+                prayertimes_month.append(all_td[i:i+7])
+            
+            for element in prayertimes_month:
+                current_year =  datetime.datetime.now().year
+                element[0] = f"0{element[0]}" if len(element[0]) == 1 else element[0]
+                month = f"0{month}" if len(str(month)) == 1 else month
+                date = f"{current_year}-{month}-{element[0]}"
+                c.execute("INSERT INTO prayertimes VALUES ( ? , ? , ? , ? , ? , ? , ?)", (date,element[1],element[2],element[3],element[4],element[5],element[6]))
+            
+            
+        conn.commit()
+        conn.close()
+        return True
+    except:
+        print("Error Ismalska forbudentet - failed to get prayertimes")
+        return False
     
 def get_prayertimes_vaktijaEU( location_slug ):
     url = "https://api.vaktija.eu/v1/locations/slug/" + location_slug

@@ -8,3 +8,5 @@
 
 2021-12-01 | ('Error on line 320', 'PermissionError', PermissionError(13, 'Permission denied'))
 
+2022-01-22 | ('Error on line 276', 'ValueError', ValueError("invalid literal for int() with base 10: 'Stockholm'"))
+
