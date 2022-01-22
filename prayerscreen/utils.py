@@ -153,7 +153,7 @@ def calculate_iqamah( date ):
     except Exception as e: 
         save_error(e)
         try:
-            with open("error.txt", "a") as f:
+            with open("prayerscreen/error.txt", "a") as f:
                 f.write(str(e)+"\n\n")
         except:
             pass
