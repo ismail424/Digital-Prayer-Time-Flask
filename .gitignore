@@ -2,7 +2,8 @@
 __pycache__/
 *.py[cod]
 *$py.class
-
+ps-react/node_modules
+./ps-react/node_modules
 # C extensions
 *.so
 
