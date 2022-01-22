@@ -90,9 +90,19 @@ def import_prayertime():
     return redirect("/")
 
 
-
+first_time = True
 @app.route( '/prayerscreen' )
 def prayer_times():
+    global first_time
+    if first_time:
+        first_time = False
+    try:
+        with open('settings.json', 'r') as f:
+            data = json.load(f)
+            rotation = data["screen_rotation"]
+    except Exception as e:
+        rotation = "normal"
+    os.system("xrandr -o {};".format(rotation))
     return render_template( 'prayer_times.html' )
 
 
@@ -309,15 +319,14 @@ def new_prayertime_salahtimes2(json):
 def rotate_screen(json):
     try:
         rotation  = str(json["data"])
-        rotation_command = f"xrandr -o {rotation}"
-        rotation_autostart = "/etc/X11/Xsession.d/45custom_xrandr-settings"
-        if os.path.exists(rotation_autostart) != True:
-            subprocess.call(['sudo', 'touch', rotation_autostart])
-            subprocess.call(['sudo', 'chmod', '777', rotation_autostart])
-        with open(rotation_autostart, "w") as f:
-            f.write(rotation_command)
-        
-        os.system("xrandr -o {}".format(rotation))
+        try:
+            with open('settings.json', 'w') as f:
+                command = '{ "screen_rotation" : "%s" }' % rotation
+                f.write(command)
+        except Exception as e:
+            print(e)
+        os.system("xrandr -o {};".format(rotation))
+
     except Exception as e:
         print(e)
         save_error(e)            
