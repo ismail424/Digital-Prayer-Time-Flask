@@ -15,6 +15,16 @@
     <button onclick="rotate('right')" class="child">Right</button>
     <button onclick="rotate('inverted')" class="child">Inverted</button>
 </div>
+<br>
+<hr>
+<br>
+<p id="screen-rotate-name">Screen resolution:</p>
+<div class="parent">
+    <button onclick="resolution('2560x1440')" class="child">4K (2560x1440)</button>
+    <button onclick="resolution('1920x1080')" class="child">HD (1920x1080)</button>
+    <button onclick="resolution('1600x1200')" class="child">1600x1200</button>
+    <button onclick="resolution('1440x900')" class="child">1440x900</button>
+</div>
 <a href="/" class="button" style="background-color: red !important;">Back</a>
 <script>
     var socket = io();
@@ -27,6 +37,12 @@
     const rotate = (rotation) => {
         console.log(rotation)
         socket.emit('rotate_screen', {"data": rotation});
+
+    }
+
+    const resolution = (resolution) => {
+        console.log(resolution)
+        socket.emit('resolution_screen', {"data": resolution});
 
     }
 </script>

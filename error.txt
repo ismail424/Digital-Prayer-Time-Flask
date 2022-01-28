@@ -10,3 +10,53 @@
 
 2022-01-22 | ('Error on line 276', 'ValueError', ValueError("invalid literal for int() with base 10: 'Stockholm'"))
 
+2022-01-28 | ('Error on line 341', 'AttributeError', AttributeError("'dict' object has no attribute 'load'"))
+
+2022-01-28 | ('Error on line 341', 'AttributeError', AttributeError("'dict' object has no attribute 'load'"))
+
+2022-01-28 | ('Error on line 341', 'AttributeError', AttributeError("'dict' object has no attribute 'loads'"))
+
+2022-01-28 | ('Error on line 341', 'AttributeError', AttributeError("'dict' object has no attribute 'loads'"))
+
+2022-01-28 | ('Error on line 341', 'AttributeError', AttributeError("'dict' object has no attribute 'load'"))
+
+2022-01-28 | ('Error on line 341', 'AttributeError', AttributeError("'dict' object has no attribute 'load'"))
+
+2022-01-28 | ('Error on line 343', 'TypeError', TypeError("object of type '_io.TextIOWrapper' has no len()"))
+
+2022-01-28 | ('Error on line 344', 'TypeError', TypeError("'str' object does not support item assignment"))
+
+2022-01-28 | ('Error on line 342', 'AttributeError', AttributeError("'dict' object has no attribute 'loads'"))
+
+2022-01-28 | ('Error on line 341', 'AttributeError', AttributeError("'dict' object has no attribute 'load'"))
+
+2022-01-28 | ('Error on line 341', 'AttributeError', AttributeError("'dict' object has no attribute 'load'"))
+
+2022-01-28 | ('Error on line 341', 'AttributeError', AttributeError("'dict' object has no attribute 'load'"))
+
+2022-01-28 | ('Error on line 341', 'AttributeError', AttributeError("'dict' object has no attribute 'load'"))
+
+2022-01-28 | ('Error on line 341', 'AttributeError', AttributeError("'dict' object has no attribute 'load'"))
+
+2022-01-28 | ('Error on line 341', 'AttributeError', AttributeError("'dict' object has no attribute 'load'"))
+
+2022-01-28 | ('Error on line 341', 'AttributeError', AttributeError("'dict' object has no attribute 'load'"))
+
+2022-01-28 | ('Error on line 341', 'ValueError', ValueError('dictionary update sequence element #0 has length 1; 2 is required'))
+
+2022-01-28 | ('Error on line 341', 'AttributeError', AttributeError("'dict' object has no attribute 'load'"))
+
+2022-01-28 | ('Error on line 341', 'AttributeError', AttributeError("'dict' object has no attribute 'load'"))
+
+2022-01-28 | ('Error on line 343', 'TypeError', TypeError('dumps() takes 1 positional argument but 2 were given'))
+
+2022-01-28 | ('Error on line 343', 'TypeError', TypeError('dumps() takes 1 positional argument but 2 were given'))
+
+2022-01-28 | ('Error on line 343', 'UnsupportedOperation', UnsupportedOperation('not writable'))
+
+2022-01-28 | ('Error on line 343', 'UnsupportedOperation', UnsupportedOperation('not writable'))
+
+2022-01-28 | ('Error on line 340', 'ValueError', ValueError('must have exactly one of create/read/write/append mode'))
+
+2022-01-28 | ('Error on line 341', 'UnsupportedOperation', UnsupportedOperation('not readable'))
+

@@ -1,4 +1,5 @@
 #Import Flask and SOCKET.IO
+from calendar import c
 from flask import Flask, render_template, request, redirect
 
 # from flask_socketio import SocketIO, emit
@@ -100,9 +101,11 @@ def prayer_times():
         with open('settings.json', 'r') as f:
             data = json.load(f)
             rotation = data["screen_rotation"]
+            screen_resolution = data["screen_resolution"]
     except Exception as e:
         rotation = "normal"
-    os.system("xrandr -o {};".format(rotation))
+        screen_resolution = "1920x1080"
+    os.system("xrandr -o {} -s {};".format(rotation, screen_resolution))
     return render_template( 'prayer_times.html' )
 
 
@@ -316,13 +319,16 @@ def new_prayertime_salahtimes2(json):
         save_error(e)    
         
 @socketio.on('rotate_screen')
-def rotate_screen(json):
+def rotate_screen(json_data):
     try:
-        rotation  = str(json["data"])
+        rotation  = str(json_data["data"])
         try:
+            with open('settings.json', "r") as f:
+                json_object = json.load(f)
+                json_object["screen_rotation"] = rotation
             with open('settings.json', 'w') as f:
-                command = '{ "screen_rotation" : "%s" }' % rotation
-                f.write(command)
+                json.dump(json_object, f)
+  
         except Exception as e:
             print(e)
         os.system("xrandr -o {};".format(rotation))
@@ -330,6 +336,25 @@ def rotate_screen(json):
     except Exception as e:
         print(e)
         save_error(e)            
+        
+@socketio.on('resolution_screen')
+def resolution_screen(json_data):
+    try:
+        resolution  = str(json_data["data"])
+        try:
+            with open('settings.json', "r") as f:
+                json_object = json.load(f)
+                json_object["screen_resolution"] = resolution
+            with open('settings.json', 'w') as f:
+                json.dump(json_object, f)
+            os.system("xrandr -s {};".format(resolution))
+        except Exception as e:
+            pass
+            
+    except Exception as e:
+        print(e)
+        save_error(e)        
+                
         
 @app.route( '/get_vaktija_eu' )
 def get_vaktija_eu():
