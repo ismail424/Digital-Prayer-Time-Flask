@@ -91,20 +91,25 @@ def import_prayertime():
     return redirect("/")
 
 
-first_time = True
 @app.route( '/prayerscreen' )
 def prayer_times():
-    global first_time
-    if first_time:
-        first_time = False
     try:
-        with open('settings.json', 'r') as f:
-            data = json.load(f)
-            rotation = data["screen_rotation"]
-            screen_resolution = data["screen_resolution"]
-    except Exception as e:
+        full_path = os.path.abspath(os.path.join(os.path.dirname(__file__),"."))
+        full_path += "/settings.json"
+        try:
+            with open(full_path, 'r') as f:
+                data = json.load(f)
+                rotation = data["screen_rotation"]
+                screen_resolution = data["screen_resolution"]
+        except:
+            with open('settings.json', 'r') as f:
+                data = json.load(f)
+                rotation = data["screen_rotation"]
+                screen_resolution = data["screen_resolution"]
+    except:
         rotation = "normal"
         screen_resolution = "1920x1080"
+    print(rotation, screen_resolution)
     os.system("xrandr -o {} -s {};".format(rotation, screen_resolution))
     return render_template( 'prayer_times.html' )
 
@@ -375,7 +380,7 @@ def refresh():
 if __name__ == '__main__':
 
     #Debug only
-    # socketio.run( app, debug = True, port = 80 )
+    #ocketio.run( app, debug = True, port = 5000 )
 
     #Server (LAN)
     socketio.run(app, host='0.0.0.0', debug=True, port=80)
