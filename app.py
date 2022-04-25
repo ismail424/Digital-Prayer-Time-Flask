@@ -115,6 +115,7 @@ def prayer_times():
         
     try:
         import subprocess
+        os.system("export DISPLAY=:0.0")
         output = [l for l in subprocess.check_output(["xrandr"]).decode("utf-8").splitlines()]
         screens = [l.split()[0] for l in output if " connected " in l]
         for screen in screens:
@@ -355,6 +356,7 @@ def rotate_screen(json_data):
             print(e)
         
         import subprocess
+        os.system("export DISPLAY=:0.0")
         output = [l for l in subprocess.check_output(["xrandr"]).decode("utf-8").splitlines()]
         screens = [l.split()[0] for l in output if " connected " in l]
         for screen in screens:
@@ -381,7 +383,20 @@ def resolution_screen(json_data):
                 json_object["screen_resolution"] = resolution
             with open('settings.json', 'w') as f:
                 json.dump(json_object, f)
-            os.system("xrandr -s {};".format(resolution))
+                
+            import subprocess
+            os.system("export DISPLAY=:0.0")
+            output = [l for l in subprocess.check_output(["xrandr"]).decode("utf-8").splitlines()]
+            screens = [l.split()[0] for l in output if " connected " in l]
+            for screen in screens:
+                subprocess.call(["xrandr", "--output", screen, "--mode", resolution])
+
+            if screens == []:
+                save_error("No screens found")
+                save_error(output)
+                save_error(subprocess.check_output(["xrandr"]).decode("utf-8"))
+                os.system("xrandr --auto")
+                
         except Exception as e:
             pass
             
