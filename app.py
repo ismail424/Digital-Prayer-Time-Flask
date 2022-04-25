@@ -8,6 +8,8 @@ from flask_socketio import SocketIO, emit
 #Import SQL
 import sqlite3
 
+from numpy import save
+
 #import help-functions from another python file
 from help_functions import *
 from new_prayer_times import *
@@ -111,17 +113,20 @@ def prayer_times():
         screen_resolution = "1920x1080"
         save_error(e)
         
-    import subprocess
-    output = [l for l in subprocess.check_output(["xrandr"]).decode("utf-8").splitlines()]
-    screens = [l.split()[0] for l in output if " connected " in l]
-    for screen in screens:
-        subprocess.call(["xrandr", "--output", screen, "--rotate", rotation, "--mode", screen_resolution])
+    try:
+        import subprocess
+        output = [l for l in subprocess.check_output(["xrandr"]).decode("utf-8").splitlines()]
+        screens = [l.split()[0] for l in output if " connected " in l]
+        for screen in screens:
+            subprocess.call(["xrandr", "--output", screen, "--rotate", rotation, "--mode", screen_resolution])
 
-    if screens == []:
-        save_error("No screens found")
-        save_error(output)
-        save_error(subprocess.check_output(["xrandr"]).decode("utf-8"))
-        os.system("xrandr --auto")
+        if screens == []:
+            save_error("No screens found")
+            save_error(output)
+            save_error(subprocess.check_output(["xrandr"]).decode("utf-8"))
+            os.system("xrandr --auto")
+    except Exception as e:
+        save_error(e)
         
     return render_template( 'prayer_times.html' )
 
