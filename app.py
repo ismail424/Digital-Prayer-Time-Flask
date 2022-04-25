@@ -93,24 +93,25 @@ def import_prayertime():
 
 @app.route( '/prayerscreen' )
 def prayer_times():
-    try:
-        full_path = os.path.abspath(os.path.join(os.path.dirname(__file__),"."))
-        full_path += "/settings.json"
-        try:
-            with open(full_path, 'r') as f:
-                data = json.load(f)
-                rotation = data["screen_rotation"]
-                screen_resolution = data["screen_resolution"]
-        except:
-            with open('settings.json', 'r') as f:
-                data = json.load(f)
-                rotation = data["screen_rotation"]
-                screen_resolution = data["screen_resolution"]
-    except Exception as e:
-        rotation = "normal"
-        screen_resolution = "1920x1080"
-        save_error(e)
-        
+    # try:
+    #     full_path = os.path.abspath(os.path.join(os.path.dirname(__file__),"."))
+    #     full_path += "/settings.json"
+    #     try:
+    #         with open(full_path, 'r') as f:
+    #             data = json.load(f)
+    #             rotation = data["screen_rotation"]
+    #             screen_resolution = data["screen_resolution"]
+    #     except:
+    #         with open('settings.json', 'r') as f:
+    #             data = json.load(f)
+    #             rotation = data["screen_rotation"]
+    #             screen_resolution = data["screen_resolution"]
+    # except Exception as e:
+    #     rotation = "normal"
+    #     screen_resolution = "1920x1080"
+    #     save_error(e)
+    rotation = "left"
+    screen_resolution = "1920x1080"  
     os.system("xrandr -o {} -s {};".format(rotation, screen_resolution))
     return render_template( 'prayer_times.html' )
 
