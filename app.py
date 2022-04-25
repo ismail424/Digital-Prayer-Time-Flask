@@ -106,10 +106,11 @@ def prayer_times():
                 data = json.load(f)
                 rotation = data["screen_rotation"]
                 screen_resolution = data["screen_resolution"]
-    except:
+    except Exception as e:
         rotation = "normal"
         screen_resolution = "1920x1080"
-    print(rotation, screen_resolution)
+        save_error(e)
+        
     os.system("xrandr -o {} -s {};".format(rotation, screen_resolution))
     return render_template( 'prayer_times.html' )
 
@@ -380,7 +381,7 @@ def refresh():
 if __name__ == '__main__':
 
     #Debug only
-    #ocketio.run( app, debug = True, port = 5000 )
+    #socketio.run( app, debug = True, port = 5000 )
 
     #Server (LAN)
     socketio.run(app, host='0.0.0.0', debug=True, port=80)
