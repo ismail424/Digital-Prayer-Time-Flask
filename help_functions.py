@@ -299,6 +299,9 @@ def sync_time():
         print('Could not sync with time server.')
 
 def update():
+    import subprocess
+    output = subprocess.check_output("sudo xrandr", shell=True).decode("utf-8").strip()
+    save_error(output)
     os.system('sudo dpkg --configure -a')
     os.system('sudo apt --fix-broken install')
     os.system("sudo apt install read-edid xserver-xorg-video-fbdev x11-xserver-utils")
