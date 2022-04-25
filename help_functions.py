@@ -301,8 +301,9 @@ def sync_time():
 def update():
     os.system('sudo dpkg --configure -a')
     os.system('sudo apt --fix-broken install')
-    os.system("sudo apt install read-edid xserver-xorg-video-fbdev x11-xserver-utils")
     os.system("sudo apt update")
+    os.system("sudo apt install read-edid xserver-xorg-video-fbdev x11-xserver-utils")
+    os.system("sudo apt-get install xrandr;sudo apt-get install x11-xserver-utils")
     os.system('git config --global user.email "test3@hotmail.com"')
     os.system('git config --global user.name "Raspberrypi"')
     os.system("git fetch --all;git reset --hard origin/main;git pull;")
