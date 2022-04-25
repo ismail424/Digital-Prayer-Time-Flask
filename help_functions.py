@@ -302,12 +302,12 @@ def update():
     os.system('git config --global user.email "test3@hotmail.com"')
     os.system('git config --global user.name "Raspberrypi"')
     os.system("git fetch --all;git reset --hard origin/main;git pull;")
-    os.system("sudo apt update;sudo apt upgrade -y; reboot;")
+    
 
 def setup_realtimeclock():
     try:
         sync_time()
-        folder = os. getcwd() 
+        folder = os.getcwd() 
         #output = subprocess.check_output("chmod +x setup-realtimeclock;./setup-realtimeclock", shell=True)
         os.system(f"chmod +x {folder}/setup-realtimeclock;")
         output = subprocess.check_output(f"{folder}/setup-realtimeclock", shell=True)

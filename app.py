@@ -111,7 +111,18 @@ def prayer_times():
         screen_resolution = "1920x1080"
         save_error(e)
         
-    os.system("xrandr -o {} -s {};".format(rotation, screen_resolution))
+    import subprocess
+    output = [l for l in subprocess.check_output(["xrandr"]).decode("utf-8").splitlines()]
+    screens = [l.split()[0] for l in output if " connected " in l]
+    for screen in screens:
+        subprocess.call(["xrandr", "--output", screen, "--rotate", rotation, "--mode", screen_resolution])"])
+
+    if screens == []:
+        save_error("No screens found")
+        save_error(output)
+        save_error(subprocess.check_output(["xrandr"]).decode("utf-8"))
+        os.system("xrandr --auto")
+        
     return render_template( 'prayer_times.html' )
 
 
@@ -337,7 +348,19 @@ def rotate_screen(json_data):
   
         except Exception as e:
             print(e)
-        os.system("xrandr -o {};".format(rotation))
+        
+        import subprocess
+        output = [l for l in subprocess.check_output(["xrandr"]).decode("utf-8").splitlines()]
+        screens = [l.split()[0] for l in output if " connected " in l]
+        for screen in screens:
+            subprocess.call(["xrandr", "--output", screen, "--rotate", rotation])
+
+        if screens == []:
+            save_error("No screens found")
+            save_error(output)
+            save_error(subprocess.check_output(["xrandr"]).decode("utf-8"))
+            os.system("xrandr --auto")
+            
 
     except Exception as e:
         print(e)
