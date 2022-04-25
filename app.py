@@ -115,7 +115,7 @@ def prayer_times():
     output = [l for l in subprocess.check_output(["xrandr"]).decode("utf-8").splitlines()]
     screens = [l.split()[0] for l in output if " connected " in l]
     for screen in screens:
-        subprocess.call(["xrandr", "--output", screen, "--rotate", rotation, "--mode", screen_resolution])"])
+        subprocess.call(["xrandr", "--output", screen, "--rotate", rotation, "--mode", screen_resolution])
 
     if screens == []:
         save_error("No screens found")
