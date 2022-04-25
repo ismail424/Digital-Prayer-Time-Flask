@@ -385,6 +385,11 @@ def resolution_screen(json_data):
                 json.dump(json_object, f)
                 
             import subprocess
+            if resolution == 0:
+                get_auto = """X=$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f1);Y=$(xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f2);echo "$X"x"$Y";"""
+                output = subprocess.check_output(get_auto, shell=True).decode("utf-8").strip()
+                resolution = output
+                
             os.system("export DISPLAY=:0.0")
             output = [l for l in subprocess.check_output(["xrandr"]).decode("utf-8").splitlines()]
             screens = [l.split()[0] for l in output if " connected " in l]
