@@ -8,8 +8,6 @@ from flask_socketio import SocketIO, emit
 #Import SQL
 import sqlite3
 
-from numpy import save
-
 #import help-functions from another python file
 from help_functions import *
 from new_prayer_times import *
