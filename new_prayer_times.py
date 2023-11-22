@@ -411,7 +411,9 @@ def get_prayertimes_vaktijaEU( location_slug ):
             for day, prayers in days["days"].items():
                 current_day = f"0{day}" if len(day) == 1 else day
                 current_date = f"{current_year}-{current_month}-{current_day}"
-                the_prayertimes = [prayers["fajr"], prayers["sunrise"], prayers["dhuhr"], prayers["asr"], prayers["maghrib"], prayers["isha"]]
+
+                # Removing the seconds part from each prayer time
+                the_prayertimes = [prayer[:-3] for prayer in [prayers["fajr"], prayers["sunrise"], prayers["dhuhr"], prayers["asr"], prayers["maghrib"], prayers["isha"]] if prayer.endswith(":00")]
                 
                 if the_prayertimes:
                     c.execute("INSERT INTO prayertimes VALUES (?, ?, ?, ?, ?, ?, ?)", (current_date, *the_prayertimes))
