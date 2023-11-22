@@ -397,7 +397,7 @@ def  save_islamiska_forbundet_data(city: str):
         return False
     
 def get_prayertimes_vaktijaEU( location_slug ):
-    url = "https://api.vaktija.eu/v1/locations/slug/" + location_slug
+    url = "https://api.vaktija.eu/v3/locations/slug/" + location_slug
     conn = sqlite3.connect("database.db")
     c = conn.cursor()
     res_json = requests.get(url).json()
@@ -420,14 +420,14 @@ def get_prayertimes_vaktijaEU( location_slug ):
 
 def get_all_data_vakitja_eu():
     try:
-        res = requests.get("https://api.vaktija.eu/v1/locations")
+        res = requests.get("https://api.vaktija.eu/v3/locations")
         return res.json()
     except Exception as e:
         print(e)
         pass
 
 def check_vaktija_eu( location_slug ):
-    url = "https://api.vaktija.eu/v1/locations/slug/" + location_slug
+    url = "https://api.vaktija.eu/v3/locations/slug/" + location_slug
     try:
         res_json = requests.get(url).json()
         months =  res_json["data"]["months"]
