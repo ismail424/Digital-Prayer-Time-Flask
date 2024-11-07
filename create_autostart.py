@@ -7,7 +7,7 @@ autostart_string = """#!/bin/bash
 cd {};
 authbind python3 app.py &
 sleep 5
-chromium-browser --kiosk --start-fullscreen --noerrdialogs --disable-infobars --disable-session-crashed-bubble http://0.0.0.0/prayerscreen
+firefox -kiosk http://0.0.0.0/prayerscreen
 """.format(path_to_this_folder)
 
 try:
